@@ -114,20 +114,23 @@ section{padding:130px 0;scroll-margin-top:60px}
 @media (max-width:800px){.head{grid-template-columns:1fr}section{padding:90px 0}}
 
 /* ---------------- služby ---------------- */
-.svc{list-style:none;border-top:1.5px solid var(--ink)}
-.svc li{border-bottom:1.5px solid var(--ink)}
-.svc a{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) 220px;align-items:center;gap:32px;padding:26px 0;text-decoration:none}
-.svc h3{font-size:clamp(46px,7vw,104px);transition:transform .35s var(--ease),color .3s}
-.svc p{color:var(--muted);font-size:16px;max-width:380px}
-.svc p b{display:block;color:var(--ink);font-size:17px;margin-bottom:4px}
-.svc .ph{height:140px;border-radius:14px;background:var(--forest-2) center/cover;transition:height .45s var(--ease),border-radius .45s}
-.svc a:hover h3{transform:translateX(14px);color:var(--forest-3)}
-.svc a:hover .ph{height:180px;border-radius:999px 14px 14px 999px}
+#sluzby{padding:90px 0}
+#sluzby .head{margin-bottom:32px}
+#sluzby .head h2{font-size:clamp(40px,5vw,68px)}
+.svc{list-style:none;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;column-gap:40px}
+.svc li{border-bottom:1px solid var(--line)}
+.svc a{display:grid;grid-template-columns:112px 1fr;align-items:center;gap:22px;padding:18px 0;text-decoration:none}
+.svc h3{font-size:clamp(30px,3vw,40px);line-height:.95;margin-bottom:6px;transition:color .25s}
+.svc p{color:var(--muted);font-size:15px;line-height:1.45}
+.svc p b{display:none}
+.svc .ph{width:112px;height:84px;border-radius:12px;background:var(--forest-2) center/cover;transition:transform .35s var(--ease)}
+.svc a:hover h3{color:var(--forest-3)}
+.svc a:hover .ph{transform:scale(1.05)}
 .svc .ph.well{background:radial-gradient(circle at 30% 70%,#F3A35B,var(--amber) 45%,var(--ember))}
 @media (max-width:860px){
-  .svc a{grid-template-columns:1fr;gap:12px}
-  .svc .ph{order:-1;height:180px}
-  .svc a:hover h3{transform:none}
+  .svc{grid-template-columns:1fr}
+  .svc a{grid-template-columns:84px 1fr;gap:16px}
+  .svc .ph{width:84px;height:68px}
 }
 
 /* ---------------- rozvrh ---------------- */
@@ -334,29 +337,29 @@ footer a{color:rgba(255,255,255,.75)}
   <section id="sluzby">
     <div class="wrap">
       <div class="head">
-        <h2 class="cond">Pod jednou<br>střechou</h2>
+        <h2 class="cond">Pod jednou střechou</h2>
         <p>Od ranní posilovny v 6:15 po večerní saunu. Vyberte si, co potřebujete, nebo to spojte.</p>
       </div>
       <ul class="svc">
         <li><a href="#cenik">
-          <h3 class="cond">Posilovna</h3>
-          <p><b>Stroje Human, kardio a open gym</b>160 m² funkční a fight zóny: hrazdy, saně, airbike, lana, kruhy, pytle a volné váhy.</p>
           <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2026/09/Harmony_posilovna_pisek_opengym_silova_zona-5-1024x768.jpg')"></div>
+          <div><h3 class="cond">Posilovna</h3>
+          <p><b>Stroje Human, kardio a open gym</b>160 m² funkční a fight zóny: hrazdy, saně, airbike, lana, kruhy, pytle a volné váhy.</p></div>
         </a></li>
         <li><a href="#rozvrh">
-          <h3 class="cond">Lekce</h3>
-          <p><b>Přes 30 lekcí každý týden</b>Pilates, barre, jumping, spinning, kruháč, total body a zdravá záda. Rezervace online.</p>
           <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/02/jumping_harmony_lekce_pisek_cviceni-1024x804.jpg')"></div>
+          <div><h3 class="cond">Lekce</h3>
+          <p><b>Přes 30 lekcí každý týden</b>Pilates, barre, jumping, spinning, kruháč, total body a zdravá záda. Rezervace online.</p></div>
         </a></li>
         <li><a href="#deti">
-          <h3 class="cond">Jiu-jitsu</h3>
-          <p><b>Bojové sporty pro děti i dospělé</b>Brazilské jiu-jitsu, kickbox a box. Skupinově i individuálně.</p>
           <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/10/Brazilske_jiu_jitsu_pisek_harmony_spolecne_foto_brazilian_jiu_jitsu-1024x819.jpeg')"></div>
+          <div><h3 class="cond">Jiu-jitsu</h3>
+          <p><b>Bojové sporty pro děti i dospělé</b>Brazilské jiu-jitsu, kickbox a box. Skupinově i individuálně.</p></div>
         </a></li>
         <li><a href="#wellness">
-          <h3 class="cond">Wellness</h3>
-          <p><b>Sauny, bazének, solárium, masáže</b>Po tréninku nebo místo něj. Úterky jen pro ženy.</p>
           <div class="ph well"></div>
+          <div><h3 class="cond">Wellness</h3>
+          <p><b>Sauny, bazének, solárium, masáže</b>Po tréninku nebo místo něj. Úterky jen pro ženy.</p></div>
         </a></li>
       </ul>
     </div>
