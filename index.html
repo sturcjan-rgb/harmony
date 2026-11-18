@@ -352,7 +352,6 @@ a.it:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 1
 @media (max-width:640px){.trainers{grid-template-columns:repeat(2,1fr)}}
 
 /* ---------------- děti ---------------- */
-#deti{background:#E9F1F8}
 .kgrid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:16px}
 .kc{position:relative;border-radius:22px;overflow:hidden;min-height:280px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;padding:26px;text-decoration:none;background:#1C3550 center/cover}
 .kc::before{display:none}
@@ -416,7 +415,6 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
             <li><h4>Cvičení</h4></li>
             <li><a href="#cviceni">Posilovna<small>stroje, kardio zóna, open gym</small></a></li>
             <li><a href="#treneri">Osobní trénink<small>první konzultace zdarma</small></a></li>
-            <li><a href="#cviceni">Brazilské jiu-jitsu<small>pro dospělé</small></a></li>
             <li><a href="#cviceni">Paddleboardy<small>v sezóně</small></a></li>
           </ul>
           <ul class="v">
@@ -433,11 +431,16 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
           <li><a href="#wellness">Masáže</a></li>
           <li><a href="#wellness">Solárium</a></li>
         </ul></div></li>
-      <li class="has"><a href="#deti">Děti</a>
+      <li class="has"><a href="https://harmonypisek.cz/deti/">Děti</a>
         <div class="drop"><ul>
-          <li><a href="#deti">Dětský kroužek</a></li>
-          <li><a href="#deti">Příměstský tábor</a></li>
-          <li><a href="#deti">Jiu-jitsu pro děti</a></li>
+          <li><a href="https://harmonypisek.cz/cviceni-pro-deti/">Dětský kroužek</a></li>
+          <li><a href="https://harmonypisek.cz/cviceni-pro-deti/">Příměstský tábor</a></li>
+          <li><a href="https://harmonypisek.cz/brazilske-jiu-jitsu-pro-deti/">Jiu-jitsu pro děti</a></li>
+        </ul></div></li>
+      <li class="has"><a href="https://harmonypisek.cz/brazilske-jiu-jitsu/">Jiu-jitsu</a>
+        <div class="drop"><ul>
+          <li><a href="https://harmonypisek.cz/brazilske-jiu-jitsu/">Pro dospělé<small>pátek od 15:30</small></a></li>
+          <li><a href="https://harmonypisek.cz/brazilske-jiu-jitsu-pro-deti/">Pro děti<small>pátek od 14:30</small></a></li>
         </ul></div></li>
       <li><a href="#cenik">Ceník</a></li>
       <li class="has"><a href="#novinky">O klubu</a>
@@ -533,7 +536,7 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
           </div>
         </a>
       </div>
-      <p class="more"><span>Další aktivity</span><a href="#rozvrh">Brazilské jiu-jitsu</a><a href="#deti">Pro děti</a><a href="#kontakt">Paddleboardy (v létě)</a></p>
+      <p class="more"><span>Další aktivity</span><a href="https://harmonypisek.cz/brazilske-jiu-jitsu/">Brazilské jiu-jitsu</a><a href="https://harmonypisek.cz/deti/">Pro děti</a><a href="#kontakt">Paddleboardy (v létě)</a></p>
     </div>
   </section>
 
@@ -645,33 +648,6 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
     </div>
   </section>
 
-  <!-- DĚTI -->
-  <section id="deti">
-    <div class="wrap">
-      <div class="head">
-        <h2 class="cond">Děti</h2>
-        <p>Všechny kroužky a aktivity pro děti na jednom místě. Nábor na školní rok 2026/27 běží.</p>
-      </div>
-      <div class="kgrid">
-        <a class="kc" href="https://harmonypisek.cz/brazilske-jiu-jitsu-pro-deti/" style="background:#2B4C7E">
-          <div class="facts"><span>Pátek 14:30</span><span>Nábor běží</span></div>
-          <h3>Jiu-jitsu pro děti</h3>
-          <p>Děti se naučí padat, ovládat své tělo a respektovat soupeře.</p>
-        </a>
-        <a class="kc" href="https://harmonypisek.cz/cviceni-pro-deti/" style="background:#3E7A55">
-          <div class="facts"><span>Pátek 14:30</span></div>
-          <h3>Dětský kroužek Harmony Academy</h3>
-          <p>Všestranný pohyb, hry a základy gymnastiky.</p>
-        </a>
-        <a class="kc plain" href="https://harmonypisek.cz/cviceni-pro-deti/">
-          <div class="facts"><span>Léto 2027</span></div>
-          <h3>Příměstský tábor</h3>
-          <p>Týden plný sportu. Termíny zveřejníme na jaře.</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
   <!-- NOVINKY + REFERENCE -->
   <section id="novinky">
     <div class="wrap">
@@ -715,8 +691,8 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
 
 <footer>
   <div class="wrap fcols">
-    <div><h4>Cvičení</h4><ul><li><a href="#cviceni">Posilovna</a></li><li><a href="#lekce">Skupinové lekce</a></li><li><a href="#treneri">Osobní trénink</a></li><li><a href="#cviceni">Brazilské jiu-jitsu</a></li></ul></div>
-    <div><h4>Wellness a děti</h4><ul><li><a href="#wellness">Sauna a bazének</a></li><li><a href="#wellness">Masáže</a></li><li><a href="#wellness">Solárium</a></li><li><a href="#deti">Kroužky pro děti</a></li></ul></div>
+    <div><h4>Cvičení</h4><ul><li><a href="#cviceni">Posilovna</a></li><li><a href="#lekce">Skupinové lekce</a></li><li><a href="#treneri">Osobní trénink</a></li><li><a href="https://harmonypisek.cz/brazilske-jiu-jitsu/">Brazilské jiu-jitsu</a></li></ul></div>
+    <div><h4>Wellness a děti</h4><ul><li><a href="#wellness">Sauna a bazének</a></li><li><a href="#wellness">Masáže</a></li><li><a href="#wellness">Solárium</a></li><li><a href="https://harmonypisek.cz/deti/">Kroužky pro děti</a></li></ul></div>
     <div><h4>Klub</h4><ul><li><a href="#novinky">Novinky</a></li><li><a href="#treneri">Trenéři a lektoři</a></li><li><a href="#novinky">Galerie</a></li><li><a href="#novinky">Partneři</a></li></ul></div>
     <div><h4>Rezervace</h4><ul><li><a href="#rozvrh">Rozvrh</a></li><li><a href="#poprve">Jak rezervovat</a></li><li><a href="https://memberzone.cz/HARMONYpisek/Uvod.aspx">Můj účet</a></li><li><a href="#cenik">Ceník</a></li></ul></div>
     <div><h4>Kontakt</h4><ul><li><a href="tel:+420773994994">773 994 994</a></li><li><a href="mailto:info@harmonypisek.cz">info@harmonypisek.cz</a></li><li>Gregorova 2599, Písek</li><li><a href="#kontakt">Otevírací doba</a></li></ul></div>
