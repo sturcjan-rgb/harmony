@@ -80,7 +80,7 @@ header.solid .logo img{filter:none}
 
 /* ---------------- hero ---------------- */
 .hero{position:relative;min-height:100svh;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:var(--forest)}
-.hero-bg{position:absolute;inset:0;background:url("https://harmonypisek.cz/wp-content/uploads/2026/09/Harmony_posilovna_pisek_opengym_silova_zona-1-2048x1536.jpg") center 40%/cover;transform:scale(1.06);animation:settle 1.8s var(--ease) forwards}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(60% 70% at 85% 30%,rgba(194,235,60,.22),rgba(194,235,60,0) 70%),radial-gradient(50% 60% at 70% 90%,rgba(27,90,69,.9),rgba(27,90,69,0) 70%),var(--forest)}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;background:
   linear-gradient(90deg,rgba(11,51,40,.92) 0%,rgba(11,51,40,.55) 45%,rgba(11,51,40,.15) 75%),
   linear-gradient(0deg,rgba(11,51,40,.95) 0%,rgba(11,51,40,0) 55%)}
@@ -159,6 +159,11 @@ section{padding:130px 0;scroll-margin-top:60px}
 .it{background:#fff;border-radius:24px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;box-shadow:inset 0 0 0 1px var(--line);transition:transform .25s var(--ease),box-shadow .25s}
 a.it:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 18px 40px rgba(11,51,40,.14)}
 .it .ph{height:190px;background:var(--forest-2) center/cover}
+.fig{display:flex;flex-direction:column;justify-content:flex-end;padding:22px 24px;color:#fff;position:relative;overflow:hidden}
+.fig b{font-variation-settings:"wdth" 62;font-weight:800;font-size:96px;line-height:.85;color:var(--lime)}
+.fig span{font-size:14px;font-weight:600;opacity:.8;margin-top:8px}
+.it:nth-child(2) .fig{background:var(--ink)}
+.it-relax .fig b{color:#FFE4C7}
 .it-relax .ph{background:radial-gradient(circle at 30% 75%,#F6B06B,var(--amber) 45%,var(--ember))}
 .it .body{padding:24px 24px 26px;display:flex;flex-direction:column;flex:1}
 .it h3{font-size:clamp(34px,3.2vw,46px);margin-bottom:12px}
@@ -213,7 +218,7 @@ a.it:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 1
 /* ---------------- novinky + reference ---------------- */
 .news{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 .nw{text-decoration:none;display:flex;flex-direction:column;gap:12px}
-.nw .ph{aspect-ratio:16/10;border-radius:18px;background:var(--forest-2) center/cover}
+.nw{border-top:2px solid var(--ink);padding-top:18px}
 .nw time{font-size:13px;color:var(--muted);font-weight:600}
 .nw h3{font-variation-settings:"wdth" 75;font-weight:800;font-size:24px;line-height:1.08}
 .nw p{font-size:15px;color:var(--muted)}
@@ -332,9 +337,10 @@ a.it:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 1
 
 /* ---------------- trenéři ---------------- */
 .trainers{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-.tr{position:relative;aspect-ratio:3/4;border-radius:22px;overflow:hidden;background:var(--forest-2) center/cover;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:18px}
+.tr{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:var(--forest-2) center/cover;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:18px}
 .tr::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,51,40,.92) 0%,rgba(11,51,40,0) 55%)}
-.tr .ini{position:absolute;inset:0;display:grid;place-items:center;font-variation-settings:"wdth" 62;font-weight:800;font-size:96px;color:var(--forest-3)}
+.tr .ini{position:absolute;inset:0;display:grid;place-items:center;font-variation-settings:"wdth" 62;font-weight:800;font-size:110px;color:var(--lime);opacity:.9}
+.tr:nth-child(even){background:var(--ink)}
 .tr>*{position:relative}
 .tr h3{font-variation-settings:"wdth" 75;font-weight:800;font-size:22px;line-height:1.05}
 .tr p{font-size:13px;opacity:.8;margin-top:4px}
@@ -348,8 +354,8 @@ a.it:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 1
 /* ---------------- děti ---------------- */
 #deti{background:#E9F1F8}
 .kgrid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:16px}
-.kc{position:relative;border-radius:22px;overflow:hidden;min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;padding:26px;text-decoration:none;background:#1C3550 center/cover}
-.kc::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(14,30,48,.92) 0%,rgba(14,30,48,.15) 70%)}
+.kc{position:relative;border-radius:22px;overflow:hidden;min-height:280px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;padding:26px;text-decoration:none;background:#1C3550 center/cover}
+.kc::before{display:none}
 .kc>*{position:relative}
 .kc h3{font-variation-settings:"wdth" 62;font-weight:800;font-size:38px;line-height:.95;margin-bottom:8px}
 .kc p{font-size:15px;opacity:.88}
@@ -357,7 +363,7 @@ a.it:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 1
 .kc .facts span{background:rgba(255,255,255,.18);backdrop-filter:blur(6px);padding:4px 11px;border-radius:999px;font-size:13px;font-weight:600}
 .kc.plain{background:#2F5D86}
 @media (max-width:900px){.kgrid{grid-template-columns:1fr}}
-.kids{position:relative;border-radius:28px;overflow:hidden;min-height:520px;display:flex;align-items:flex-end;color:#fff;background:#14243A url("https://harmonypisek.cz/wp-content/uploads/2024/04/Harmony_brazilske_jiu_jitsu_posilovna_gym_pisek__opengym_2-1024x768.jpeg") center/cover}
+.kids{position:relative;border-radius:28px;overflow:hidden;min-height:520px;display:flex;align-items:flex-end;color:#fff;background:#14243A}
 .kids::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,26,22,.92) 0%,rgba(16,26,22,.55) 55%,rgba(16,26,22,.1) 100%)}
 .kids .c{position:relative;padding:56px;max-width:640px}
 .kids h2{font-size:clamp(56px,8vw,112px);margin-bottom:20px}
@@ -452,7 +458,7 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
 <main id="top">
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-bg" role="img" aria-label="Nová silová zóna v Harmony"></div>
+    <div class="hero-bg" aria-hidden="true"></div>
     <div class="wrap">
       <div>
         <h1 class="cond"><span><i>Cvičit.</i></span><span><i>Zapotit se.</i></span><span><i>Zalehnout</i></span><span><i>do sauny.</i></span></h1>
@@ -489,7 +495,7 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
       </div>
       <div class="intent">
         <article class="it it-lektor">
-          <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/02/jumping_harmony_lekce_pisek_cviceni-1024x804.jpg')"></div>
+          <div class="ph fig"><b>30+</b><span>lekcí každý týden</span></div>
           <div class="body">
             <h3 class="cond">Cvičit s lektorem</h3>
             <div class="opts">
@@ -509,7 +515,7 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
           </div>
         </article>
         <a class="it" href="#cenik">
-          <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2026/09/Harmony_posilovna_pisek_opengym_silova_zona-5-1024x768.jpg')"></div>
+          <div class="ph fig"><b>6:15</b><span>otevíráme ve všední dny</span></div>
           <div class="body">
             <h3 class="cond">Cvičit sám</h3>
             <p>Posilovna: stroje Human, kardio zóna a open gym se 160 m² funkční a fight zóny. Jeden vstup na všechno.</p>
@@ -518,7 +524,7 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
           </div>
         </a>
         <a class="it it-relax" href="#wellness">
-          <div class="ph"></div>
+          <div class="ph fig"><b>16:30</b><span>otevírá sauna v po, st a ne</span></div>
           <div class="body">
             <h3 class="cond">Odpočinout si</h3>
             <p>Finská a parní sauna, ochlazovací bazének, masáže a solárium.</p>
@@ -647,12 +653,12 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
         <p>Všechny kroužky a aktivity pro děti na jednom místě. Nábor na školní rok 2026/27 běží.</p>
       </div>
       <div class="kgrid">
-        <a class="kc" href="https://harmonypisek.cz/brazilske-jiu-jitsu-pro-deti/" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/04/Harmony_brazilske_jiu_jitsu_posilovna_gym_pisek__opengym_2-1024x768.jpeg')">
+        <a class="kc" href="https://harmonypisek.cz/brazilske-jiu-jitsu-pro-deti/" style="background:#2B4C7E">
           <div class="facts"><span>Pátek 14:30</span><span>Nábor běží</span></div>
           <h3>Jiu-jitsu pro děti</h3>
           <p>Děti se naučí padat, ovládat své tělo a respektovat soupeře.</p>
         </a>
-        <a class="kc" href="https://harmonypisek.cz/cviceni-pro-deti/" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2026/08/Brazilske_jiu_jitsu_deti_pisek_harmony_uvodka-410x200.jpg')">
+        <a class="kc" href="https://harmonypisek.cz/cviceni-pro-deti/" style="background:#3E7A55">
           <div class="facts"><span>Pátek 14:30</span></div>
           <h3>Dětský kroužek Harmony Academy</h3>
           <p>Všestranný pohyb, hry a základy gymnastiky.</p>
@@ -674,9 +680,9 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
         <p><a href="https://harmonypisek.cz/novinky/">Všechny novinky</a></p>
       </div>
       <div class="news">
-        <a class="nw" href="https://harmonypisek.cz/class-barre/"><div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/02/jumping_harmony_lekce_pisek_cviceni-1024x804.jpg')"></div><time>1. 9. 2026</time><h3>Novinka: Barre</h3><p>Elegantní cvičení pro zpevnění celého těla. Úterý a čtvrtek.</p></a>
-        <a class="nw" href="https://harmonypisek.cz/brazilske-jiu-jitsu-pro-deti/"><div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/10/Brazilske_jiu_jitsu_pisek_harmony_spolecne_foto_brazilian_jiu_jitsu-1024x819.jpeg')"></div><time>1. 9. 2026</time><h3>Nábor na jiu-jitsu pro děti</h3><p>Na školní rok 2026/27 přijímáme nové členy.</p></a>
-        <a class="nw" href="https://harmonypisek.cz/novy_rozvrh-skupinovych-lekci/"><div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2026/09/Harmony_posilovna_pisek_opengym_silova_zona-2-1024x768.jpg')"></div><time>31. 8. 2026</time><h3>Nový rozvrh skupinových lekcí</h3><p>Přidali jsme nové lekce, mimo jiné zdravé cvičení a power pilates.</p></a>
+        <a class="nw" href="https://harmonypisek.cz/class-barre/"><time>1. 9. 2026</time><h3>Novinka: Barre</h3><p>Elegantní cvičení pro zpevnění celého těla. Úterý a čtvrtek.</p></a>
+        <a class="nw" href="https://harmonypisek.cz/brazilske-jiu-jitsu-pro-deti/"><time>1. 9. 2026</time><h3>Nábor na jiu-jitsu pro děti</h3><p>Na školní rok 2026/27 přijímáme nové členy.</p></a>
+        <a class="nw" href="https://harmonypisek.cz/novy_rozvrh-skupinovych-lekci/"><time>31. 8. 2026</time><h3>Nový rozvrh skupinových lekcí</h3><p>Přidali jsme nové lekce, mimo jiné zdravé cvičení a power pilates.</p></a>
       </div>
       <div class="quotes">
         <figure class="q"><blockquote>Mám sedavé zaměstnání, a proto se vždy těším na aktivní relax v Harmony. Díky široké nabídce lekcí a vybavené posilovně si vždy vyberu sport, na který mám zrovna náladu.</blockquote><cite>Aneta, 28 let</cite></figure>
@@ -807,9 +813,9 @@ const PRICES={
    half:"Na půl roku bez wellness jen <b>990 Kč měsíčně</b> (5 940 Kč najednou)."}
 };
 const TRAINERS=[
- ["Kačka Králová","Fitness, TRX, cvičení po porodu","https://harmonypisek.cz/wp-content/uploads/2022/11/Kacka_Kralova_posilovna_osobni_trener_Harmony_Pisek_web-360x460.jpg"],
- ["Martina Salátová","Trénink a výživa","https://harmonypisek.cz/wp-content/uploads/2024/01/Martina_Salatova_posilovna_osobni_trener_Harmony_Pisek_web-360x460.jpg"],
- ["Míša Segečová","Jumping, Total Body","https://harmonypisek.cz/wp-content/uploads/2025/02/Misa_segecova_Harmony_jumping_pisek_2_web-360x460.jpg"],
+ ["Kačka Králová","Fitness, TRX, cvičení po porodu",""],
+ ["Martina Salátová","Trénink a výživa",""],
+ ["Míša Segečová","Jumping, Total Body",""],
  ["Vojtěch Šanda","Kondiční příprava, výživa",""],
  ["Jirka Hladík","Kickbox a box",""]
 ];
