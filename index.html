@@ -152,6 +152,34 @@ section{padding:130px 0;scroll-margin-top:60px}
   .svc .ph{width:84px;height:68px}
 }
 
+/* ---------------- co chcete dělat ---------------- */
+#cviceni{padding:110px 0 60px}
+#cviceni .head h2{font-size:clamp(48px,6.5vw,96px)}
+.intent{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:16px}
+.it{background:#fff;border-radius:24px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;box-shadow:inset 0 0 0 1px var(--line);transition:transform .25s var(--ease),box-shadow .25s}
+a.it:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 18px 40px rgba(11,51,40,.14)}
+.it .ph{height:190px;background:var(--forest-2) center/cover}
+.it-relax .ph{background:radial-gradient(circle at 30% 75%,#F6B06B,var(--amber) 45%,var(--ember))}
+.it .body{padding:24px 24px 26px;display:flex;flex-direction:column;flex:1}
+.it h3{font-size:clamp(34px,3.2vw,46px);margin-bottom:12px}
+.it p{color:var(--muted);font-size:15px;line-height:1.45}
+.it em{font-style:normal;font-weight:700;font-size:15px;margin-top:auto;padding-top:18px}
+.go{font-style:normal;font-weight:700;font-size:15px;margin-top:12px;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;background:var(--lime);color:var(--forest);padding:10px 16px;border-radius:999px}
+.go::after{content:"";width:7px;height:7px;border:solid currentColor;border-width:2px 2px 0 0;transform:rotate(45deg)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1}
+.opt{display:flex;flex-direction:column;gap:6px;text-decoration:none;background:var(--mineral);border-radius:16px;padding:18px;transition:background .2s}
+.opt:hover{background:#E1E9E0}
+.opt b{font-size:18px}
+.opt span{font-size:14px;color:var(--muted);line-height:1.4}
+.opt em{padding-top:10px}
+.it-lektor .ph{height:190px}
+.more{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin-top:22px;font-size:15px}
+.more span{color:var(--muted);margin-right:6px}
+.more a{text-decoration:none;font-weight:700;background:var(--mineral);padding:8px 14px;border-radius:999px}
+.more a:hover{background:var(--forest);color:#fff}
+@media (max-width:1000px){.intent{grid-template-columns:1fr 1fr}.it-lektor{grid-column:1/-1}}
+@media (max-width:640px){.intent{grid-template-columns:1fr}.opts{grid-template-columns:1fr}.it .ph{height:150px}}
+
 /* ---------------- lekce ---------------- */
 #lekce{padding-top:30px}
 .lhead{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:26px}
@@ -380,8 +408,7 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
         <div class="drop mega">
           <ul>
             <li><h4>Cvičení</h4></li>
-            <li><a href="#cviceni">Posilovna a kardio<small>stroje Human, kardio zóna</small></a></li>
-            <li><a href="#cviceni">Open gym<small>funkční a fight zóna</small></a></li>
+            <li><a href="#cviceni">Posilovna<small>stroje, kardio zóna, open gym</small></a></li>
             <li><a href="#cviceni">Osobní trénink<small>první konzultace zdarma</small></a></li>
             <li><a href="#cviceni">Brazilské jiu-jitsu<small>pro dospělé</small></a></li>
             <li><a href="#cviceni">Paddleboardy<small>v sezóně</small></a></li>
@@ -453,45 +480,54 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
     </div>
   </div>
 
-  <!-- CVIČENÍ -->
+  <!-- CO CHCETE DĚLAT -->
   <section id="cviceni">
     <div class="wrap">
       <div class="head">
-        <h2 class="cond">Cvičení</h2>
-        <p>Od ranní posilovny v 6:15 po večerní lekci. Vyberte si, jak chcete cvičit.</p>
+        <h2 class="cond">Co chcete dělat?</h2>
+        <p>Od ranní posilovny v 6:15 po večerní saunu. Vyberte si podle toho, na co máte zrovna chuť.</p>
       </div>
-      <ul class="svc">
-        <li><a href="#cenik">
-          <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2017/06/Posilovna_Pisek_Harmony-4-1024x768.jpeg')"></div>
-          <div><h3 class="cond">Posilovna a kardio</h3>
-          <p>Stroje Human i klasické, kardio zóna. Ve všední dny od 6:15.</p></div>
-        </a></li>
-        <li><a href="#cenik">
-          <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2026/09/Harmony_posilovna_pisek_opengym_silova_zona-5-1024x768.jpg')"></div>
-          <div><h3 class="cond">Open gym</h3>
-          <p>160 m² funkční a fight zóny: hrazdy, saně, airbike, lana, pytle a volné váhy.</p></div>
-        </a></li>
-        <li><a href="#lekce">
+      <div class="intent">
+        <article class="it it-lektor">
           <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/02/jumping_harmony_lekce_pisek_cviceni-1024x804.jpg')"></div>
-          <div><h3 class="cond">Skupinové lekce</h3>
-          <p>Přes 30 lekcí týdně ve třech skupinách: kardio, síla, klid a mobilita.</p></div>
-        </a></li>
-        <li><a href="#poprve">
-          <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2022/11/Kacka_Kralova_posilovna_osobni_trener_Harmony_Pisek_web-360x460.jpg');background-position:center 20%"></div>
-          <div><h3 class="cond">Osobní trénink</h3>
-          <p>Plán na míru, diagnostika InBody. První konzultace zdarma.</p></div>
-        </a></li>
-        <li><a href="#rozvrh">
-          <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/10/Brazilske_jiu_jitsu_pisek_harmony_spolecne_foto_brazilian_jiu_jitsu-1024x819.jpeg')"></div>
-          <div><h3 class="cond">Brazilské jiu-jitsu</h3>
-          <p>Pro dospělé každý pátek od 15:30, začátečníci vítáni.</p></div>
-        </a></li>
-        <li><a href="#kontakt">
-          <div class="ph" style="background:linear-gradient(160deg,#7FC7E6,#2F7FA8)"></div>
-          <div><h3 class="cond">Paddleboardy</h3>
-          <p>Půjčovna v letní sezóně. Rezervace na recepci.</p></div>
-        </a></li>
-      </ul>
+          <div class="body">
+            <h3 class="cond">Cvičit s lektorem</h3>
+            <div class="opts">
+              <a class="opt" href="#lekce">
+                <b>Ve skupině</b>
+                <span>Přes 30 lekcí týdně: kardio, síla, klid a mobilita.</span>
+                <em>lekce od 199 Kč</em>
+                <i class="go">Vybrat lekci</i>
+              </a>
+              <a class="opt" href="#poprve">
+                <b>Individuálně</b>
+                <span>Osobní trenér v posilovně, plán na míru, diagnostika InBody.</span>
+                <em>první konzultace zdarma</em>
+                <i class="go">Najít trenéra</i>
+              </a>
+            </div>
+          </div>
+        </article>
+        <a class="it" href="#cenik">
+          <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2026/09/Harmony_posilovna_pisek_opengym_silova_zona-5-1024x768.jpg')"></div>
+          <div class="body">
+            <h3 class="cond">Cvičit sám</h3>
+            <p>Posilovna: stroje Human, kardio zóna a open gym se 160 m² funkční a fight zóny. Jeden vstup na všechno.</p>
+            <em>vstup od 199 Kč</em>
+            <i class="go">Ceník a otevírací doba</i>
+          </div>
+        </a>
+        <a class="it it-relax" href="#wellness">
+          <div class="ph"></div>
+          <div class="body">
+            <h3 class="cond">Odpočinout si</h3>
+            <p>Finská a parní sauna, ochlazovací bazének, masáže a solárium.</p>
+            <em>2 hodiny za 210 Kč</em>
+            <i class="go">Kdy je otevřeno</i>
+          </div>
+        </a>
+      </div>
+      <p class="more"><span>Další aktivity</span><a href="#rozvrh">Brazilské jiu-jitsu</a><a href="#deti">Pro děti</a><a href="#kontakt">Paddleboardy (v létě)</a></p>
     </div>
   </section>
 
@@ -661,7 +697,7 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
 
 <footer>
   <div class="wrap fcols">
-    <div><h4>Cvičení</h4><ul><li><a href="#cviceni">Posilovna a kardio</a></li><li><a href="#cviceni">Open gym</a></li><li><a href="#lekce">Skupinové lekce</a></li><li><a href="#cviceni">Osobní trénink</a></li><li><a href="#cviceni">Brazilské jiu-jitsu</a></li></ul></div>
+    <div><h4>Cvičení</h4><ul><li><a href="#cviceni">Posilovna</a></li><li><a href="#lekce">Skupinové lekce</a></li><li><a href="#cviceni">Osobní trénink</a></li><li><a href="#cviceni">Brazilské jiu-jitsu</a></li></ul></div>
     <div><h4>Wellness a děti</h4><ul><li><a href="#wellness">Sauna a bazének</a></li><li><a href="#wellness">Masáže</a></li><li><a href="#wellness">Solárium</a></li><li><a href="#deti">Kroužky pro děti</a></li></ul></div>
     <div><h4>Klub</h4><ul><li><a href="#novinky">Novinky</a></li><li><a href="#poprve">Trenéři a lektoři</a></li><li><a href="#novinky">Galerie</a></li><li><a href="#novinky">Partneři</a></li></ul></div>
     <div><h4>Rezervace</h4><ul><li><a href="#rozvrh">Rozvrh</a></li><li><a href="#poprve">Jak rezervovat</a></li><li><a href="https://memberzone.cz/HARMONYpisek/Uvod.aspx">Můj účet</a></li><li><a href="#cenik">Ceník</a></li></ul></div>
