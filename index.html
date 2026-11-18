@@ -46,15 +46,34 @@ header.solid{background:rgba(247,249,245,.94);backdrop-filter:blur(12px);color:v
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .logo img{height:42px;width:auto;filter:brightness(0) invert(1);transition:filter .3s}
 header.solid .logo img{filter:none}
-.nav ul{display:flex;gap:30px;list-style:none;margin-left:auto}
-.nav ul a{text-decoration:none;font-weight:600;font-size:15px;position:relative}
-.nav ul a::after{content:"";position:absolute;left:0;right:100%;bottom:-6px;height:2px;background:var(--lime);transition:right .25s var(--ease)}
-.nav ul a:hover::after{right:0}
+.nav>ul{display:flex;gap:30px;list-style:none;margin-left:auto}
+.nav>ul>li>a{text-decoration:none;font-weight:600;font-size:15px;position:relative}
+.nav>ul>li>a::after{content:"";position:absolute;left:0;right:100%;bottom:-6px;height:2px;background:var(--lime);transition:right .25s var(--ease)}
+.nav>ul>li>a:hover::after{right:0}
 .menu-btn{display:none;background:none;border:0;font:inherit;font-weight:700;color:inherit;cursor:pointer;padding:8px;margin-left:auto}
-@media (max-width:960px){
-  .nav ul{display:none;position:absolute;top:78px;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);color:var(--ink);box-shadow:0 20px 40px rgba(0,0,0,.15)}
-  .nav ul.open{display:flex}
-  .nav ul a{display:block;padding:16px 28px;border-top:1px solid var(--line);font-size:18px}
+.nav>ul>li{position:relative;padding:28px 0}
+.nav>ul>li.has>a::before{content:"";position:absolute;right:-13px;top:50%;width:6px;height:6px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-70%) rotate(45deg);opacity:.7}
+.drop{position:absolute;top:100%;left:-24px;min-width:240px;background:var(--paper);color:var(--ink);border-radius:18px;box-shadow:0 24px 60px rgba(11,51,40,.22);padding:14px;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .2s,transform .2s var(--ease),visibility .2s}
+.nav>ul>li:hover .drop,.nav>ul>li:focus-within .drop{opacity:1;visibility:visible;transform:none}
+.drop ul{list-style:none;display:block}
+.drop a{display:block;padding:9px 12px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none}
+.drop a::after{display:none!important}
+.drop a:hover{background:var(--mineral)}
+.drop small{display:block;font-weight:500;font-size:13px;color:var(--muted)}
+.mega{display:grid;grid-template-columns:1fr 1fr;gap:8px;min-width:560px}
+.mega h4{font-size:12px;font-weight:700;color:var(--muted);padding:8px 12px 4px;letter-spacing:.02em}
+.mega .v a{display:flex;align-items:center;gap:10px}
+.mega .v .sw{width:10px;height:10px;border-radius:3px}
+.mega .v a.all{color:var(--forest-3);font-size:14px}
+@media (max-width:1080px){
+  .nav ul#menu{display:none;position:absolute;top:78px;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);color:var(--ink);box-shadow:0 20px 40px rgba(0,0,0,.15);max-height:calc(100vh - 78px);overflow:auto}
+  .nav ul#menu.open{display:flex}
+  .nav>ul>li{padding:0;border-top:1px solid var(--line)}
+  .nav>ul>li>a{display:block;padding:16px 28px;font-size:18px}
+  .nav>ul>li.has>a::before{display:none}
+  .drop{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;background:transparent;padding:0 16px 12px;min-width:0}
+  .mega{grid-template-columns:1fr;min-width:0}
+  .drop small{display:none}
   .menu-btn{display:block}
   .nav .btn{padding:10px 16px;font-size:14px}
 }
@@ -133,6 +152,51 @@ section{padding:130px 0;scroll-margin-top:60px}
   .svc .ph{width:84px;height:68px}
 }
 
+/* ---------------- lekce ---------------- */
+#lekce{padding-top:30px}
+.lhead{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:26px}
+.lhead h3{font-variation-settings:"wdth" 62;font-weight:800;font-size:clamp(40px,5vw,68px);line-height:.9}
+.lhead p{max-width:440px;color:var(--muted);font-size:15px}
+.vchips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.vchips button{font:inherit;font-size:15px;font-weight:700;cursor:pointer;border:0;border-radius:999px;padding:11px 18px 11px 14px;background:var(--mineral);color:var(--ink);display:flex;align-items:center;gap:9px}
+.vchips button .n{font-weight:500;color:var(--muted);font-size:13px}
+.vchips button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.vchips button[aria-pressed="true"] .n{color:rgba(255,255,255,.6)}
+.vchips .sw{width:11px;height:11px}
+.lgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.lc{position:relative;background:#fff;border-radius:18px;padding:18px 18px 16px;text-decoration:none;display:flex;flex-direction:column;gap:10px;box-shadow:inset 0 0 0 1px var(--line);transition:transform .2s var(--ease),box-shadow .2s;overflow:hidden}
+.lc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}
+.lc:hover{transform:translateY(-3px);box-shadow:inset 0 0 0 1px var(--line),0 14px 30px rgba(11,51,40,.12)}
+.lc h4{font-variation-settings:"wdth" 75;font-weight:800;font-size:21px;line-height:1.05}
+.lc p{font-size:14px;color:var(--muted);line-height:1.4}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 9px 3px 7px;border-radius:99px;background:color-mix(in srgb,var(--c) 22%,#fff)}
+.tag .sw{width:8px;height:8px}
+.tag.main{background:var(--c);color:var(--ink)}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);margin-top:auto;padding-top:8px;border-top:1px solid var(--mineral)}
+.lvl{display:inline-flex;gap:3px;align-items:center}
+.lvl i{width:7px;height:14px;border-radius:2px;background:var(--line)}
+.lvl i.on{background:var(--ink)}
+.lc.hide{display:none}
+@media (max-width:1100px){.lgrid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:820px){.lgrid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.lgrid{grid-template-columns:1fr}}
+
+/* ---------------- novinky + reference ---------------- */
+.news{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.nw{text-decoration:none;display:flex;flex-direction:column;gap:12px}
+.nw .ph{aspect-ratio:16/10;border-radius:18px;background:var(--forest-2) center/cover}
+.nw time{font-size:13px;color:var(--muted);font-weight:600}
+.nw h3{font-variation-settings:"wdth" 75;font-weight:800;font-size:24px;line-height:1.08}
+.nw p{font-size:15px;color:var(--muted)}
+.nw:hover h3{color:var(--forest-3)}
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:90px}
+.q{background:var(--mineral);border-radius:22px;padding:28px}
+.q blockquote{font-size:17px;line-height:1.5}
+.q blockquote::before{content:"“";display:block;font-variation-settings:"wdth" 62;font-weight:800;font-size:72px;line-height:.6;color:var(--forest-3);margin-bottom:10px}
+.q cite{display:block;font-style:normal;font-weight:700;margin-top:16px;font-size:15px}
+@media (max-width:900px){.news,.quotes{grid-template-columns:1fr}}
+
 /* ---------------- rozvrh ---------------- */
 #rozvrh{background:var(--forest);color:#fff}
 #rozvrh .head p{color:rgba(255,255,255,.65)}
@@ -149,6 +213,8 @@ section{padding:130px 0;scroll-margin-top:60px}
 .filters button[aria-pressed="true"]{background:#fff;color:var(--forest);box-shadow:none}
 .sw{width:9px;height:9px;border-radius:3px;background:var(--c)}
 .c-mind{--c:#F2C744}.c-cardio{--c:#B48CF2}.c-sila{--c:#FF6B57}.c-boj{--c:#6FA0FF}.c-deti{--c:#7FD69A}
+.block .sec{position:absolute;right:8px;bottom:8px;display:flex;gap:3px}
+.block .sec i{width:9px;height:9px;border-radius:3px;background:var(--c);box-shadow:0 0 0 1.5px rgba(16,26,22,.55)}
 
 .board{position:relative;background:rgba(255,255,255,.04);border-radius:22px;padding:18px 22px 22px 112px;overflow:hidden}
 .axis{position:relative;height:26px;margin-bottom:6px}
@@ -252,6 +318,17 @@ section{padding:130px 0;scroll-margin-top:60px}
 @media (max-width:640px){.trainers{grid-template-columns:repeat(2,1fr)}}
 
 /* ---------------- děti ---------------- */
+#deti{background:#E9F1F8}
+.kgrid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:16px}
+.kc{position:relative;border-radius:22px;overflow:hidden;min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;padding:26px;text-decoration:none;background:#1C3550 center/cover}
+.kc::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(14,30,48,.92) 0%,rgba(14,30,48,.15) 70%)}
+.kc>*{position:relative}
+.kc h3{font-variation-settings:"wdth" 62;font-weight:800;font-size:38px;line-height:.95;margin-bottom:8px}
+.kc p{font-size:15px;opacity:.88}
+.kc .facts{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.kc .facts span{background:rgba(255,255,255,.18);backdrop-filter:blur(6px);padding:4px 11px;border-radius:999px;font-size:13px;font-weight:600}
+.kc.plain{background:#2F5D86}
+@media (max-width:900px){.kgrid{grid-template-columns:1fr}}
 .kids{position:relative;border-radius:28px;overflow:hidden;min-height:520px;display:flex;align-items:flex-end;color:#fff;background:#14243A url("https://harmonypisek.cz/wp-content/uploads/2024/04/Harmony_brazilske_jiu_jitsu_posilovna_gym_pisek__opengym_2-1024x768.jpeg") center/cover}
 .kids::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,26,22,.92) 0%,rgba(16,26,22,.55) 55%,rgba(16,26,22,.1) 100%)}
 .kids .c{position:relative;padding:56px;max-width:640px}
@@ -278,9 +355,16 @@ section{padding:130px 0;scroll-margin-top:60px}
 .hours .n{font-size:14px;opacity:.6;margin-top:14px}
 @media (max-width:900px){.contact{grid-template-columns:1fr;gap:56px}}
 
-footer{background:#0A110E;color:rgba(255,255,255,.5);font-size:14px}
-footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding-top:30px;padding-bottom:30px}
-footer a{color:rgba(255,255,255,.75)}
+footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
+.fcols{display:grid;grid-template-columns:repeat(5,1fr);gap:28px;padding-top:56px;padding-bottom:40px}
+.fcols h4{color:#fff;font-size:15px;margin-bottom:12px}
+.fcols ul{list-style:none}
+.fcols li{padding:4px 0}
+.fcols a{color:rgba(255,255,255,.7);text-decoration:none}
+.fcols a:hover{color:var(--lime)}
+.fbot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding-top:22px;padding-bottom:28px;border-top:1px solid rgba(255,255,255,.1)}
+.fbot a{color:rgba(255,255,255,.7)}
+@media (max-width:900px){.fcols{grid-template-columns:repeat(2,1fr)}}
 
 .proto{position:fixed;right:16px;bottom:16px;z-index:60;background:var(--ink);color:#fff;font-size:12px;font-weight:600;padding:8px 12px;border-radius:999px;box-shadow:0 0 0 1px rgba(255,255,255,.15)}
 </style>
@@ -292,13 +376,49 @@ footer a{color:rgba(255,255,255,.75)}
     <a class="logo" href="#top"><img src="https://harmonypisek.cz/wp-content/uploads/2024/03/harmony2024.png" alt="Harmony Sport &amp; Relax Club"></a>
     <ul id="menu">
       <li><a href="#rozvrh">Rozvrh</a></li>
+      <li class="has"><a href="#cviceni">Cvičení</a>
+        <div class="drop mega">
+          <ul>
+            <li><h4>Cvičení</h4></li>
+            <li><a href="#cviceni">Posilovna a kardio<small>stroje Human, kardio zóna</small></a></li>
+            <li><a href="#cviceni">Open gym<small>funkční a fight zóna</small></a></li>
+            <li><a href="#cviceni">Osobní trénink<small>první konzultace zdarma</small></a></li>
+            <li><a href="#cviceni">Brazilské jiu-jitsu<small>pro dospělé</small></a></li>
+            <li><a href="#cviceni">Paddleboardy<small>v sezóně</small></a></li>
+          </ul>
+          <ul class="v">
+            <li><h4>Skupinové lekce</h4></li>
+            <li><a href="#lekce" data-v="cardio"><span class="sw c-cardio"></span>Kardio</a></li>
+            <li><a href="#lekce" data-v="sila"><span class="sw c-sila"></span>Síla</a></li>
+            <li><a href="#lekce" data-v="mind"><span class="sw c-mind"></span>Klid a mobilita</a></li>
+            <li><a href="#lekce" data-v="" class="all">Všechny lekce</a></li>
+          </ul>
+        </div></li>
+      <li class="has"><a href="#wellness">Wellness</a>
+        <div class="drop"><ul>
+          <li><a href="#wellness">Sauna a bazének</a></li>
+          <li><a href="#wellness">Masáže</a></li>
+          <li><a href="#wellness">Solárium</a></li>
+        </ul></div></li>
+      <li class="has"><a href="#deti">Děti</a>
+        <div class="drop"><ul>
+          <li><a href="#deti">Dětský kroužek</a></li>
+          <li><a href="#deti">Příměstský tábor</a></li>
+          <li><a href="#deti">Jiu-jitsu pro děti</a></li>
+        </ul></div></li>
       <li><a href="#cenik">Ceník</a></li>
-      <li><a href="#wellness">Wellness</a></li>
-      <li><a href="#treneri">Trenéři</a></li>
+      <li class="has"><a href="#novinky">O klubu</a>
+        <div class="drop"><ul>
+          <li><a href="#novinky">Novinky</a></li>
+          <li><a href="#poprve">Trenéři a lektoři</a></li>
+          <li><a href="#novinky">Galerie</a></li>
+          <li><a href="#novinky">Závodníci</a></li>
+          <li><a href="#novinky">Partneři</a></li>
+        </ul></div></li>
       <li><a href="#kontakt">Kontakt</a></li>
     </ul>
     <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
-    <a class="btn sm" href="https://harmonypisek.cz/online-rezervace/">Rezervovat</a>
+    <a class="btn sm" href="https://memberzone.cz/HARMONYpisek/Uvod.aspx">Rezervovat</a>
   </div>
 </header>
 
@@ -333,35 +453,57 @@ footer a{color:rgba(255,255,255,.75)}
     </div>
   </div>
 
-  <!-- SLUŽBY -->
-  <section id="sluzby">
+  <!-- CVIČENÍ -->
+  <section id="cviceni">
     <div class="wrap">
       <div class="head">
-        <h2 class="cond">Pod jednou střechou</h2>
-        <p>Od ranní posilovny v 6:15 po večerní saunu. Vyberte si, co potřebujete, nebo to spojte.</p>
+        <h2 class="cond">Cvičení</h2>
+        <p>Od ranní posilovny v 6:15 po večerní lekci. Vyberte si, jak chcete cvičit.</p>
       </div>
       <ul class="svc">
         <li><a href="#cenik">
+          <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2017/06/Posilovna_Pisek_Harmony-4-1024x768.jpeg')"></div>
+          <div><h3 class="cond">Posilovna a kardio</h3>
+          <p>Stroje Human i klasické, kardio zóna. Ve všední dny od 6:15.</p></div>
+        </a></li>
+        <li><a href="#cenik">
           <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2026/09/Harmony_posilovna_pisek_opengym_silova_zona-5-1024x768.jpg')"></div>
-          <div><h3 class="cond">Posilovna</h3>
-          <p><b>Stroje Human, kardio a open gym</b>160 m² funkční a fight zóny: hrazdy, saně, airbike, lana, kruhy, pytle a volné váhy.</p></div>
+          <div><h3 class="cond">Open gym</h3>
+          <p>160 m² funkční a fight zóny: hrazdy, saně, airbike, lana, pytle a volné váhy.</p></div>
+        </a></li>
+        <li><a href="#lekce">
+          <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/02/jumping_harmony_lekce_pisek_cviceni-1024x804.jpg')"></div>
+          <div><h3 class="cond">Skupinové lekce</h3>
+          <p>Přes 30 lekcí týdně ve třech skupinách: kardio, síla, klid a mobilita.</p></div>
+        </a></li>
+        <li><a href="#poprve">
+          <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2022/11/Kacka_Kralova_posilovna_osobni_trener_Harmony_Pisek_web-360x460.jpg');background-position:center 20%"></div>
+          <div><h3 class="cond">Osobní trénink</h3>
+          <p>Plán na míru, diagnostika InBody. První konzultace zdarma.</p></div>
         </a></li>
         <li><a href="#rozvrh">
-          <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/02/jumping_harmony_lekce_pisek_cviceni-1024x804.jpg')"></div>
-          <div><h3 class="cond">Lekce</h3>
-          <p><b>Přes 30 lekcí každý týden</b>Pilates, barre, jumping, spinning, kruháč, total body a zdravá záda. Rezervace online.</p></div>
-        </a></li>
-        <li><a href="#deti">
           <div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/10/Brazilske_jiu_jitsu_pisek_harmony_spolecne_foto_brazilian_jiu_jitsu-1024x819.jpeg')"></div>
-          <div><h3 class="cond">Jiu-jitsu</h3>
-          <p><b>Bojové sporty pro děti i dospělé</b>Brazilské jiu-jitsu, kickbox a box. Skupinově i individuálně.</p></div>
+          <div><h3 class="cond">Brazilské jiu-jitsu</h3>
+          <p>Pro dospělé každý pátek od 15:30, začátečníci vítáni.</p></div>
         </a></li>
-        <li><a href="#wellness">
-          <div class="ph well"></div>
-          <div><h3 class="cond">Wellness</h3>
-          <p><b>Sauny, bazének, solárium, masáže</b>Po tréninku nebo místo něj. Úterky jen pro ženy.</p></div>
+        <li><a href="#kontakt">
+          <div class="ph" style="background:linear-gradient(160deg,#7FC7E6,#2F7FA8)"></div>
+          <div><h3 class="cond">Paddleboardy</h3>
+          <p>Půjčovna v letní sezóně. Rezervace na recepci.</p></div>
         </a></li>
       </ul>
+    </div>
+  </section>
+
+  <!-- LEKCE -->
+  <section id="lekce">
+    <div class="wrap">
+      <div class="lhead">
+        <h3>Skupinové lekce</h3>
+        <p>Každá lekce má jednu hlavní skupinu (barva v rozvrhu) a případně vedlejší. Filtr ukáže všechny lekce, které do skupiny patří.</p>
+      </div>
+      <div class="vchips" id="vchips"></div>
+      <div class="lgrid" id="lgrid"></div>
     </div>
   </section>
 
@@ -378,7 +520,7 @@ footer a{color:rgba(255,255,255,.75)}
       </div>
       <div class="board" id="board"></div>
       <ul class="list" id="list"></ul>
-      <p class="note"><b style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#fff;margin-right:6px"></b>Tečka nebo štítek označuje novou lekci. Na lekci přijďte aspoň 5 minut předem, jinak rezervace propadá. Plná lekce? Zapište se jako náhradník, při uvolnění místa vám přijde e-mail.</p>
+      <p class="note">Barva bloku = hlavní skupina lekce, malý čtvereček vpravo dole = vedlejší skupina. Kulatá tečka označuje novou lekci. Na lekci přijďte aspoň 5 minut předem, jinak rezervace propadá. Plná lekce? Zapište se jako náhradník, při uvolnění místa vám přijde e-mail.</p>
     </div>
   </section>
 
@@ -431,7 +573,7 @@ footer a{color:rgba(255,255,255,.75)}
       </div>
       <div class="wtimes" id="wtimes"></div>
       <div class="wfoot">
-        <p>Ve dny „na objednání“ vám saunu rádi zatopíme. Stačí si ji zarezervovat online nebo zavolat na recepci.</p>
+        <p>Ve dny „na objednání“ vám saunu rádi zatopíme. Stačí si ji zarezervovat online nebo zavolat na recepci. Dále u nás najdete <b>masáže</b> (sportovní, relaxační, lávové kameny) a <b>solárium</b>.</p>
         <a class="btn dark" href="https://harmonypisek.cz/online-rezervace/">Objednat saunu</a>
       </div>
     </div>
@@ -442,35 +584,56 @@ footer a{color:rgba(255,255,255,.75)}
     <div class="wrap">
       <div class="head"><h2 class="cond">Jdete poprvé?</h2></div>
       <ol class="steps">
-        <li><h3>Vyberte si lekci</h3><p>Pro začátek doporučujeme Zdravá záda, Total Body nebo pilates. Rezervace je zdarma, platíte až na místě.</p></li>
+        <li><h3>Vyberte si lekci</h3><p>Pro začátek doporučujeme lekce s jednou čárkou náročnosti, třeba Zdravá záda nebo pilates. Rezervace je zdarma. <a href="#rozvrh"><b>Jak rezervovat</b></a></p></li>
         <li><h3>Přijďte o 10 minut dřív</h3><p>Na recepci vás zapíšeme, půjčíme zámek a ukážeme šatny. Ručník si můžete půjčit.</p></li>
-        <li><h3>Chcete do posilovny?</h3><p>S osobním trenérem máte první konzultaci a diagnostiku zdarma. Sestaví vám plán podle toho, čeho chcete dosáhnout.</p></li>
+        <li><h3>Chcete do posilovny?</h3><p>S osobním trenérem máte první konzultaci a diagnostiku zdarma. Sestaví vám plán podle toho, čeho chcete dosáhnout. <a href="#poprve"><b>Trenéři a lektoři</b></a></p></li>
       </ol>
     </div>
   </section>
 
-  <!-- TRENÉŘI -->
-  <section id="treneri">
+  <!-- DĚTI -->
+  <section id="deti">
     <div class="wrap">
       <div class="head">
-        <h2 class="cond">Trenéři</h2>
-        <p>První konzultace a diagnostika s osobním trenérem jsou zdarma.</p>
+        <h2 class="cond">Děti</h2>
+        <p>Všechny kroužky a aktivity pro děti na jednom místě. Nábor na školní rok 2026/27 běží.</p>
       </div>
-      <div class="trainers" id="trainers"></div>
-      <div class="lect" id="lect"><span>Lekce vedou</span></div>
+      <div class="kgrid">
+        <a class="kc" href="https://harmonypisek.cz/brazilske-jiu-jitsu-pro-deti/" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/04/Harmony_brazilske_jiu_jitsu_posilovna_gym_pisek__opengym_2-1024x768.jpeg')">
+          <div class="facts"><span>Pátek 14:30</span><span>Nábor běží</span></div>
+          <h3>Jiu-jitsu pro děti</h3>
+          <p>Děti se naučí padat, ovládat své tělo a respektovat soupeře.</p>
+        </a>
+        <a class="kc" href="https://harmonypisek.cz/cviceni-pro-deti/" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2026/08/Brazilske_jiu_jitsu_deti_pisek_harmony_uvodka-410x200.jpg')">
+          <div class="facts"><span>Pátek 14:30</span></div>
+          <h3>Dětský kroužek Harmony Academy</h3>
+          <p>Všestranný pohyb, hry a základy gymnastiky.</p>
+        </a>
+        <a class="kc plain" href="https://harmonypisek.cz/cviceni-pro-deti/">
+          <div class="facts"><span>Léto 2027</span></div>
+          <h3>Příměstský tábor</h3>
+          <p>Týden plný sportu. Termíny zveřejníme na jaře.</p>
+        </a>
+      </div>
     </div>
   </section>
 
-  <!-- DĚTI -->
-  <section id="deti" style="padding-top:0">
+  <!-- NOVINKY + REFERENCE -->
+  <section id="novinky">
     <div class="wrap">
-      <div class="kids">
-        <div class="c">
-          <h2 class="cond">Jiu-jitsu<br>pro děti</h2>
-          <div class="facts"><span>Pátky od 14:30</span><span>Nábor 2026/27 běží</span><span>Kroužek Harmony Academy</span></div>
-          <p>Děti se naučí padat, ovládat své tělo a respektovat soupeře. Dospělí trénují hned po nich od 15:30.</p>
-          <a class="btn" href="https://harmonypisek.cz/brazilske-jiu-jitsu-pro-deti/">Přihlásit dítě</a>
-        </div>
+      <div class="head">
+        <h2 class="cond">Novinky</h2>
+        <p><a href="https://harmonypisek.cz/novinky/">Všechny novinky</a></p>
+      </div>
+      <div class="news">
+        <a class="nw" href="https://harmonypisek.cz/class-barre/"><div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/02/jumping_harmony_lekce_pisek_cviceni-1024x804.jpg')"></div><time>1. 9. 2026</time><h3>Novinka: Barre</h3><p>Elegantní cvičení pro zpevnění celého těla. Úterý a čtvrtek.</p></a>
+        <a class="nw" href="https://harmonypisek.cz/brazilske-jiu-jitsu-pro-deti/"><div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2024/10/Brazilske_jiu_jitsu_pisek_harmony_spolecne_foto_brazilian_jiu_jitsu-1024x819.jpeg')"></div><time>1. 9. 2026</time><h3>Nábor na jiu-jitsu pro děti</h3><p>Na školní rok 2026/27 přijímáme nové členy.</p></a>
+        <a class="nw" href="https://harmonypisek.cz/novy_rozvrh-skupinovych-lekci/"><div class="ph" style="background-image:url('https://harmonypisek.cz/wp-content/uploads/2026/09/Harmony_posilovna_pisek_opengym_silova_zona-2-1024x768.jpg')"></div><time>31. 8. 2026</time><h3>Nový rozvrh skupinových lekcí</h3><p>Přidali jsme nové lekce, mimo jiné zdravé cvičení a power pilates.</p></a>
+      </div>
+      <div class="quotes">
+        <figure class="q"><blockquote>Mám sedavé zaměstnání, a proto se vždy těším na aktivní relax v Harmony. Díky široké nabídce lekcí a vybavené posilovně si vždy vyberu sport, na který mám zrovna náladu.</blockquote><cite>Aneta, 28 let</cite></figure>
+        <figure class="q"><blockquote>V práci prosedím spoustu hodin před počítačem a kompenzuji to cvičením v Harmony. Možná právě díky tomu si na rozdíl od kolegů nestěžuji na bolesti zad.</blockquote><cite>Jiří, 31 let</cite></figure>
+        <figure class="q"><blockquote>Po náročném tréninku je naprosto dokonalé zalézt si do vyhřáté sauny. Personál vždy poradí s technikou cvičení i jídelníčkem.</blockquote><cite>Klára, 27 let</cite></figure>
       </div>
     </div>
   </section>
@@ -497,17 +660,46 @@ footer a{color:rgba(255,255,255,.75)}
 </main>
 
 <footer>
-  <div class="wrap">
-    <span>© 2026 Harmony Sport &amp; Relax Club Písek</span>
-    <span>Provozovatel IVAN SVATOŠ a.s., IČO 25151673</span>
-    <a href="https://harmonypisek.cz/vop/">Obchodní podmínky</a>
+  <div class="wrap fcols">
+    <div><h4>Cvičení</h4><ul><li><a href="#cviceni">Posilovna a kardio</a></li><li><a href="#cviceni">Open gym</a></li><li><a href="#lekce">Skupinové lekce</a></li><li><a href="#cviceni">Osobní trénink</a></li><li><a href="#cviceni">Brazilské jiu-jitsu</a></li></ul></div>
+    <div><h4>Wellness a děti</h4><ul><li><a href="#wellness">Sauna a bazének</a></li><li><a href="#wellness">Masáže</a></li><li><a href="#wellness">Solárium</a></li><li><a href="#deti">Kroužky pro děti</a></li></ul></div>
+    <div><h4>Klub</h4><ul><li><a href="#novinky">Novinky</a></li><li><a href="#poprve">Trenéři a lektoři</a></li><li><a href="#novinky">Galerie</a></li><li><a href="#novinky">Partneři</a></li></ul></div>
+    <div><h4>Rezervace</h4><ul><li><a href="#rozvrh">Rozvrh</a></li><li><a href="#poprve">Jak rezervovat</a></li><li><a href="https://memberzone.cz/HARMONYpisek/Uvod.aspx">Můj účet</a></li><li><a href="#cenik">Ceník</a></li></ul></div>
+    <div><h4>Kontakt</h4><ul><li><a href="tel:+420773994994">773 994 994</a></li><li><a href="mailto:info@harmonypisek.cz">info@harmonypisek.cz</a></li><li>Gregorova 2599, Písek</li><li><a href="#kontakt">Otevírací doba</a></li></ul></div>
+  </div>
+  <div class="wrap fbot">
+    <span>© 2026 Harmony Sport &amp; Relax Club Písek · Provozovatel IVAN SVATOŠ a.s., IČO 25151673</span>
+    <span><a href="https://harmonypisek.cz/vop/">Obchodní podmínky</a> · <a href="#">Ochrana osobních údajů</a></span>
   </div>
 </footer>
 <div class="proto">Prototyp · Tiptop Studio</div>
 
 <script>
 /* ---------- data ---------- */
-const CAT={mind:["Klid a mobilita","c-mind"],cardio:["Kardio","c-cardio"],sila:["Síla","c-sila"],boj:["Bojové sporty","c-boj"],deti:["Pro děti","c-deti"]};
+const CAT={cardio:["Kardio","c-cardio"],sila:["Síla","c-sila"],mind:["Klid a mobilita","c-mind"],boj:["Jiu-jitsu","c-boj"],deti:["Děti","c-deti"]};
+const VERT=["cardio","sila","mind"];
+// lekce: skupiny (první = hlavní, určuje barvu), náročnost 1–3, popis
+const LES={
+ "Jumping":[["cardio"],2,"Skákání na trampolínách v rytmu hudby. Šetrné ke kloubům."],
+ "Spinning":[["cardio"],2,"Jízda na kole ve skupině, tempo si řídíte sami."],
+ "Fit aerobic":[["cardio"],1,"Taneční aerobik pro dobrou náladu a kondici."],
+ "Fitbox":[["cardio","sila"],3,"Údery a kopy do pytlů, intervalový trénink."],
+ "Problémové partie":[["sila","cardio"],2,"Zpevnění břicha, stehen a hýždí."],
+ "Total Body":[["sila","cardio"],2,"Celé tělo za hodinu: síla i kondice."],
+ "Kruhový trénink":[["sila","cardio"],3,"Stanoviště v open gymu, střídání zátěže a pauz."],
+ "Bodyform":[["sila"],2,"Posilování s vlastní vahou a pomůckami."],
+ "Břicho a hýždě":[["sila"],2,"Cílené posílení středu těla a hýždí."],
+ "Barre":[["sila","mind"],2,"Prvky baletu, pilates a posilování u tyče."],
+ "Pilates":[["mind","sila"],1,"Hluboký stabilizační systém, dech a držení těla."],
+ "Power pilates":[["mind","sila"],2,"Dynamičtější pilates s větší zátěží."],
+ "Ball pilates":[["mind","sila"],1,"Ranní pilates s velkým míčem."],
+ "Power jóga":[["mind","sila"],2,"Dynamická jóga pro sílu i protažení."],
+ "Zdravá záda":[["mind"],1,"Úleva pro záda, mobilita páteře a protažení."],
+ "Zdravé cvičení":[["mind"],1,"Klidné tempo, stabilita a koordinace. Vede rehabilitační lektorka."],
+ "SM systém":[["mind"],1,"Spirální stabilizace páteře podle MUDr. Smíška."]
+};
+const ALIAS={"Kruháč 1":"Kruhový trénink","Kruháč 2":"Kruhový trénink"};
+const tagsOf=s=>s[5]==="boj"||s[5]==="deti"?[s[5]]:(LES[ALIAS[s[2]]||s[2]]||[[s[5]]])[0];
 const ROOMS=["Sál 1","Sál 2","Open gym"];
 // [den 0=Ne, čas, lekce, lektor, sál, kategorie, nové, délka]
 const S=[
@@ -614,7 +806,7 @@ function renderFilters(){
   $("#filters").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{selCat=selCat===b.dataset.c?null:b.dataset.c;renderFilters();renderSched()});
   const w=$("#filters [data-w]");if(w)w.onclick=()=>{selWho=null;renderFilters();renderSched()};
 }
-const match=s=>(!selCat||s[5]===selCat)&&(!selWho||s[3]===selWho);
+const match=s=>(!selCat||tagsOf(s).includes(selCat))&&(!selWho||s[3]===selWho);
 function renderSched(){
   const day=S.filter(s=>s[0]===selDay).sort((a,b)=>m(a[1])-m(b[1]));
   const isPast=s=>selDay===today&&m(s[1])+dur(s)<=nowM;
@@ -623,15 +815,16 @@ function renderSched(){
   for(let t=8*60;t<=END;t+=60)h+=`<i style="left:${(t-START)/SPAN*100}%"></i>`;h+=`</div>`;
   ROOMS.forEach(r=>{h+=`<div class="lane" data-room="${r}">`;
     day.filter(s=>s[4]===r).forEach(s=>{const a=m(s[1]),d=dur(s);
-      h+=`<a class="block ${CAT[s[5]][1]} ${s[6]?"new":""} ${isPast(s)?"past":""} ${match(s)?"":"dim"}" href="${RES}" style="left:${(a-START)/SPAN*100}%;width:calc(${d/SPAN*100}% - 4px)" title="${s[2]}, ${s[1]}–${hm(a+d)}, ${s[3]}">
-        <span class="bt">${s[1]}</span><span class="bn">${s[2]}</span><span class="bl">${s[3]}</span></a>`});
+      const tg=tagsOf(s);
+      h+=`<a class="block ${CAT[tg[0]][1]} ${s[6]?"new":""} ${isPast(s)?"past":""} ${match(s)?"":"dim"}" href="${RES}" style="left:${(a-START)/SPAN*100}%;width:calc(${d/SPAN*100}% - 4px)" title="${s[2]}, ${s[1]}–${hm(a+d)}, ${s[3]} · ${tg.map(t=>CAT[t][0]).join(" + ")}">
+        <span class="bt">${s[1]}</span><span class="bn">${s[2]}</span><span class="bl">${s[3]}</span>${tg.length>1?`<span class="sec">${tg.slice(1).map(t=>`<i class="${CAT[t][1]}"></i>`).join("")}</span>`:""}</a>`});
     h+=`</div>`});
   if(!day.length)h+=`<p class="empty">Tento den nejsou žádné lekce. Posilovna a open gym jsou otevřené podle provozní doby.</p>`;
   if(selDay===today&&nowM>START&&nowM<END)h+=`<div class="nowline" style="left:calc(112px + (100% - 134px) * ${(nowM-START)/SPAN})" data-t="${hm(nowM)}"></div>`;
   $("#board").innerHTML=h;
   // list (mobil)
   const l=day.filter(match);
-  $("#list").innerHTML=l.length?l.map(s=>`<li class="${isPast(s)?"past":""}"><span class="t">${s[1]}</span><span class="n ${CAT[s[5]][1]}"><span class="sw"></span>${s[2]}${s[6]?' <small style="font-size:11px;font-weight:700;background:#fff;color:var(--forest);padding:1px 7px;border-radius:99px">nové</small>':""}</span><span class="w">${s[3]}, ${s[4].toLowerCase()}</span>${isPast(s)?"":`<a class="btn sm" href="${RES}">Rezervovat</a>`}</li>`).join("")
+  $("#list").innerHTML=l.length?l.map(s=>`<li class="${isPast(s)?"past":""}"><span class="t">${s[1]}</span><span class="n ${CAT[tagsOf(s)[0]][1]}"><span class="sw"></span>${s[2]}${s[6]?' <small style="font-size:11px;font-weight:700;background:#fff;color:var(--forest);padding:1px 7px;border-radius:99px">nové</small>':""}</span><span class="w">${s[3]}, ${s[4].toLowerCase()}</span>${isPast(s)?"":`<a class="btn sm" href="${RES}">Rezervovat</a>`}</li>`).join("")
     :`<li class="empty" style="display:block">Žádná lekce z výběru. Zkuste jiný den nebo zrušte filtr.</li>`;
 }
 renderDays();renderFilters();renderSched();
@@ -647,15 +840,25 @@ renderPrices("adult");
 /* ---------- wellness týden ---------- */
 $("#wtimes").innerHTML=ORDER.map(d=>`<div class="wd ${WELL[d][1]?"open":""} ${d===today?"today":""}"><b>${DN[d]}</b><span>${WELL[d][0]}</span></div>`).join("");
 
-/* ---------- trenéři ---------- */
-$("#trainers").innerHTML=TRAINERS.map(([n,d,img])=>`<article class="tr" ${img?`style="background-image:url('${img}')"`:""}>${img?"":`<span class="ini">${n.split(" ").map(x=>x[0]).join("")}</span>`}<h3>${n}</h3><p>${d}</p></article>`).join("");
-const lect=[...new Set(S.map(s=>s[3]).filter(x=>!x.startsWith("Harmony")))];
-$("#lect").insertAdjacentHTML("beforeend",lect.map(l=>`<button data-l="${l}">${l}</button>`).join(""));
-$("#lect").querySelectorAll("button").forEach(b=>b.onclick=()=>{
-  selWho=b.dataset.l;selCat=null;
-  const days=[today,...ORDER.filter(d=>d!==today)];
-  selDay=days.find(d=>S.some(s=>s[0]===d&&s[3]===selWho))??today;
-  renderDays();renderFilters();renderSched();$("#rozvrh").scrollIntoView()});
+/* ---------- lekce (vertikály jako filtr) ---------- */
+let selV="";
+const DSH=["Ne","Po","Út","St","Čt","Pá","So"];
+function when(n){const t=S.filter(s=>(ALIAS[s[2]]||s[2])===n).sort((a,b)=>((a[0]+6)%7)-((b[0]+6)%7)||m(a[1])-m(b[1]));
+  const u=[...new Set(t.map(s=>DSH[s[0]]+" "+s[1]))];return u.slice(0,3).join(", ")+(u.length>3?" …":"")}
+function lect(n){return [...new Set(S.filter(s=>(ALIAS[s[2]]||s[2])===n).map(s=>s[3]))].join(", ")}
+function renderLessons(){
+  const cnt=v=>Object.values(LES).filter(l=>!v||l[0].includes(v)).length;
+  $("#vchips").innerHTML=[["","Všechny lekce"],...VERT.map(v=>[v,CAT[v][0]])].map(([v,l])=>`<button aria-pressed="${selV===v}" data-v="${v}" class="${v?CAT[v][1]:""}">${v?'<span class="sw"></span>':""}${l} <span class="n">${cnt(v)}</span></button>`).join("");
+  $("#vchips").querySelectorAll("button").forEach(b=>b.onclick=()=>setV(b.dataset.v));
+  const order=Object.entries(LES).sort((a,b)=>VERT.indexOf(a[1][0][0])-VERT.indexOf(b[1][0][0]));
+  $("#lgrid").innerHTML=order.map(([n,[tg,lv,d]])=>`<a class="lc ${CAT[tg[0]][1]} ${selV&&!tg.includes(selV)?"hide":""}" href="#rozvrh" data-n="${n}">
+    <div class="tags">${tg.map((t,i)=>`<span class="tag ${i?"":"main"} ${CAT[t][1]}"><span class="sw"></span>${CAT[t][0]}</span>`).join("")}</div>
+    <h4>${n}</h4><p>${d}</p>
+    <div class="meta"><span>${when(n)||"termín upřesníme"}</span><span class="lvl" title="Náročnost ${lv} ze 3">${[1,2,3].map(i=>`<i class="${i<=lv?"on":""}"></i>`).join("")}</span></div></a>`).join("");
+}
+function setV(v){selV=v;renderLessons();selCat=v||null;renderFilters();renderSched()}
+renderLessons();
+document.querySelectorAll(".mega [data-v]").forEach(a=>a.addEventListener("click",()=>setV(a.dataset.v)));
 
 /* ---------- kontakt ---------- */
 $("#clubT").innerHTML=ORDER.map(d=>`<tr class="${d===today?"now":""}"><td>${DN[d]}</td><td>${CLUB[d].map(r=>r.join("–")).join(", ")}</td></tr>`).join("");
