@@ -39,10 +39,20 @@ a{color:inherit}
 .btn.sm{padding:9px 16px;font-size:14px}
 .arrow{width:18px;height:18px}
 
+/* ---------------- alert ---------------- */
+.alert{background:var(--lime);color:var(--forest);font-size:14px;font-weight:600}
+.alert .wrap{display:flex;align-items:center;gap:14px;min-height:42px;padding-top:8px;padding-bottom:8px}
+.alert b{background:var(--forest);color:var(--lime);font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.alert a{color:inherit;font-weight:700;white-space:nowrap}
+.alert p{flex:1}
+.alert button{background:none;border:0;font:inherit;font-size:20px;line-height:1;color:inherit;cursor:pointer;padding:4px 6px;margin-right:-6px}
+body.has-alert .hero .wrap{padding-top:182px}
+@media (max-width:700px){.alert .wrap{font-size:13px;gap:10px}.alert a{display:none}}
+
 /* ---------------- header ---------------- */
 header{position:fixed;inset:0 0 auto;z-index:50;color:#fff;transition:background .3s,color .3s,box-shadow .3s}
 header.solid{background:rgba(247,249,245,.94);backdrop-filter:blur(12px);color:var(--ink);box-shadow:0 1px 0 var(--line)}
-.nav{display:flex;align-items:center;gap:32px;height:78px}
+.nav{display:flex;align-items:center;gap:32px;height:78px;position:relative}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .logo img{height:42px;width:auto;filter:brightness(0) invert(1);transition:filter .3s}
 header.solid .logo img{filter:none}
@@ -66,7 +76,7 @@ header.solid .logo img{filter:none}
 .mega .v .sw{width:10px;height:10px;border-radius:3px}
 .mega .v a.all{color:var(--forest-3);font-size:14px}
 @media (max-width:1080px){
-  .nav ul#menu{display:none;position:absolute;top:78px;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);color:var(--ink);box-shadow:0 20px 40px rgba(0,0,0,.15);max-height:calc(100vh - 78px);overflow:auto}
+  .nav ul#menu{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);color:var(--ink);box-shadow:0 20px 40px rgba(0,0,0,.15);max-height:calc(100vh - 78px);overflow:auto}
   .nav ul#menu.open{display:flex}
   .nav>ul>li{padding:0;border-top:1px solid var(--line)}
   .nav>ul>li>a{display:block;padding:16px 28px;font-size:18px}
@@ -401,9 +411,17 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
 .proto{position:fixed;right:16px;bottom:16px;z-index:60;background:var(--ink);color:#fff;font-size:12px;font-weight:600;padding:8px 12px;border-radius:999px;box-shadow:0 0 0 1px rgba(255,255,255,.15)}
 </style>
 </head>
-<body>
+<body class="has-alert">
 
 <header id="hdr">
+  <div class="alert" id="alert" role="status">
+    <div class="wrap">
+      <b>Pozor, změna</b>
+      <p id="alertText"></p>
+      <a href="#rozvrh">Rozvrh</a>
+      <button aria-label="Zavřít oznámení" id="alertClose">×</button>
+    </div>
+  </div>
   <div class="wrap nav">
     <a class="logo" href="#top"><img src="https://harmonypisek.cz/wp-content/uploads/2024/03/harmony2024.png" alt="Harmony Sport &amp; Relax Club"></a>
     <ul id="menu">
@@ -796,6 +814,17 @@ const RES="https://harmonypisek.cz/online-rezervace/";
 const hdr=$("#hdr");const onScroll=()=>hdr.classList.toggle("solid",scrollY>window.innerHeight*.75);addEventListener("scroll",onScroll,{passive:true});onScroll();
 $(".menu-btn").onclick=e=>{const o=$("#menu").classList.toggle("open");e.target.setAttribute("aria-expanded",o);hdr.classList.add("solid")};
 $("#menu").querySelectorAll("a").forEach(a=>a.onclick=()=>$("#menu").classList.remove("open"));
+
+/* ---------- alert ---------- */
+// ukázka: záskok a zrušená lekce se propíší i do panelu Dnes a do rozvrhu
+(()=>{const d=now,day=S.filter(s=>s[0]===today).sort((a,b)=>m(a[1])-m(b[1]));
+ const dt=`${["ne","po","út","st","čt","pá","so"][d.getDay()]} ${d.getDate()}. ${d.getMonth()+1}.`;
+ let txt=`Dnes ${dt}: wellness je otevřené jen do 19:00.`;
+ if(day.length>=2){const up=day.find(s=>m(s[1])>nowM)||day[0],last=day[day.length-1];
+   const sub=up[3]==="Lucka K."?"Jana":"Lucka K.";txt=`Dnes ${dt}: ${up[2]} v ${up[1]} místo ${up[3]} vede ${sub}`+(sub.endsWith(".")?"":".");up[3]=sub;
+   if(last!==up){txt+=` ${last[2]} v ${last[1]} se ruší.`;S.splice(S.indexOf(last),1)}}
+ $("#alertText").textContent=txt;
+ $("#alertClose").onclick=()=>{$("#alert").remove();document.body.classList.remove("has-alert")}})();
 
 /* ---------- hero: dnes ---------- */
 (()=>{
