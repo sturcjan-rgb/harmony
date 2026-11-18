@@ -165,14 +165,17 @@ section{padding:130px 0;scroll-margin-top:60px}
 /* ---------------- co chcete dělat ---------------- */
 #cviceni{padding:110px 0 60px}
 #cviceni .head h2{font-size:clamp(48px,6.5vw,96px)}
-.intent{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:16px}
+.intent{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .it{background:#fff;border-radius:24px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;box-shadow:inset 0 0 0 1px var(--line);transition:transform .25s var(--ease),box-shadow .25s}
 a.it:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 18px 40px rgba(11,51,40,.14)}
-.it .ph{height:190px;background:var(--forest-2) center/cover}
+.it .ph{height:150px;background:var(--forest-2) center/cover}
 .fig{display:flex;flex-direction:column;justify-content:flex-end;padding:22px 24px;color:#fff;position:relative;overflow:hidden}
 .fig b{font-variation-settings:"wdth" 62;font-weight:800;font-size:96px;line-height:.85;color:var(--lime)}
 .fig span{font-size:14px;font-weight:600;opacity:.8;margin-top:8px}
-.it:nth-child(2) .fig{background:var(--ink)}
+.it:nth-child(2) .ph{background:var(--ink)}
+.ctas{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ctas .go{margin-top:0;text-decoration:none}
+.go.line{background:transparent;box-shadow:inset 0 0 0 1.5px var(--forest)}
 .it-relax .fig b{color:#FFE4C7}
 .it-relax .ph{background:radial-gradient(circle at 30% 75%,#F6B06B,var(--amber) 45%,var(--ember))}
 .it .body{padding:24px 24px 26px;display:flex;flex-direction:column;flex:1}
@@ -187,12 +190,12 @@ a.it:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 1
 .opt b{font-size:18px}
 .opt span{font-size:14px;color:var(--muted);line-height:1.4}
 .opt em{padding-top:10px}
-.it-lektor .ph{height:190px}
+
 .more{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin-top:22px;font-size:15px}
 .more span{color:var(--muted);margin-right:6px}
 .more a{text-decoration:none;font-weight:700;background:var(--mineral);padding:8px 14px;border-radius:999px}
 .more a:hover{background:var(--forest);color:#fff}
-@media (max-width:1000px){.intent{grid-template-columns:1fr 1fr}.it-lektor{grid-column:1/-1}}
+@media (max-width:1000px){.intent{grid-template-columns:1fr}}
 @media (max-width:640px){.intent{grid-template-columns:1fr}.opts{grid-template-columns:1fr}.it .ph{height:150px}}
 
 /* ---------------- lekce ---------------- */
@@ -514,27 +517,16 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
       </div>
       <div class="intent">
         <article class="it it-lektor">
-          <div class="ph fig"><b>30+</b><span>lekcí každý týden</span></div>
+          <div class="ph"></div>
           <div class="body">
             <h3 class="cond">Cvičit s lektorem</h3>
-            <div class="opts">
-              <a class="opt" href="#lekce">
-                <b>Ve skupině</b>
-                <span>Přes 30 lekcí týdně: kardio, síla, klid a mobilita.</span>
-                <em>lekce od 199 Kč</em>
-                <i class="go">Vybrat lekci</i>
-              </a>
-              <a class="opt" href="#treneri">
-                <b>Individuálně</b>
-                <span>Osobní trenér v posilovně, plán na míru, diagnostika InBody.</span>
-                <em>první konzultace zdarma</em>
-                <i class="go">Najít trenéra</i>
-              </a>
-            </div>
+            <p>Přes 30 skupinových lekcí týdně – kardio, síla, klid a mobilita. Nebo osobní trenér v posilovně, který vám sestaví plán na míru.</p>
+            <em>lekce od 199 Kč · konzultace s trenérem zdarma</em>
+            <div class="ctas"><a class="go" href="#lekce">Najít lekci</a><a class="go line" href="#treneri">Najít trenéra</a></div>
           </div>
         </article>
         <a class="it" href="#cenik">
-          <div class="ph fig"><b>6:15</b><span>otevíráme ve všední dny</span></div>
+          <div class="ph"></div>
           <div class="body">
             <h3 class="cond">Cvičit sám</h3>
             <p>Posilovna: stroje Human, kardio zóna a open gym se 160 m² funkční a fight zóny. Jeden vstup na všechno.</p>
@@ -543,7 +535,7 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
           </div>
         </a>
         <a class="it it-relax" href="#wellness">
-          <div class="ph fig"><b>16:30</b><span>otevírá sauna v po, st a ne</span></div>
+          <div class="ph"></div>
           <div class="body">
             <h3 class="cond">Odpočinout si</h3>
             <p>Finská a parní sauna, ochlazovací bazének, masáže a solárium.</p>
