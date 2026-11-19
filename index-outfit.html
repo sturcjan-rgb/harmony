@@ -1,0 +1,973 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Harmony Sport & Relax Club Písek – prototyp (Outfit)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#0B3328;
+  --forest-2:#124535;
+  --forest-3:#1B5A45;
+  --mineral:#ECF0EA;
+  --paper:#F7F9F5;
+  --ink:#101A16;
+  --lime:#C2EB3C;
+  --amber:#E07A2E;
+  --ember:#B4501B;
+  --line:#CFD8D1;
+  --muted:#5E6E66;
+  --w:1240px;
+  --ease:cubic-bezier(.2,.7,.1,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Archivo",system-ui,sans-serif;font-variation-settings:"wdth" 100;color:var(--ink);background:var(--paper);line-height:1.55;font-size:17px;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+.wrap{max-width:var(--w);margin:0 auto;padding:0 28px}
+.cond{font-variation-settings:"wdth" 62;font-weight:800;letter-spacing:-.005em;line-height:.88}
+.semi{font-variation-settings:"wdth" 75}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:inherit;font-weight:700;font-size:16px;text-decoration:none;border:0;cursor:pointer;padding:15px 24px;border-radius:999px;background:var(--lime);color:var(--forest);transition:background .2s,transform .2s var(--ease)}
+.btn:hover{transform:translateY(-2px)}
+.btn.line{background:transparent;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor}
+.btn.dark{background:var(--forest);color:#fff}
+.btn.sm{padding:9px 16px;font-size:14px}
+.arrow{width:18px;height:18px}
+
+/* ---------------- alert ---------------- */
+.alert{background:var(--lime);color:var(--forest);font-size:14px;font-weight:600}
+.alert .wrap{display:flex;align-items:center;gap:14px;min-height:42px;padding-top:8px;padding-bottom:8px}
+.alert b{background:var(--forest);color:var(--lime);font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px;white-space:nowrap}
+.alert a{color:inherit;font-weight:700;white-space:nowrap}
+.alert p{flex:1}
+.alert button{background:none;border:0;font:inherit;font-size:20px;line-height:1;color:inherit;cursor:pointer;padding:4px 6px;margin-right:-6px}
+body.has-alert .hero>.wrap{padding-top:182px}
+@media (max-width:700px){.alert .wrap{font-size:13px;gap:10px}.alert a{display:none}}
+
+/* ---------------- header extras ---------------- */
+.login{text-decoration:none;font-weight:600;font-size:15px;opacity:.85}
+.login:hover{opacity:1}
+.sauna-cta{display:flex;flex-direction:column;gap:8px;max-width:300px}
+.sauna-cta small{font-size:13px;line-height:1.4;opacity:.85}
+.sauna-cta small a{color:inherit;font-weight:700}
+.tabbar{display:none}
+@media (max-width:1080px){
+  .login{display:none}
+  .nav>.btn{display:none}
+  .nav>ul>li .drop{display:none}
+  .nav>ul>li.open .drop{display:block}
+  .nav>ul>li.has>a{display:flex!important;justify-content:space-between;align-items:center}
+  .nav>ul>li.has>a::before{display:block!important;position:static!important;flex:none;width:9px;height:9px;transform:rotate(45deg)!important;order:2;margin-right:4px}
+  .nav>ul>li.has.open>a::before{transform:rotate(225deg)!important}
+  .nav>ul>li>a::after{display:none}
+  .tabbar{display:grid;grid-template-columns:repeat(3,1fr);position:fixed;left:0;right:0;bottom:0;z-index:55;background:var(--paper);box-shadow:0 -1px 0 var(--line),0 -10px 30px rgba(11,51,40,.08);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;font-size:12px;font-weight:700;padding:6px 0;border-radius:12px}
+  .tabbar a svg{width:22px;height:22px}
+  .tabbar a.main{background:var(--lime);color:var(--forest)}
+  body{padding-bottom:74px}
+  .proto{bottom:86px!important}
+}
+
+/* ---------------- header ---------------- */
+header{position:fixed;inset:0 0 auto;z-index:50;color:#fff;transition:background .3s,color .3s,box-shadow .3s}
+header.solid{background:rgba(247,249,245,.94);backdrop-filter:blur(12px);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+.nav{display:flex;align-items:center;gap:32px;height:78px;position:relative}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo img{height:42px;width:auto;filter:brightness(0) invert(1);transition:filter .3s}
+header.solid .logo img{filter:none}
+.nav>ul{display:flex;gap:30px;list-style:none;margin-left:auto}
+.nav>ul>li>a{text-decoration:none;font-weight:600;font-size:15px;position:relative}
+.nav>ul>li>a::after{content:"";position:absolute;left:0;right:100%;bottom:-6px;height:2px;background:var(--lime);transition:right .25s var(--ease)}
+.nav>ul>li>a:hover::after{right:0}
+.menu-btn{display:none;background:none;border:0;font:inherit;font-weight:700;color:inherit;cursor:pointer;padding:8px;margin-left:auto}
+.nav>ul>li{position:relative;padding:28px 0}
+.nav>ul>li.has>a::before{content:"";position:absolute;right:-13px;top:50%;width:6px;height:6px;border:solid currentColor;border-width:0 1.5px 1.5px 0;transform:translateY(-70%) rotate(45deg);opacity:.7}
+.drop{position:absolute;top:100%;left:-24px;min-width:240px;background:var(--paper);color:var(--ink);border-radius:18px;box-shadow:0 24px 60px rgba(11,51,40,.22);padding:14px;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .2s,transform .2s var(--ease),visibility .2s}
+.nav>ul>li:hover .drop,.nav>ul>li:focus-within .drop{opacity:1;visibility:visible;transform:none}
+.drop ul{list-style:none;display:block}
+.drop a{display:block;padding:9px 12px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none}
+.drop a::after{display:none!important}
+.drop a:hover{background:var(--mineral)}
+.drop small{display:block;font-weight:500;font-size:13px;color:var(--muted)}
+.mega{display:grid;grid-template-columns:1fr 1fr;gap:8px;min-width:560px}
+.mega h4{font-size:12px;font-weight:700;color:var(--muted);padding:8px 12px 4px;letter-spacing:.02em}
+.mega .v a{display:flex;align-items:center;gap:10px}
+.mega .v .sw{width:10px;height:10px;border-radius:3px}
+.mega .v a.all{color:var(--forest-3);font-size:14px}
+@media (max-width:1080px){
+  .nav ul#menu{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);color:var(--ink);box-shadow:0 20px 40px rgba(0,0,0,.15);max-height:calc(100vh - 78px);overflow:auto}
+  .nav ul#menu.open{display:flex}
+  .nav>ul>li{padding:0;border-top:1px solid var(--line)}
+  .nav>ul>li>a{display:block;padding:16px 28px;font-size:18px}
+  .nav>ul>li.has>a::before{display:none}
+  .drop{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;background:transparent;padding:0 16px 12px;min-width:0}
+  .mega{grid-template-columns:1fr;min-width:0}
+  .drop small{display:none}
+  .menu-btn{display:block}
+  .nav .btn{padding:10px 16px;font-size:14px}
+}
+
+/* ---------------- hero ---------------- */
+.hero{position:relative;min-height:100svh;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:var(--forest)}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(60% 70% at 85% 30%,rgba(194,235,60,.22),rgba(194,235,60,0) 70%),radial-gradient(50% 60% at 70% 90%,rgba(27,90,69,.9),rgba(27,90,69,0) 70%),var(--forest)}
+.hero::before{content:"";position:absolute;inset:0;z-index:1;background:
+  linear-gradient(90deg,rgba(11,51,40,.92) 0%,rgba(11,51,40,.55) 45%,rgba(11,51,40,.15) 75%),
+  linear-gradient(0deg,rgba(11,51,40,.95) 0%,rgba(11,51,40,0) 55%)}
+.hero::after{content:"";position:absolute;inset:0;z-index:1;opacity:.18;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+@keyframes settle{to{transform:scale(1)}}
+.hero .wrap{position:relative;z-index:2;width:100%;display:grid;grid-template-columns:1fr 360px;gap:48px;align-items:end;padding-top:140px;padding-bottom:56px}
+.hero h1{font-size:clamp(64px,10vw,156px);text-transform:none}
+.hero h1 span{display:block;overflow:hidden}
+.hero h1 span i{display:block;font-style:normal;transform:translateY(105%);animation:up .9s var(--ease) forwards}
+.hero h1 span:nth-child(2) i{animation-delay:.12s}
+.hero h1 span:nth-child(3) i{animation-delay:.24s;color:var(--lime)}
+.hero h1 span:nth-child(4) i{animation-delay:.36s;color:var(--lime)}
+@keyframes up{to{transform:none}}
+.hero-sub{display:flex;gap:28px;align-items:center;flex-wrap:wrap;margin-top:34px;opacity:0;animation:fade .8s .55s forwards}
+.hero-sub p{max-width:430px;font-size:18px;opacity:.9}
+@keyframes fade{to{opacity:1}}
+
+.today{background:rgba(11,51,40,.62);backdrop-filter:blur(18px) saturate(1.3);border:1px solid rgba(255,255,255,.14);border-radius:22px;padding:26px 26px 22px;opacity:0;animation:fade .8s .75s forwards}
+.status{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 4px rgba(194,235,60,.2)}
+.dot.off{background:#F0705F;box-shadow:0 0 0 4px rgba(240,112,95,.2)}
+.today .hrs{font-size:14px;opacity:.7;margin:6px 0 18px 20px}
+.today h2{font-size:13px;font-weight:600;opacity:.6;margin-bottom:4px}
+.upcoming{list-style:none}
+.upcoming li{display:grid;grid-template-columns:66px 1fr;align-items:baseline;padding:11px 0;border-top:1px solid rgba(255,255,255,.12)}
+.upcoming .t{font-variation-settings:"wdth" 62;font-weight:800;font-size:26px;line-height:1}
+.upcoming .n{font-weight:700;font-size:16px}
+.upcoming .l{grid-column:2;font-size:13px;opacity:.65}
+.today .btn{width:100%;margin-top:16px}
+
+.ribbon{position:relative;z-index:2;border-top:1px solid rgba(255,255,255,.14)}
+.ribbon .wrap{display:flex;flex-wrap:wrap;gap:10px 44px;padding-top:18px;padding-bottom:18px;font-size:15px}
+.ribbon a,.ribbon span{text-decoration:none;opacity:.85}
+.ribbon a:hover{opacity:1}
+.ribbon em{font-style:normal;color:var(--lime);margin-right:8px;font-weight:600}
+@media (max-width:960px){
+  .hero .wrap{grid-template-columns:1fr;gap:32px;padding-top:120px}
+  .hero::before{background:linear-gradient(0deg,rgba(11,51,40,.97) 30%,rgba(11,51,40,.35) 100%)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0s!important;animation-delay:0s!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+
+/* ---------------- sections ---------------- */
+section{padding:130px 0}
+html{scroll-padding-top:var(--hdr,130px)}
+.head{display:grid;grid-template-columns:1fr auto;align-items:end;gap:24px;margin-bottom:56px}
+.head h2{font-size:clamp(56px,8.5vw,128px)}
+.head p{max-width:360px;color:var(--muted);font-size:17px}
+@media (max-width:800px){.head{grid-template-columns:1fr}section{padding:90px 0}}
+
+/* ---------------- služby ---------------- */
+#sluzby{padding:90px 0}
+#sluzby .head{margin-bottom:32px}
+#sluzby .head h2{font-size:clamp(40px,5vw,68px)}
+.svc{list-style:none;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;column-gap:40px}
+.svc li{border-bottom:1px solid var(--line)}
+.svc a{display:grid;grid-template-columns:112px 1fr;align-items:center;gap:22px;padding:18px 0;text-decoration:none}
+.svc h3{font-size:clamp(30px,3vw,40px);line-height:.95;margin-bottom:6px;transition:color .25s}
+.svc p{color:var(--muted);font-size:15px;line-height:1.45}
+.svc p b{display:none}
+.svc .ph{width:112px;height:84px;border-radius:12px;background:var(--forest-2) center/cover;transition:transform .35s var(--ease)}
+.svc a:hover h3{color:var(--forest-3)}
+.svc a:hover .ph{transform:scale(1.05)}
+.svc .ph.well{background:radial-gradient(circle at 30% 70%,#F3A35B,var(--amber) 45%,var(--ember))}
+@media (max-width:860px){
+  .svc{grid-template-columns:1fr}
+  .svc a{grid-template-columns:84px 1fr;gap:16px}
+  .svc .ph{width:84px;height:68px}
+}
+
+/* ---------------- co chcete dělat ---------------- */
+#cviceni{padding:110px 0 60px}
+#cviceni .head h2{font-size:clamp(48px,6.5vw,96px)}
+.intent{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.it{background:#fff;border-radius:24px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;box-shadow:inset 0 0 0 1px var(--line);transition:transform .25s var(--ease),box-shadow .25s}
+a.it:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 18px 40px rgba(11,51,40,.14)}
+.it .ph{height:150px;background:var(--forest-2) center/cover}
+.fig{display:flex;flex-direction:column;justify-content:flex-end;padding:22px 24px;color:#fff;position:relative;overflow:hidden}
+.fig b{font-variation-settings:"wdth" 62;font-weight:800;font-size:96px;line-height:.85;color:var(--lime)}
+.fig span{font-size:14px;font-weight:600;opacity:.8;margin-top:8px}
+.it:nth-child(2) .ph{background:var(--ink)}
+.ctas{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.ctas .go{margin-top:0;text-decoration:none}
+.go.line{background:transparent;box-shadow:inset 0 0 0 1.5px var(--forest)}
+.it-relax .fig b{color:#FFE4C7}
+.it-relax .ph{background:radial-gradient(circle at 30% 75%,#F6B06B,var(--amber) 45%,var(--ember))}
+.it .body{padding:24px 24px 26px;display:flex;flex-direction:column;flex:1}
+.it h3{font-size:clamp(34px,3.2vw,46px);margin-bottom:12px}
+.it p{color:var(--muted);font-size:15px;line-height:1.45}
+.it em{font-style:normal;font-weight:700;font-size:15px;margin-top:auto;padding-top:18px}
+.go{font-style:normal;font-weight:700;font-size:15px;margin-top:12px;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;background:var(--lime);color:var(--forest);padding:10px 16px;border-radius:999px}
+.go::after{content:"";width:7px;height:7px;border:solid currentColor;border-width:2px 2px 0 0;transform:rotate(45deg)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1}
+.opt{display:flex;flex-direction:column;gap:6px;text-decoration:none;background:var(--mineral);border-radius:16px;padding:18px;transition:background .2s}
+.opt:hover{background:#E1E9E0}
+.opt b{font-size:18px}
+.opt span{font-size:14px;color:var(--muted);line-height:1.4}
+.opt em{padding-top:10px}
+
+.more{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;margin-top:22px;font-size:15px}
+.more span{color:var(--muted);margin-right:6px}
+.more a{text-decoration:none;font-weight:700;background:var(--mineral);padding:8px 14px;border-radius:999px}
+.more a:hover{background:var(--forest);color:#fff}
+@media (max-width:1000px){.intent{grid-template-columns:1fr}}
+@media (max-width:640px){.intent{grid-template-columns:1fr}.opts{grid-template-columns:1fr}.it .ph{height:150px}}
+
+/* ---------------- lekce ---------------- */
+#lekce{padding-top:30px}
+.lhead{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:26px}
+.lhead h3{font-variation-settings:"wdth" 62;font-weight:800;font-size:clamp(40px,5vw,68px);line-height:.9}
+.lhead p{max-width:440px;color:var(--muted);font-size:15px}
+.vchips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.vchips button{font:inherit;font-size:15px;font-weight:700;cursor:pointer;border:0;border-radius:999px;padding:11px 18px 11px 14px;background:var(--mineral);color:var(--ink);display:flex;align-items:center;gap:9px}
+.vchips button .n{font-weight:500;color:var(--muted);font-size:13px}
+.vchips button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.vchips button[aria-pressed="true"] .n{color:rgba(255,255,255,.6)}
+.vchips .sw{width:11px;height:11px}
+.lgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.lc{position:relative;background:#fff;border-radius:22px;padding:22px 22px 20px;text-decoration:none;display:flex;flex-direction:column;gap:10px;transition:transform .2s var(--ease),box-shadow .2s;overflow:hidden}
+.lc:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(11,51,40,.10)}
+.lc h4{font-variation-settings:"wdth" 75;font-weight:800;font-size:24px;line-height:1.05}
+.lc p{font-size:15px;color:var(--muted);line-height:1.45}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 9px 3px 7px;border-radius:99px;background:color-mix(in srgb,var(--c) 22%,#fff)}
+.tag .sw{width:8px;height:8px}
+.tag{font-size:13px;padding:5px 11px 5px 9px}
+.tag.main{background:color-mix(in srgb,var(--c) 35%,#fff)}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--muted);margin-top:auto;padding-top:14px;border-top:1px solid var(--line)}
+.lvl{display:inline-flex;gap:3px;align-items:center}
+.lvl i{width:7px;height:14px;border-radius:2px;background:var(--line)}
+.lvl i.on{background:var(--ink)}
+.lc.hide{display:none}
+@media (max-width:1100px){.lgrid{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:820px){.lgrid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.lgrid{grid-template-columns:1fr}}
+
+/* ---------------- novinky + reference ---------------- */
+.news{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.nw{text-decoration:none;display:flex;flex-direction:column;gap:12px}
+.nw{border-top:2px solid var(--ink);padding-top:18px}
+.nw time{font-size:13px;color:var(--muted);font-weight:600}
+.nw h3{font-variation-settings:"wdth" 75;font-weight:800;font-size:24px;line-height:1.08}
+.nw p{font-size:15px;color:var(--muted)}
+.nw:hover h3{color:var(--forest-3)}
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:90px}
+.q{background:var(--mineral);border-radius:22px;padding:28px}
+.q blockquote{font-size:17px;line-height:1.5}
+.q blockquote::before{content:"“";display:block;font-variation-settings:"wdth" 62;font-weight:800;font-size:72px;line-height:.6;color:var(--forest-3);margin-bottom:10px}
+.q cite{display:block;font-style:normal;font-weight:700;margin-top:16px;font-size:15px}
+@media (max-width:900px){.news,.quotes{grid-template-columns:1fr}}
+
+/* ---------------- rozvrh ---------------- */
+#rozvrh{background:var(--forest);color:#fff}
+#rozvrh .head p{color:rgba(255,255,255,.65)}
+.controls{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:28px}
+.days{display:flex;gap:6px;flex-wrap:wrap}
+.days button{font:inherit;cursor:pointer;border:0;border-radius:14px;background:rgba(255,255,255,.07);color:#fff;padding:10px 0 9px;width:68px;text-align:center;transition:background .2s}
+.days button b{display:block;font-variation-settings:"wdth" 62;font-weight:800;font-size:24px;line-height:1}
+.days button span{font-size:12px;opacity:.6}
+.days button:hover{background:rgba(255,255,255,.14)}
+.days button[aria-selected="true"]{background:var(--lime);color:var(--forest)}
+.days button[aria-selected="true"] span{opacity:.8}
+.filters{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.filters button{font:inherit;font-size:14px;font-weight:600;cursor:pointer;border:0;border-radius:999px;padding:8px 14px 8px 12px;background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22);display:flex;align-items:center;gap:8px}
+.filters button[aria-pressed="true"]{background:#fff;color:var(--forest);box-shadow:none}
+.sw{width:9px;height:9px;border-radius:3px;background:var(--c)}
+.c-mind{--c:#F2C744}.c-cardio{--c:#B48CF2}.c-sila{--c:#FF6B57}.c-boj{--c:#6FA0FF}.c-deti{--c:#7FD69A}
+
+.board{position:relative;background:rgba(255,255,255,.04);border-radius:22px;padding:18px 22px 22px 112px;overflow:hidden}
+.axis{position:relative;height:26px;margin-bottom:6px}
+.axis span{position:absolute;transform:translateX(-50%);font-size:12px;opacity:.5;font-variant-numeric:tabular-nums}
+.pgap{position:absolute;top:44px;bottom:22px;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;font-size:11px;opacity:.45;background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 6px,transparent 6px 12px);border-radius:8px;pointer-events:none}
+.grid-lines{position:absolute;top:44px;bottom:22px;left:112px;right:22px;pointer-events:none}
+.grid-lines i{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.07)}
+.lane{position:relative;height:96px;margin-bottom:8px}
+.lane::before{content:attr(data-room);position:absolute;right:calc(100% + 18px);top:50%;transform:translateY(-50%);font-size:14px;font-weight:600;opacity:.6;white-space:nowrap}
+.block{position:absolute;top:0;bottom:0;border-radius:12px;padding:10px 11px;background:var(--c);color:var(--ink);text-decoration:none;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;transition:transform .2s var(--ease),box-shadow .2s;min-width:0}
+.block:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.35);z-index:3}
+.block .bt{font-size:12px;font-weight:700;opacity:.75;font-variant-numeric:tabular-nums}
+.block .bn{font-variation-settings:"wdth" 75;font-weight:800;font-size:16px;line-height:1.05}
+.block .bl{font-size:12px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.block.past{opacity:.28;filter:saturate(.3)}
+.block.dim{opacity:.12}
+.nowline{position:absolute;top:36px;bottom:14px;width:2px;background:#fff;z-index:4;pointer-events:none}
+.nowline::before{content:attr(data-t);position:absolute;top:-4px;left:50%;transform:translate(-50%,-100%);background:#fff;color:var(--forest);font-size:11px;font-weight:800;padding:2px 7px;border-radius:99px}
+.list{display:none;list-style:none}
+.list li{display:grid;grid-template-columns:70px 1fr auto;align-items:center;gap:4px 14px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.list .t{font-variation-settings:"wdth" 62;font-weight:800;font-size:28px;line-height:1;grid-row:span 2}
+.list .n{font-weight:700;display:flex;gap:8px;align-items:center}
+.list .w{font-size:14px;opacity:.65;grid-column:2}
+.list .btn{grid-row:1/span 2;grid-column:3}
+.list li.past{opacity:.35}
+.empty{padding:28px 0;opacity:.7}
+.note{margin-top:22px;font-size:14px;opacity:.6;max-width:640px}
+@media (max-width:900px){.board{display:none}.list{display:block}.days button{width:calc((100% - 36px)/7)}.days{width:100%}}
+
+/* ---------------- ceník ---------------- */
+#cenik .toggle{display:inline-flex;padding:5px;border-radius:999px;background:var(--mineral);margin-bottom:40px}
+.toggle button{font:inherit;font-weight:700;font-size:15px;border:0;background:none;color:var(--ink);padding:11px 20px;border-radius:999px;cursor:pointer;transition:background .2s}
+.toggle button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.prices{display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:18px;align-items:stretch}
+.plan{border-radius:22px;padding:32px;display:flex;flex-direction:column;background:var(--mineral)}
+.plan h3{font-variation-settings:"wdth" 75;font-weight:800;font-size:28px;line-height:1.05}
+.plan .sub{font-size:15px;color:var(--muted);margin:8px 0 26px}
+.plan dl{display:grid;grid-template-columns:1fr auto;font-size:15px}
+.plan dd{padding-left:16px}
+.plan dt,.plan dd{padding:11px 0;border-top:1px solid var(--line)}
+.plan dd{font-weight:700;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.card{position:relative;background:linear-gradient(140deg,var(--forest-3) 0%,var(--forest) 55%,#071F18 100%);color:#fff;overflow:hidden}
+.card>*{position:relative;z-index:1}
+.card .sub{color:rgba(255,255,255,.65)}
+.mem{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
+.mem .k{padding:14px 0;border-top:1px solid rgba(255,255,255,.18);border-bottom:1px solid rgba(255,255,255,.18);margin-top:28px}
+.mem .k{font-weight:700;font-size:15px}
+.mem .k span{font-weight:500;opacity:.6;display:block;font-size:13px;margin-top:2px}
+.mem .p{font-variation-settings:"wdth" 62;font-weight:800;font-size:76px;line-height:.9;margin-top:56px;font-variant-numeric:tabular-nums}
+.mem .p small{font-size:16px;font-weight:600;font-variation-settings:"wdth" 100;margin-left:4px}
+.half{font-size:15px;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.07);margin-bottom:22px}
+.half b{color:var(--lime)}
+.card .btn{margin-top:auto;align-self:flex-start}
+.fine{margin-top:22px;font-size:14px;color:var(--muted);max-width:760px}
+@media (max-width:980px){.prices{grid-template-columns:1fr}}
+
+/* ---------------- wellness ---------------- */
+#wellness{background:var(--amber);color:#2A0F02;position:relative;overflow:hidden}
+#wellness::before{content:"";position:absolute;left:50%;top:-40%;width:1100px;height:1100px;margin-left:-550px;border-radius:50%;background:radial-gradient(circle,rgba(255,214,150,.55),rgba(255,214,150,0) 62%);pointer-events:none}
+#wellness .wrap{position:relative}
+.temps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:60px}
+.temp{border-top:2px solid #2A0F02;padding-top:16px}
+.temp .v{font-variation-settings:"wdth" 62;font-weight:800;font-size:clamp(76px,10vw,150px);line-height:.85}
+.temp .v sup{font-size:.35em;vertical-align:top;margin-left:4px}
+.temp p{font-weight:700;margin-top:10px}
+.temp span{display:block;font-weight:500;opacity:.75;font-size:15px}
+.wtimes{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.wd{background:rgba(255,255,255,.18);border-radius:14px;padding:14px 12px;min-height:96px}
+.wd b{display:block;font-size:14px}
+.wd span{font-size:14px;opacity:.85}
+.wd.open{background:#2A0F02;color:#FFE4C7}
+.wd.today{outline:2px solid #2A0F02;outline-offset:3px}
+.wfoot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:34px}
+.wfoot p{max-width:560px;font-size:16px}
+@media (max-width:860px){.temps{grid-template-columns:1fr}.wtimes{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------------- poprvé ---------------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:44px;list-style:none;counter-reset:s}
+.steps li{counter-increment:s}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:var(--forest);color:var(--lime);font-variation-settings:"wdth" 62;font-weight:800;font-size:34px;margin-bottom:22px}
+.steps h3{font-variation-settings:"wdth" 75;font-weight:800;font-size:28px;line-height:1.05;margin-bottom:10px}
+@media (max-width:800px){.steps{grid-template-columns:1fr;gap:34px}}
+
+/* ---------------- trenéři ---------------- */
+.trainers{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.tr{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:var(--forest-2) center/cover;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:18px}
+.tr::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,51,40,.92) 0%,rgba(11,51,40,0) 55%)}
+.tr .ini{position:absolute;inset:0;display:grid;place-items:center;font-variation-settings:"wdth" 62;font-weight:800;font-size:110px;color:var(--lime);opacity:.9}
+.tr:nth-child(even){background:var(--ink)}
+.tr>*{position:relative}
+.tr h3{font-variation-settings:"wdth" 75;font-weight:800;font-size:22px;line-height:1.05}
+.tr p{font-size:13px;opacity:.8;margin-top:4px}
+.lect{margin-top:44px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.lect>span{font-weight:700;margin-right:10px}
+.lect button{font:inherit;font-size:14px;font-weight:600;border:0;background:var(--mineral);padding:8px 14px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.lect button:hover{background:var(--forest);color:#fff}
+@media (max-width:1000px){.trainers{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:640px){.trainers{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------------- děti ---------------- */
+.kgrid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:16px}
+.kc{position:relative;border-radius:22px;overflow:hidden;min-height:280px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;padding:26px;text-decoration:none;background:#1C3550 center/cover}
+.kc::before{display:none}
+.kc>*{position:relative}
+.kc h3{font-variation-settings:"wdth" 62;font-weight:800;font-size:38px;line-height:.95;margin-bottom:8px}
+.kc p{font-size:15px;opacity:.88}
+.kc .facts{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.kc .facts span{background:rgba(255,255,255,.18);backdrop-filter:blur(6px);padding:4px 11px;border-radius:999px;font-size:13px;font-weight:600}
+.kc.plain{background:#2F5D86}
+@media (max-width:900px){.kgrid{grid-template-columns:1fr}}
+.kids{position:relative;border-radius:28px;overflow:hidden;min-height:520px;display:flex;align-items:flex-end;color:#fff;background:#14243A}
+.kids::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,26,22,.92) 0%,rgba(16,26,22,.55) 55%,rgba(16,26,22,.1) 100%)}
+.kids .c{position:relative;padding:56px;max-width:640px}
+.kids h2{font-size:clamp(56px,8vw,112px);margin-bottom:20px}
+.kids p{font-size:18px;opacity:.9;margin-bottom:28px}
+.kids .facts{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.kids .facts span{background:rgba(255,255,255,.14);backdrop-filter:blur(6px);padding:7px 14px;border-radius:999px;font-size:14px;font-weight:600}
+@media (max-width:700px){.kids .c{padding:32px 24px}}
+
+/* ---------------- kontakt ---------------- */
+#kontakt{background:var(--forest);color:#fff}
+.contact{display:grid;grid-template-columns:1.2fr 1fr;gap:72px}
+.contact .big{font-variation-settings:"wdth" 62;font-weight:800;font-size:clamp(48px,6vw,92px);white-space:nowrap;line-height:.92;text-decoration:none;display:block}
+.contact .big:hover{color:var(--lime)}
+.contact .mail{font-size:clamp(22px,2.6vw,32px);font-weight:600;text-decoration:none;display:inline-block;margin-top:14px;border-bottom:2px solid var(--lime)}
+.contact address{font-style:normal;margin-top:30px;opacity:.75;font-size:17px}
+.contact .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.hours h3{font-size:14px;font-weight:600;opacity:.6;margin-bottom:10px}
+.hours table{width:100%;border-collapse:collapse;font-size:16px;font-variant-numeric:tabular-nums}
+.hours td{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.hours td:last-child{text-align:right;font-weight:600}
+.hours tr.now td{color:var(--lime)}
+.hours tr.now td:first-child::after{content:" · dnes";opacity:.7;font-weight:500}
+.hours .n{font-size:14px;opacity:.6;margin-top:14px}
+@media (max-width:900px){.contact{grid-template-columns:1fr;gap:56px}}
+
+footer{background:var(--forest);border-top:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.55);font-size:14px}
+.fcols{display:grid;grid-template-columns:repeat(5,1fr);gap:28px;padding-top:56px;padding-bottom:40px}
+.fcols h4{color:#fff;font-size:15px;margin-bottom:12px}
+.fcols ul{list-style:none}
+.fcols li{padding:4px 0}
+.fcols a{color:rgba(255,255,255,.7);text-decoration:none}
+.fcols a:hover{color:var(--lime)}
+.fbot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;padding-top:22px;padding-bottom:28px;border-top:1px solid rgba(255,255,255,.1)}
+.fbot a{color:rgba(255,255,255,.7)}
+@media (max-width:900px){.fcols{grid-template-columns:repeat(2,1fr)}}
+
+.proto{position:fixed;right:16px;bottom:16px;z-index:60;background:var(--ink);color:#fff;font-size:12px;font-weight:600;padding:8px 12px;border-radius:999px;box-shadow:0 0 0 1px rgba(255,255,255,.15)}
+
+/* ================= varianta: nadpisy Outfit ================= */
+.cond,.hero h1,.head h2,.it h3,.lhead h3,.lc h4,.plan h3,.mem .p,.temp .v,.contact .big,.tr h3,.tr .ini,
+.block .bn,.days button b,.upcoming .t,.list .t,.nw h3,.q blockquote::before,.wd h3{
+  font-family:"Outfit",system-ui,sans-serif;font-variation-settings:normal;font-weight:700;letter-spacing:-.025em}
+.hero h1{font-size:clamp(46px,6.6vw,104px);line-height:.98;letter-spacing:-.035em}
+.head h2{font-size:clamp(38px,5vw,76px);line-height:1}
+#cviceni .head h2{font-size:clamp(34px,4.2vw,62px)}
+.it h3{font-size:clamp(25px,2.2vw,32px);line-height:1.05}
+.lhead h3{font-size:clamp(30px,3.2vw,46px);line-height:1}
+.lc h4{font-size:20px;line-height:1.15;font-weight:600}
+.plan h3{font-size:23px;font-weight:600}
+.mem .p{font-size:54px;line-height:1}
+.temp .v{font-size:clamp(54px,6.4vw,100px);line-height:.95}
+.contact .big{font-size:clamp(34px,4vw,62px);line-height:1}
+.tr h3{font-size:18px;font-weight:600}
+.tr .ini{font-size:76px}
+.block .bn{font-size:14px;font-weight:600;line-height:1.15}
+.days button b{font-size:19px}
+.upcoming .t,.list .t{font-size:21px}
+.nw h3{font-size:21px;font-weight:600;line-height:1.2}
+</style>
+</head>
+<body class="has-alert">
+
+<header id="hdr">
+  <div class="alert" id="alert" role="status">
+    <div class="wrap">
+      <b>Pozor, změna</b>
+      <p id="alertText"></p>
+      <a href="#rozvrh">Rozvrh</a>
+      <button aria-label="Zavřít oznámení" id="alertClose">×</button>
+    </div>
+  </div>
+  <div class="wrap nav">
+    <a class="logo" href="#top"><img src="https://harmonypisek.cz/wp-content/uploads/2024/03/harmony2024.png" alt="Harmony Sport &amp; Relax Club"></a>
+    <ul id="menu">
+      <li><a href="#rozvrh">Rozvrh</a></li>
+      <li class="has"><a href="#cviceni">Cvičení</a>
+        <div class="drop mega">
+          <ul>
+            <li><h4>Cvičení</h4></li>
+            <li><a href="#cviceni">Posilovna<small>stroje, kardio zóna, open gym</small></a></li>
+            <li><a href="#treneri">Osobní trénink<small>první konzultace zdarma</small></a></li>
+          </ul>
+          <ul class="v">
+            <li><h4>Skupinové lekce</h4></li>
+            <li><a href="#lekce" data-v="cardio"><span class="sw c-cardio"></span>Kardio</a></li>
+            <li><a href="#lekce" data-v="sila"><span class="sw c-sila"></span>Síla</a></li>
+            <li><a href="#lekce" data-v="mind"><span class="sw c-mind"></span>Klid a mobilita</a></li>
+            <li><a href="#lekce" data-v="" class="all">Všechny lekce</a></li>
+          </ul>
+        </div></li>
+      <li class="has"><a href="#wellness">Wellness</a>
+        <div class="drop"><ul>
+          <li><a href="#wellness">Sauna a bazének</a></li>
+          <li><a href="#wellness">Masáže</a></li>
+          <li><a href="#wellness">Solárium</a></li>
+        </ul></div></li>
+      <li class="has"><a href="https://harmonypisek.cz/deti/">Děti</a>
+        <div class="drop"><ul>
+          <li><a href="https://harmonypisek.cz/cviceni-pro-deti/">Dětský kroužek</a></li>
+          <li><a href="https://harmonypisek.cz/cviceni-pro-deti/">Příměstský tábor</a></li>
+          <li><a href="https://harmonypisek.cz/brazilske-jiu-jitsu-pro-deti/">Jiu-jitsu pro děti</a></li>
+        </ul></div></li>
+      <li class="has"><a href="https://harmonypisek.cz/brazilske-jiu-jitsu/">Jiu-jitsu</a>
+        <div class="drop"><ul>
+          <li><a href="https://harmonypisek.cz/brazilske-jiu-jitsu/">Pro dospělé<small>pátek od 15:30</small></a></li>
+          <li><a href="https://harmonypisek.cz/brazilske-jiu-jitsu-pro-deti/">Pro děti<small>pátek od 14:30</small></a></li>
+        </ul></div></li>
+      <li><a href="#cenik">Ceník</a></li>
+      <li class="has"><a href="#novinky">O klubu</a>
+        <div class="drop"><ul>
+          <li><a href="#novinky">Novinky</a></li>
+          <li><a href="#treneri">Trenéři a lektoři</a></li>
+          <li><a href="#novinky">Galerie</a></li>
+          <li><a href="#novinky">Závodníci</a></li>
+          <li><a href="#novinky">Partneři</a></li>
+        </ul></div></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+    <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+    <a class="login" href="https://memberzone.cz/HARMONYpisek/Uvod.aspx">Přihlásit</a>
+    <a class="btn sm" href="#rozvrh">Rezervovat</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="wrap">
+      <div>
+        <h1 class="cond"><span><i>Cvičit.</i></span><span><i>Zapotit se.</i></span><span><i>Zalehnout</i></span><span><i>do sauny.</i></span></h1>
+        <div class="hero-sub">
+          <p>Posilovna, open gym, přes 30 lekcí týdně, jiu-jitsu a wellness. Jeden klub v Písku, sedm dní v týdnu.</p>
+          <a class="btn" href="#rozvrh">Vybrat lekci</a>
+          <a class="btn line" href="#cenik">Ceník</a>
+        </div>
+      </div>
+      <aside class="today" aria-label="Dnes v Harmony">
+        <div class="status"><span class="dot" id="dot"></span><span id="statusText"></span></div>
+        <div class="hrs" id="todayHours"></div>
+        <h2 id="nextTitle">Další lekce dnes</h2>
+        <ul class="upcoming" id="upcoming"></ul>
+        <a class="btn" href="#rozvrh">Celý rozvrh</a>
+      </aside>
+    </div>
+    <div class="ribbon">
+      <div class="wrap">
+        <a href="https://mapy.cz/?q=Gregorova%202599%20P%C3%ADsek"><em>Kde</em>Gregorova 2599, Písek</a>
+        <a href="tel:+420773994994"><em>Recepce</em>773 994 994</a>
+        <a href="mailto:info@harmonypisek.cz"><em>E-mail</em>info@harmonypisek.cz</a>
+        <span><em>Otevřeno</em>7 dní v týdnu</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CO CHCETE DĚLAT -->
+  <section id="cviceni">
+    <div class="wrap">
+      <div class="head">
+        <h2 class="cond">Co chcete dělat?</h2>
+        <p>Od ranní posilovny v 6:15 po večerní saunu. Vyberte si podle toho, na co máte zrovna chuť.</p>
+      </div>
+      <div class="intent">
+        <article class="it it-lektor">
+          <div class="ph"></div>
+          <div class="body">
+            <h3 class="cond">Cvičit s lektorem</h3>
+            <p>Přes 30 skupinových lekcí týdně – kardio, síla, klid a mobilita. Nebo osobní trenér v posilovně, který vám sestaví plán na míru.</p>
+            <em>lekce od 199 Kč · konzultace s trenérem zdarma</em>
+            <div class="ctas"><a class="go" href="#lekce">Najít lekci</a><a class="go line" href="#treneri">Najít trenéra</a></div>
+          </div>
+        </article>
+        <a class="it" href="#cenik">
+          <div class="ph"></div>
+          <div class="body">
+            <h3 class="cond">Cvičit sám</h3>
+            <p>Posilovna: stroje Human, kardio zóna a open gym se 160 m² funkční a fight zóny. Jeden vstup na všechno.</p>
+            <em>vstup od 199 Kč</em>
+            <i class="go">Ceník a otevírací doba</i>
+          </div>
+        </a>
+        <a class="it it-relax" href="#wellness">
+          <div class="ph"></div>
+          <div class="body">
+            <h3 class="cond">Odpočinout si</h3>
+            <p>Finská a parní sauna, ochlazovací bazének, masáže a solárium.</p>
+            <em>2 hodiny za 210 Kč</em>
+            <i class="go">Kdy je otevřeno</i>
+          </div>
+        </a>
+      </div>
+      <p class="more"><span>Další aktivity</span><a href="https://harmonypisek.cz/brazilske-jiu-jitsu/">Brazilské jiu-jitsu</a><a href="https://harmonypisek.cz/deti/">Pro děti</a></p>
+    </div>
+  </section>
+
+  <!-- LEKCE -->
+  <section id="lekce">
+    <div class="wrap">
+      <div class="lhead">
+        <h3>Skupinové lekce</h3>
+        <p>Každá lekce má jednu hlavní skupinu (barva v rozvrhu) a případně vedlejší. Filtr ukáže všechny lekce, které do skupiny patří.</p>
+      </div>
+      <div class="vchips" id="vchips"></div>
+      <div class="lgrid" id="lgrid"></div>
+    </div>
+  </section>
+
+  <!-- OSOBNÍ TRENÉŘI -->
+  <section id="treneri">
+    <div class="wrap">
+      <div class="head">
+        <h2 class="cond">Osobní trenéři</h2>
+        <p>Trénink v posilovně na míru. První konzultace a diagnostika jsou zdarma, domluvíte se na recepci nebo přímo s trenérem.</p>
+      </div>
+      <div class="trainers" id="trainers"></div>
+      <p class="more" style="margin-top:28px"><a href="#novinky">Všichni trenéři a lektoři</a></p>
+    </div>
+  </section>
+
+  <!-- ROZVRH -->
+  <section id="rozvrh">
+    <div class="wrap">
+      <div class="head">
+        <h2 class="cond">Rozvrh</h2>
+        <p>Klikněte na lekci a rovnou se zarezervujte. Rozvrh se načítá z rezervačního systému, takže vždy platí včetně záskoků.</p>
+      </div>
+      <div class="controls">
+        <div class="days" role="tablist" id="days"></div>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div class="board" id="board"></div>
+      <ul class="list" id="list"></ul>
+      <p class="note">Barva bloku = skupina lekce. Hodiny bez lekcí jsou zkrácené do proužku „pauza“. Na lekci přijďte aspoň 5 minut předem, jinak rezervace propadá. Plná lekce? Zapište se jako náhradník, při uvolnění místa vám přijde e-mail.</p>
+    </div>
+  </section>
+
+  <!-- CENÍK -->
+  <section id="cenik">
+    <div class="wrap">
+      <div class="head">
+        <h2 class="cond">Ceník</h2>
+        <p>Platí od 17. 11. 2025. Studenti do 26 a senioři 65+ mají vlastní ceny.</p>
+      </div>
+      <div class="toggle" role="group" aria-label="Pro koho">
+        <button aria-pressed="true" data-who="adult">Dospělí</button>
+        <button aria-pressed="false" data-who="student">Student / senior</button>
+      </div>
+      <div class="prices">
+        <div class="plan">
+          <h3>Jednou si to zkusit</h3>
+          <p class="sub">Bez registrace, platíte na recepci.</p>
+          <dl id="once"></dl>
+        </div>
+        <div class="plan">
+          <h3>Chodím občas</h3>
+          <p class="sub">Permanentka na 10 vstupů, platí 3 měsíce.</p>
+          <dl id="perm"></dl>
+        </div>
+        <div class="plan card">
+          <h3>Chodím pravidelně</h3>
+          <p class="sub">Členství, neomezený vstup na 30 dní.</p>
+          <div class="mem" id="member"></div>
+          <div class="half" id="half"></div>
+          <a class="btn" href="https://memberzone.cz/HARMONYpisek/Uvod.aspx">Koupit členství</a>
+        </div>
+      </div>
+      <p class="fine">Permanentky a členství jsou nepřenosné a nelze je přerušit ani prodloužit. MultiSport doplatek do wellness 75 Kč. K zapůjčení ručník 20 Kč, prostěradlo 35 Kč, zámek za vratnou zálohu 50 Kč.</p>
+    </div>
+  </section>
+
+  <!-- WELLNESS -->
+  <section id="wellness">
+    <div class="wrap">
+      <div class="head">
+        <h2 class="cond">Wellness</h2>
+        <p style="color:inherit;opacity:.8">Finská a parní sauna s ochlazovacím bazénkem. Vstup na 2 hodiny za 210 Kč, s členstvím All-in v ceně.</p>
+      </div>
+      <div class="temps">
+        <div class="temp"><div class="v">90<sup>°C</sup></div><p>Finská sauna<span>80–100 °C, suchý vzduch</span></p></div>
+        <div class="temp"><div class="v">2<sup>h</sup></div><p>Vstup za 210 Kč<span>finská i parní sauna, ochlazovací bazének</span></p></div>
+        <div class="temp"><div class="v">Út</div><p>Jen pro ženy<span>na objednání přes online rezervace</span></p></div>
+      </div>
+      <div class="wtimes" id="wtimes"></div>
+      <div class="wfoot">
+        <p>Ve dny „na objednání“ vám saunu rádi zatopíme. Stačí si ji zarezervovat online nebo zavolat na recepci. Dále u nás najdete <b>masáže</b> (sportovní, relaxační, lávové kameny) a <b>solárium</b>.</p>
+        <div class="sauna-cta"><a class="btn dark" href="https://memberzone.cz/HARMONYpisek/Uvod.aspx">Objednat saunu online</a><small>V rezervacích zvolte <b>Wellness</b> a čas. Nebo zavolejte na recepci <a href="tel:+420773994994">773 994 994</a>.</small></div>
+      </div>
+    </div>
+  </section>
+
+<!-- NOVINKY + REFERENCE -->
+  <section id="novinky">
+    <div class="wrap">
+      <div class="head">
+        <h2 class="cond">Novinky</h2>
+        <p><a href="https://harmonypisek.cz/novinky/">Všechny novinky</a></p>
+      </div>
+      <div class="news">
+        <a class="nw" href="https://harmonypisek.cz/class-barre/"><time>1. 9. 2026</time><h3>Novinka: Barre</h3><p>Elegantní cvičení pro zpevnění celého těla. Úterý a čtvrtek.</p></a>
+        <a class="nw" href="https://harmonypisek.cz/brazilske-jiu-jitsu-pro-deti/"><time>1. 9. 2026</time><h3>Nábor na jiu-jitsu pro děti</h3><p>Na školní rok 2026/27 přijímáme nové členy.</p></a>
+        <a class="nw" href="https://harmonypisek.cz/novy_rozvrh-skupinovych-lekci/"><time>31. 8. 2026</time><h3>Nový rozvrh skupinových lekcí</h3><p>Přidali jsme nové lekce, mimo jiné zdravé cvičení a power pilates.</p></a>
+      </div>
+      <div class="quotes">
+        <figure class="q"><blockquote>Mám sedavé zaměstnání, a proto se vždy těším na aktivní relax v Harmony. Díky široké nabídce lekcí a vybavené posilovně si vždy vyberu sport, na který mám zrovna náladu.</blockquote><cite>Aneta, 28 let</cite></figure>
+        <figure class="q"><blockquote>V práci prosedím spoustu hodin před počítačem a kompenzuji to cvičením v Harmony. Možná právě díky tomu si na rozdíl od kolegů nestěžuji na bolesti zad.</blockquote><cite>Jiří, 31 let</cite></figure>
+        <figure class="q"><blockquote>Po náročném tréninku je naprosto dokonalé zalézt si do vyhřáté sauny. Personál vždy poradí s technikou cvičení i jídelníčkem.</blockquote><cite>Klára, 27 let</cite></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section id="kontakt">
+    <div class="wrap contact">
+      <div>
+        <a class="big" href="tel:+420773994994">773 994 994</a>
+        <a class="mail" href="mailto:info@harmonypisek.cz">info@harmonypisek.cz</a>
+        <address>Harmony Sport &amp; Relax Club<br>Gregorova 2599, 397 01 Písek</address>
+        <div class="actions">
+          <a class="btn" href="https://mapy.cz/?q=Gregorova%202599%20P%C3%ADsek">Navigovat</a>
+          <a class="btn line" href="https://www.facebook.com/Harmony-Wellness-club-P%C3%ADsek-174623809243578/">Facebook</a>
+        </div>
+      </div>
+      <div class="hours">
+        <h3>Otevírací doba klubu</h3>
+        <table id="clubT"></table>
+        <p class="n">Svátek 17. 11. otevřeno 7:00–21:00.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap fcols">
+    <div><h4>Cvičení</h4><ul><li><a href="#cviceni">Posilovna</a></li><li><a href="#lekce">Skupinové lekce</a></li><li><a href="#treneri">Osobní trénink</a></li><li><a href="https://harmonypisek.cz/brazilske-jiu-jitsu/">Brazilské jiu-jitsu</a></li></ul></div>
+    <div><h4>Wellness a děti</h4><ul><li><a href="#wellness">Sauna a bazének</a></li><li><a href="#wellness">Masáže</a></li><li><a href="#wellness">Solárium</a></li><li><a href="https://harmonypisek.cz/deti/">Kroužky pro děti</a></li></ul></div>
+    <div><h4>Klub</h4><ul><li><a href="#novinky">Novinky</a></li><li><a href="#treneri">Trenéři a lektoři</a></li><li><a href="#novinky">Galerie</a></li><li><a href="#novinky">Partneři</a></li></ul></div>
+    <div><h4>Rezervace</h4><ul><li><a href="#rozvrh">Rozvrh</a></li><li><a href="https://harmonypisek.cz/online-rezervace/">Jak rezervovat</a></li><li><a href="https://memberzone.cz/HARMONYpisek/Uvod.aspx">Můj účet</a></li><li><a href="#cenik">Ceník</a></li></ul></div>
+    <div><h4>Kontakt</h4><ul><li><a href="tel:+420773994994">773 994 994</a></li><li><a href="mailto:info@harmonypisek.cz">info@harmonypisek.cz</a></li><li>Gregorova 2599, Písek</li><li><a href="#kontakt">Otevírací doba</a></li></ul></div>
+  </div>
+  <div class="wrap fbot">
+    <span>© 2026 Harmony Sport &amp; Relax Club Písek · Provozovatel IVAN SVATOŠ a.s., IČO 25151673</span>
+    <span><a href="https://harmonypisek.cz/vop/">Obchodní podmínky</a> · <a href="#">Ochrana osobních údajů</a></span>
+  </div>
+</footer>
+<nav class="tabbar" aria-label="Rychlé akce">
+  <a class="main" href="#rozvrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Rozvrh a rezervace</a>
+  <a href="tel:+420773994994"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Zavolat</a>
+  <a href="https://memberzone.cz/HARMONYpisek/Uvod.aspx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Můj účet</a>
+</nav>
+<div class="proto">Prototyp · Tiptop Studio</div>
+
+<script>
+/* ---------- data ---------- */
+const CAT={cardio:["Kardio","c-cardio"],sila:["Síla","c-sila"],mind:["Klid a mobilita","c-mind"],boj:["Jiu-jitsu","c-boj"],deti:["Děti","c-deti"]};
+const VERT=["cardio","sila","mind"];
+// lekce: skupiny (první = hlavní, určuje barvu), náročnost 1–3, popis
+const LES={
+ "Jumping":[["cardio"],2,"Skákání na trampolínách v rytmu hudby. Šetrné ke kloubům."],
+ "Spinning":[["cardio"],2,"Jízda na kole ve skupině, tempo si řídíte sami."],
+ "Fit aerobic":[["cardio"],1,"Taneční aerobik pro dobrou náladu a kondici."],
+ "Fitbox":[["cardio","sila"],3,"Údery a kopy do pytlů, intervalový trénink."],
+ "Problémové partie":[["sila","cardio"],2,"Zpevnění břicha, stehen a hýždí."],
+ "Total Body":[["sila","cardio"],2,"Celé tělo za hodinu: síla i kondice."],
+ "Kruhový trénink":[["sila","cardio"],3,"Stanoviště v open gymu, střídání zátěže a pauz."],
+ "Bodyform":[["sila"],2,"Posilování s vlastní vahou a pomůckami."],
+ "Břicho a hýždě":[["sila"],2,"Cílené posílení středu těla a hýždí."],
+ "Barre":[["sila","mind"],2,"Prvky baletu, pilates a posilování u tyče."],
+ "Pilates":[["mind","sila"],1,"Hluboký stabilizační systém, dech a držení těla."],
+ "Power pilates":[["mind","sila"],2,"Dynamičtější pilates s větší zátěží."],
+ "Ball pilates":[["mind","sila"],1,"Ranní pilates s velkým míčem."],
+ "Power jóga":[["mind","sila"],2,"Dynamická jóga pro sílu i protažení."],
+ "Zdravá záda":[["mind"],1,"Úleva pro záda, mobilita páteře a protažení."],
+ "Zdravé cvičení":[["mind"],1,"Klidné tempo, stabilita a koordinace. Vede rehabilitační lektorka."],
+ "SM systém":[["mind"],1,"Spirální stabilizace páteře podle MUDr. Smíška."]
+};
+const ALIAS={"Kruháč 1":"Kruhový trénink","Kruháč 2":"Kruhový trénink"};
+const tagsOf=s=>s[5]==="boj"||s[5]==="deti"?[s[5]]:(LES[ALIAS[s[2]]||s[2]]||[[s[5]]])[0];
+const ROOMS=["Sál 1","Sál 2","Open gym"];
+// [den 0=Ne, čas, lekce, lektor, sál, kategorie, nové, délka]
+const S=[
+ [1,"8:30","Zdravá záda","Eliška","Sál 1","mind"],
+ [1,"17:00","Problémové partie","Edita","Sál 1","cardio"],
+ [1,"18:00","Pilates","Jana","Sál 1","mind"],
+ [1,"18:10","Kruháč 1","Vítek","Open gym","sila"],
+ [1,"19:10","Kruháč 2","Vítek","Open gym","sila"],
+ [2,"8:00","Total Body","Peťa","Sál 1","sila"],
+ [2,"9:00","Zdravé cvičení","Julie Č.","Sál 2","mind",1],
+ [2,"16:00","Total Body","Míša S.","Sál 1","sila",1],
+ [2,"17:00","Barre","Lucka S.","Sál 1","mind",1],
+ [2,"17:00","Jumping","Míša S.","Sál 2","cardio"],
+ [2,"18:00","Pilates","Klárka","Sál 1","mind"],
+ [2,"18:00","Spinning","Jitka","Sál 2","cardio"],
+ [2,"19:00","Power jóga","Jitka","Sál 1","mind"],
+ [3,"8:00","SM systém","David","Sál 1","mind"],
+ [3,"9:00","Zdravé cvičení","Julie Č.","Sál 2","mind",1],
+ [3,"16:00","Pilates","Eliška","Sál 1","mind"],
+ [3,"17:00","Power pilates","Naty","Sál 1","mind",1],
+ [3,"18:00","Bodyform","Klárka","Sál 1","sila"],
+ [3,"19:00","Bodyform","Klárka","Sál 1","sila"],
+ [4,"8:00","Total Body","Klárka","Sál 1","sila"],
+ [4,"16:00","Zdravá záda","Jana","Sál 1","mind",1],
+ [4,"17:00","Total Body","Edita","Sál 1","sila"],
+ [4,"17:00","Fitbox","Jana","Sál 2","cardio",1],
+ [4,"18:00","Barre","Lucka S.","Sál 1","mind",1],
+ [4,"18:10","Kruháč 1","Vítek","Open gym","sila"],
+ [4,"19:00","Pilates","Hanka","Sál 1","mind"],
+ [4,"19:10","Kruháč 2","Vítek","Open gym","sila",1],
+ [5,"8:00","Ball pilates","Lucka K.","Sál 1","mind"],
+ [5,"14:30","Dětský kroužek","Harmony Academy","Sál 1","deti",0,60],
+ [5,"14:30","BJJ děti","Harmony BJJ","Sál 2","deti",0,60],
+ [5,"15:30","Jiu-jitsu","Harmony BJJ","Sál 2","boj",0,90],
+ [5,"16:00","Zdravé cvičení","Julie Č.","Sál 1","mind",1],
+ [5,"17:00","Total Body","Peťa","Sál 1","sila"],
+ [5,"17:10","Jumping","Barča","Sál 2","cardio",1],
+ [5,"18:00","Total Body","Peťa","Sál 1","sila"],
+ [6,"8:30","Total Body","Peťa","Sál 1","sila"],
+ [0,"17:00","Jumping","Klárka","Sál 2","cardio"],
+ [0,"18:00","Břicho a hýždě","Jana","Sál 1","sila"],
+ [0,"19:00","Fit aerobic","Ája P.","Sál 1","cardio",1]
+];
+const CLUB={1:[["6:15","21:00"]],2:[["6:15","21:00"]],3:[["6:15","21:00"]],4:[["6:15","21:00"]],5:[["6:15","20:00"]],6:[["8:00","13:00"],["16:00","20:00"]],0:[["8:00","21:00"]]};
+const WELL={1:["16:30–20:30",1],2:["jen ženy, na objednání",0],3:["16:30–20:30",1],4:["na objednání",0],5:["na objednání",0],6:["zavřeno",0],0:["16:30–20:30",1]};
+const DN=["Neděle","Pondělí","Úterý","Středa","Čtvrtek","Pátek","Sobota"];
+const DS=["Ne","Po","Út","St","Čt","Pá","So"];
+const ORDER=[1,2,3,4,5,6,0];
+const PRICES={
+ adult:{once:[["Posilovna, 2 hodiny","199 Kč"],["Skupinová lekce","199 Kč"],["Wellness, 2 hodiny","210 Kč"],["Celý den bez wellness","390 Kč"]],
+   perm:[["Lekce, 8 + 2 zdarma","1 800 Kč"],["Posilovna, 9 + 1 zdarma","1 600 Kč"],["Wellness","2 000 Kč"]],
+   mem:[["Fit","1690","posilovna, open gym, lekce"],["All-in","2190","vše + wellness"]],
+   half:"Na půl roku bez wellness jen <b>1&nbsp;390&nbsp;Kč měsíčně</b> (8&nbsp;340&nbsp;Kč najednou)."},
+ student:{once:[["Posilovna, 2 hodiny","199 Kč"],["Skupinová lekce","199 Kč"],["Wellness, 2 hodiny","210 Kč"],["Celý den bez wellness","290 Kč"]],
+   perm:[["Posilovna nebo lekce, 7 + 3 zdarma","1 400 Kč"],["Wellness","2 000 Kč"]],
+   mem:[["Fit","1390","posilovna, open gym, lekce"],["All-in","1890","vše + wellness"]],
+   half:"Na půl roku bez wellness jen <b>990&nbsp;Kč měsíčně</b> (5&nbsp;940&nbsp;Kč najednou)."}
+};
+const TRAINERS=[
+ ["Kačka Králová","Fitness, TRX, cvičení po porodu",""],
+ ["Martina Salátová","Trénink a výživa",""],
+ ["Míša Segečová","Jumping, Total Body",""],
+ ["Vojtěch Šanda","Kondiční příprava, výživa",""],
+ ["Jirka Hladík","Kickbox a box",""]
+];
+
+
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const m=t=>{const[h,mi]=t.split(":").map(Number);return h*60+mi};
+const hm=x=>`${Math.floor(x/60)}:${String(x%60).padStart(2,"0")}`;
+const now=new Date(),today=now.getDay(),nowM=now.getHours()*60+now.getMinutes();
+const dur=s=>s[7]||55;
+const RES="https://memberzone.cz/HARMONYpisek/Uvod.aspx";
+
+/* ---------- výška hlavičky pro kotvy ---------- */
+const setHdr=()=>document.documentElement.style.setProperty("--hdr",($("#hdr").offsetHeight+16)+"px");
+setHdr();addEventListener("resize",setHdr);
+
+/* ---------- mobilní menu: podmenu jako akordeon ---------- */
+document.querySelectorAll("#menu > li.has > a").forEach(a=>a.addEventListener("click",e=>{
+  if(innerWidth>1080)return;e.preventDefault();const li=a.parentElement;
+  document.querySelectorAll("#menu > li.open").forEach(x=>{if(x!==li)x.classList.remove("open")});li.classList.toggle("open")}));
+
+/* ---------- header ---------- */
+const hdr=$("#hdr");const onScroll=()=>hdr.classList.toggle("solid",scrollY>window.innerHeight*.75);addEventListener("scroll",onScroll,{passive:true});onScroll();
+$(".menu-btn").onclick=e=>{const o=$("#menu").classList.toggle("open");e.target.setAttribute("aria-expanded",o);hdr.classList.add("solid")};
+document.querySelectorAll("#menu .drop a, #menu > li:not(.has) > a").forEach(a=>a.addEventListener("click",()=>$("#menu").classList.remove("open")));
+
+/* ---------- alert ---------- */
+// ukázka: záskok a zrušená lekce se propíší i do panelu Dnes a do rozvrhu
+(()=>{const d=now,day=S.filter(s=>s[0]===today).sort((a,b)=>m(a[1])-m(b[1]));
+ const dt=`${["ne","po","út","st","čt","pá","so"][d.getDay()]} ${d.getDate()}. ${d.getMonth()+1}.`;
+ let txt=`Dnes ${dt}: wellness je otevřené jen do 19:00.`;
+ if(day.length>=2){const up=day.find(s=>m(s[1])>nowM)||day[0],last=day[day.length-1];
+   const sub=up[3]==="Lucka K."?"Jana":"Lucka K.";txt=`Dnes ${dt}: ${up[2]} v ${up[1]} místo ${up[3]} vede ${sub}`+(sub.endsWith(".")?"":".");up[3]=sub;
+   if(last!==up){txt+=` ${last[2]} v ${last[1]} se ruší.`;S.splice(S.indexOf(last),1)}}
+ $("#alertText").textContent=txt;
+ $("#alertClose").onclick=()=>{$("#alert").remove();document.body.classList.remove("has-alert");setHdr()}})();
+
+/* ---------- hero: dnes ---------- */
+(()=>{
+  const r=CLUB[today],cur=r.find(([a,b])=>nowM>=m(a)&&nowM<m(b)),nx=r.find(([a])=>nowM<m(a));
+  $("#statusText").textContent=cur?`Otevřeno do ${cur[1]}`:nx?`Zavřeno, otevíráme v ${nx[0]}`:`Zavřeno, zítra od ${CLUB[(today+1)%7][0][0]}`;
+  if(!cur)$("#dot").classList.add("off");
+  $("#todayHours").textContent=`${DN[today]} ${r.map(x=>x.join("–")).join(" a ")}, wellness ${WELL[today][0]}`;
+  let l=S.filter(s=>s[0]===today&&m(s[1])>nowM).sort((a,b)=>m(a[1])-m(b[1])),t="Další lekce dnes";
+  if(!l.length){const d=(today+1)%7;l=S.filter(s=>s[0]===d).sort((a,b)=>m(a[1])-m(b[1]));t=`Zítra, ${DN[d].toLowerCase()}`}
+  $("#nextTitle").textContent=t;
+  $("#upcoming").innerHTML=l.slice(0,3).map(s=>`<li><span class="t">${s[1]}</span><span class="n">${s[2]}</span><span class="l">${s[3]}, ${s[4].toLowerCase()}</span></li>`).join("");
+})();
+
+/* ---------- rozvrh ---------- */
+let selDay=today,selCat=null,selWho=null;
+const START=7*60+30,END=21*60,SPAN=END-START;
+function renderDays(){
+  const mon=new Date(now);mon.setDate(now.getDate()-((today+6)%7));
+  $("#days").innerHTML=ORDER.map((d,i)=>{const dt=new Date(mon);dt.setDate(mon.getDate()+i);
+    return `<button role="tab" aria-selected="${d===selDay}" data-d="${d}"><b>${DS[d]}</b><span>${dt.getDate()}. ${dt.getMonth()+1}.</span></button>`}).join("");
+  $("#days").querySelectorAll("button").forEach(b=>b.onclick=()=>{selDay=+b.dataset.d;renderDays();renderSched()});
+}
+function renderFilters(){
+  $("#filters").innerHTML=Object.entries(CAT).map(([k,[l,c]])=>`<button class="${c}" aria-pressed="${selCat===k}" data-c="${k}"><span class="sw"></span>${l}</button>`).join("")
+   +(selWho?`<button aria-pressed="true" data-w>${selWho} ✕</button>`:"");
+  $("#filters").querySelectorAll("[data-c]").forEach(b=>b.onclick=()=>{selCat=selCat===b.dataset.c?null:b.dataset.c;renderFilters();renderSched()});
+  const w=$("#filters [data-w]");if(w)w.onclick=()=>{selWho=null;renderFilters();renderSched()};
+}
+const match=s=>(!selCat||tagsOf(s).includes(selCat))&&(!selWho||s[3]===selWho);
+function renderSched(){
+  const day=S.filter(s=>s[0]===selDay).sort((a,b)=>m(a[1])-m(b[1]));
+  const isPast=s=>selDay===today&&m(s[1])+dur(s)<=nowM;
+  // board
+  // časová osa se zkrácenými pauzami (úseky bez lekcí > 60 min)
+  let segs=[],cur=null;day.forEach(s=>{const a=m(s[1]),e=a+dur(s);if(cur&&a-cur[1]<=60)cur[1]=Math.max(cur[1],e);else{cur=[Math.floor(a/60)*60,e];segs.push(cur)}});
+  const GAP=28,total=segs.reduce((t,g)=>t+g[1]-g[0],0)+GAP*Math.max(segs.length-1,0)||1;
+  const map=[];let x=0;segs.forEach((g,i)=>{if(i)x+=GAP;map.push([g[0],g[1],x]);x+=g[1]-g[0]});
+  const X=t=>{const g=map.find(g=>t>=g[0]&&t<=g[1]);return g?(g[2]+t-g[0])/total*100:null};
+  const inner=p=>`calc(112px + (100% - 134px) * ${p/100})`;
+  let h=`<div class="axis">`;map.forEach(([a,b,xx])=>{for(let t=Math.ceil(a/60)*60;t<=b;t+=60)h+=`<span style="left:${(xx+t-a)/total*100}%">${t/60}:00</span>`});h+=`</div><div class="grid-lines">`;
+  map.forEach(([a,b,xx])=>{for(let t=Math.ceil(a/60)*60;t<=b;t+=60)h+=`<i style="left:${(xx+t-a)/total*100}%"></i>`});h+=`</div>`;
+  h+=map.slice(1).map((g,i)=>{const l=(map[i][2]+map[i][1]-map[i][0])/total*100;return `<div class="pgap" style="left:calc(${inner(l)} + 3px);width:calc((100% - 134px) * ${GAP/total} - 6px)">pauza</div>`}).join("");
+  ROOMS.forEach(r=>{h+=`<div class="lane" data-room="${r}">`;
+    day.filter(s=>s[4]===r).forEach(s=>{const a=m(s[1]),d=dur(s);
+      const tg=tagsOf(s);
+      h+=`<a class="block ${CAT[tg[0]][1]} ${isPast(s)?"past":""} ${match(s)?"":"dim"}" href="${RES}" style="left:${X(a)}%;width:calc(${d/total*100}% - 4px)" title="${s[2]}, ${s[1]}–${hm(a+d)}, ${s[3]} · ${tg.map(t=>CAT[t][0]).join(" + ")}">
+        <span class="bt">${s[1]}</span><span class="bn">${s[2]}</span><span class="bl">${s[3]}</span></a>`});
+    h+=`</div>`});
+  if(!day.length)h+=`<p class="empty">Tento den nejsou žádné lekce. Posilovna a open gym jsou otevřené podle provozní doby.</p>`;
+  const nx=selDay===today?X(nowM):null;
+  if(nx!==null)h+=`<div class="nowline" style="left:${inner(nx)}" data-t="${hm(nowM)}"></div>`;
+  $("#board").innerHTML=h;
+  // list (mobil)
+  const l=day.filter(match);
+  $("#list").innerHTML=l.length?l.map(s=>`<li class="${isPast(s)?"past":""}"><span class="t">${s[1]}</span><span class="n ${CAT[tagsOf(s)[0]][1]}"><span class="sw"></span>${s[2]}${s[6]?' <small style="font-size:11px;font-weight:700;background:#fff;color:var(--forest);padding:1px 7px;border-radius:99px">nové</small>':""}</span><span class="w">${s[3]}, ${s[4].toLowerCase()}</span>${isPast(s)?"":`<a class="btn sm" href="${RES}">Rezervovat</a>`}</li>`).join("")
+    :`<li class="empty" style="display:block">Žádná lekce z výběru. Zkuste jiný den nebo zrušte filtr.</li>`;
+}
+renderDays();renderFilters();renderSched();
+
+/* ---------- ceník ---------- */
+function renderPrices(w){const p=PRICES[w],dl=a=>a.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("");
+  $("#once").innerHTML=dl(p.once);$("#perm").innerHTML=dl(p.perm);
+  $("#member").innerHTML=p.mem.map(([k,v,x])=>`<div><div class="k">${k}<span>${x}</span></div><div class="p">${v}<small>Kč</small></div></div>`).join("");
+  $("#half").innerHTML=p.half}
+document.querySelectorAll(".toggle button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".toggle button").forEach(x=>x.setAttribute("aria-pressed",x===b));renderPrices(b.dataset.who)});
+renderPrices("adult");
+
+/* ---------- wellness týden ---------- */
+$("#wtimes").innerHTML=ORDER.map(d=>`<div class="wd ${WELL[d][1]?"open":""} ${d===today?"today":""}"><b>${DN[d]}</b><span>${WELL[d][0]}</span></div>`).join("");
+
+/* ---------- lekce (vertikály jako filtr) ---------- */
+let selV="";
+const DSH=["Ne","Po","Út","St","Čt","Pá","So"];
+function when(n){const t=S.filter(s=>(ALIAS[s[2]]||s[2])===n).sort((a,b)=>((a[0]+6)%7)-((b[0]+6)%7)||m(a[1])-m(b[1]));
+  const u=[...new Set(t.map(s=>DSH[s[0]]+" "+s[1]))];return u.slice(0,3).join(", ")+(u.length>3?" …":"")}
+function lect(n){return [...new Set(S.filter(s=>(ALIAS[s[2]]||s[2])===n).map(s=>s[3]))].join(", ")}
+function renderLessons(){
+  const cnt=v=>Object.values(LES).filter(l=>!v||l[0].includes(v)).length;
+  $("#vchips").innerHTML=[["","Všechny lekce"],...VERT.map(v=>[v,CAT[v][0]])].map(([v,l])=>`<button aria-pressed="${selV===v}" data-v="${v}" class="${v?CAT[v][1]:""}">${v?'<span class="sw"></span>':""}${l} <span class="n">${cnt(v)}</span></button>`).join("");
+  $("#vchips").querySelectorAll("button").forEach(b=>b.onclick=()=>setV(b.dataset.v));
+  const order=Object.entries(LES).sort((a,b)=>VERT.indexOf(a[1][0][0])-VERT.indexOf(b[1][0][0]));
+  $("#lgrid").innerHTML=order.map(([n,[tg,lv,d]])=>`<a class="lc ${CAT[tg[0]][1]} ${selV&&!tg.includes(selV)?"hide":""}" href="#rozvrh" data-n="${n}">
+    <div class="tags">${tg.map((t,i)=>`<span class="tag ${i?"":"main"} ${CAT[t][1]}"><span class="sw"></span>${CAT[t][0]}</span>`).join("")}</div>
+    <h4>${n}</h4><p>${d}</p>
+    <div class="meta"><span>${when(n)||"termín upřesníme"}</span><span class="lvl" title="Náročnost ${lv} ze 3">${[1,2,3].map(i=>`<i class="${i<=lv?"on":""}"></i>`).join("")}</span></div></a>`).join("");
+}
+function setV(v){selV=v;renderLessons();selCat=v||null;renderFilters();renderSched()}
+renderLessons();
+document.querySelectorAll(".mega [data-v]").forEach(a=>a.addEventListener("click",()=>setV(a.dataset.v)));
+
+/* ---------- trenéři ---------- */
+$("#trainers").innerHTML=TRAINERS.map(([n,d,img])=>`<article class="tr" ${img?`style="background-image:url('${img}')"`:""}>${img?"":`<span class="ini">${n.split(" ").map(x=>x[0]).join("")}</span>`}<h3>${n}</h3><p>${d}</p></article>`).join("");
+
+/* ---------- kontakt ---------- */
+$("#clubT").innerHTML=ORDER.map(d=>`<tr class="${d===today?"now":""}"><td>${DN[d]}</td><td>${CLUB[d].map(r=>r.join("–")).join(", ")}</td></tr>`).join("");
+</script>
+</body>
+</html>
