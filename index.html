@@ -49,6 +49,30 @@ a{color:inherit}
 body.has-alert .hero .wrap{padding-top:182px}
 @media (max-width:700px){.alert .wrap{font-size:13px;gap:10px}.alert a{display:none}}
 
+/* ---------------- header extras ---------------- */
+.login{text-decoration:none;font-weight:600;font-size:15px;opacity:.85}
+.login:hover{opacity:1}
+.sauna-cta{display:flex;flex-direction:column;gap:8px;max-width:300px}
+.sauna-cta small{font-size:13px;line-height:1.4;opacity:.85}
+.sauna-cta small a{color:inherit;font-weight:700}
+.tabbar{display:none}
+@media (max-width:1080px){
+  .login{display:none}
+  .nav>.btn{display:none}
+  .nav>ul>li .drop{display:none}
+  .nav>ul>li.open .drop{display:block}
+  .nav>ul>li.has>a{display:flex!important;justify-content:space-between;align-items:center}
+  .nav>ul>li.has>a::before{display:block!important;position:static!important;flex:none;width:9px;height:9px;transform:rotate(45deg)!important;order:2;margin-right:4px}
+  .nav>ul>li.has.open>a::before{transform:rotate(225deg)!important}
+  .nav>ul>li>a::after{display:none}
+  .tabbar{display:grid;grid-template-columns:repeat(3,1fr);position:fixed;left:0;right:0;bottom:0;z-index:55;background:var(--paper);box-shadow:0 -1px 0 var(--line),0 -10px 30px rgba(11,51,40,.08);padding:8px 10px calc(8px + env(safe-area-inset-bottom))}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:2px;text-decoration:none;font-size:12px;font-weight:700;padding:6px 0;border-radius:12px}
+  .tabbar a svg{width:22px;height:22px}
+  .tabbar a.main{background:var(--lime);color:var(--forest)}
+  body{padding-bottom:74px}
+  .proto{bottom:86px!important}
+}
+
 /* ---------------- header ---------------- */
 header{position:fixed;inset:0 0 auto;z-index:50;color:#fff;transition:background .3s,color .3s,box-shadow .3s}
 header.solid{background:rgba(247,249,245,.94);backdrop-filter:blur(12px);color:var(--ink);box-shadow:0 1px 0 var(--line)}
@@ -136,7 +160,8 @@ header.solid .logo img{filter:none}
 }
 
 /* ---------------- sections ---------------- */
-section{padding:130px 0;scroll-margin-top:60px}
+section{padding:130px 0}
+html{scroll-padding-top:var(--hdr,130px)}
 .head{display:grid;grid-template-columns:1fr auto;align-items:end;gap:24px;margin-bottom:56px}
 .head h2{font-size:clamp(56px,8.5vw,128px)}
 .head p{max-width:360px;color:var(--muted);font-size:17px}
@@ -473,7 +498,8 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
       <li><a href="#kontakt">Kontakt</a></li>
     </ul>
     <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
-    <a class="btn sm" href="https://memberzone.cz/HARMONYpisek/Uvod.aspx">Rezervovat</a>
+    <a class="login" href="https://memberzone.cz/HARMONYpisek/Uvod.aspx">Přihlásit</a>
+    <a class="btn sm" href="#rozvrh">Rezervovat</a>
   </div>
 </header>
 
@@ -495,7 +521,7 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
         <div class="hrs" id="todayHours"></div>
         <h2 id="nextTitle">Další lekce dnes</h2>
         <ul class="upcoming" id="upcoming"></ul>
-        <a class="btn" href="https://harmonypisek.cz/online-rezervace/">Rezervovat lekci</a>
+        <a class="btn" href="#rozvrh">Celý rozvrh</a>
       </aside>
     </div>
     <div class="ribbon">
@@ -617,7 +643,7 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
           <p class="sub">Členství, neomezený vstup na 30 dní.</p>
           <div class="mem" id="member"></div>
           <div class="half" id="half"></div>
-          <a class="btn" href="https://harmonypisek.cz/online-rezervace/">Koupit členství</a>
+          <a class="btn" href="https://memberzone.cz/HARMONYpisek/Uvod.aspx">Koupit členství</a>
         </div>
       </div>
       <p class="fine">Permanentky a členství jsou nepřenosné a nelze je přerušit ani prodloužit. MultiSport doplatek do wellness 75 Kč. K zapůjčení ručník 20 Kč, prostěradlo 35 Kč, zámek za vratnou zálohu 50 Kč.</p>
@@ -639,7 +665,7 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
       <div class="wtimes" id="wtimes"></div>
       <div class="wfoot">
         <p>Ve dny „na objednání“ vám saunu rádi zatopíme. Stačí si ji zarezervovat online nebo zavolat na recepci. Dále u nás najdete <b>masáže</b> (sportovní, relaxační, lávové kameny) a <b>solárium</b>.</p>
-        <a class="btn dark" href="https://harmonypisek.cz/online-rezervace/">Objednat saunu</a>
+        <div class="sauna-cta"><a class="btn dark" href="https://memberzone.cz/HARMONYpisek/Uvod.aspx">Objednat saunu online</a><small>V rezervacích zvolte <b>Wellness</b> a čas. Nebo zavolejte na recepci <a href="tel:+420773994994">773 994 994</a>.</small></div>
       </div>
     </div>
   </section>
@@ -698,6 +724,11 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
     <span><a href="https://harmonypisek.cz/vop/">Obchodní podmínky</a> · <a href="#">Ochrana osobních údajů</a></span>
   </div>
 </footer>
+<nav class="tabbar" aria-label="Rychlé akce">
+  <a class="main" href="#rozvrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Rozvrh a rezervace</a>
+  <a href="tel:+420773994994"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Zavolat</a>
+  <a href="https://memberzone.cz/HARMONYpisek/Uvod.aspx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Můj účet</a>
+</nav>
 <div class="proto">Prototyp · Tiptop Studio</div>
 
 <script>
@@ -800,12 +831,21 @@ const m=t=>{const[h,mi]=t.split(":").map(Number);return h*60+mi};
 const hm=x=>`${Math.floor(x/60)}:${String(x%60).padStart(2,"0")}`;
 const now=new Date(),today=now.getDay(),nowM=now.getHours()*60+now.getMinutes();
 const dur=s=>s[7]||55;
-const RES="https://harmonypisek.cz/online-rezervace/";
+const RES="https://memberzone.cz/HARMONYpisek/Uvod.aspx";
+
+/* ---------- výška hlavičky pro kotvy ---------- */
+const setHdr=()=>document.documentElement.style.setProperty("--hdr",($("#hdr").offsetHeight+16)+"px");
+setHdr();addEventListener("resize",setHdr);
+
+/* ---------- mobilní menu: podmenu jako akordeon ---------- */
+document.querySelectorAll("#menu > li.has > a").forEach(a=>a.addEventListener("click",e=>{
+  if(innerWidth>1080)return;e.preventDefault();const li=a.parentElement;
+  document.querySelectorAll("#menu > li.open").forEach(x=>{if(x!==li)x.classList.remove("open")});li.classList.toggle("open")}));
 
 /* ---------- header ---------- */
 const hdr=$("#hdr");const onScroll=()=>hdr.classList.toggle("solid",scrollY>window.innerHeight*.75);addEventListener("scroll",onScroll,{passive:true});onScroll();
 $(".menu-btn").onclick=e=>{const o=$("#menu").classList.toggle("open");e.target.setAttribute("aria-expanded",o);hdr.classList.add("solid")};
-$("#menu").querySelectorAll("a").forEach(a=>a.onclick=()=>$("#menu").classList.remove("open"));
+document.querySelectorAll("#menu .drop a, #menu > li:not(.has) > a").forEach(a=>a.addEventListener("click",()=>$("#menu").classList.remove("open")));
 
 /* ---------- alert ---------- */
 // ukázka: záskok a zrušená lekce se propíší i do panelu Dnes a do rozvrhu
@@ -816,7 +856,7 @@ $("#menu").querySelectorAll("a").forEach(a=>a.onclick=()=>$("#menu").classList.r
    const sub=up[3]==="Lucka K."?"Jana":"Lucka K.";txt=`Dnes ${dt}: ${up[2]} v ${up[1]} místo ${up[3]} vede ${sub}`+(sub.endsWith(".")?"":".");up[3]=sub;
    if(last!==up){txt+=` ${last[2]} v ${last[1]} se ruší.`;S.splice(S.indexOf(last),1)}}
  $("#alertText").textContent=txt;
- $("#alertClose").onclick=()=>{$("#alert").remove();document.body.classList.remove("has-alert")}})();
+ $("#alertClose").onclick=()=>{$("#alert").remove();document.body.classList.remove("has-alert");setHdr()}})();
 
 /* ---------- hero: dnes ---------- */
 (()=>{
