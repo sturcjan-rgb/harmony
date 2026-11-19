@@ -284,12 +284,11 @@ a.it:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 1
 .filters button[aria-pressed="true"]{background:#fff;color:var(--forest);box-shadow:none}
 .sw{width:9px;height:9px;border-radius:3px;background:var(--c)}
 .c-mind{--c:#F2C744}.c-cardio{--c:#B48CF2}.c-sila{--c:#FF6B57}.c-boj{--c:#6FA0FF}.c-deti{--c:#7FD69A}
-.block .sec{position:absolute;right:8px;bottom:8px;display:flex;gap:3px}
-.block .sec i{width:9px;height:9px;border-radius:3px;background:var(--c);box-shadow:0 0 0 1.5px rgba(16,26,22,.55)}
 
 .board{position:relative;background:rgba(255,255,255,.04);border-radius:22px;padding:18px 22px 22px 112px;overflow:hidden}
 .axis{position:relative;height:26px;margin-bottom:6px}
 .axis span{position:absolute;transform:translateX(-50%);font-size:12px;opacity:.5;font-variant-numeric:tabular-nums}
+.pgap{position:absolute;top:44px;bottom:22px;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;font-size:11px;opacity:.45;background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 6px,transparent 6px 12px);border-radius:8px;pointer-events:none}
 .grid-lines{position:absolute;top:44px;bottom:22px;left:112px;right:22px;pointer-events:none}
 .grid-lines i{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.07)}
 .lane{position:relative;height:96px;margin-bottom:8px}
@@ -297,9 +296,8 @@ a.it:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 1
 .block{position:absolute;top:0;bottom:0;border-radius:12px;padding:10px 11px;background:var(--c);color:var(--ink);text-decoration:none;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;transition:transform .2s var(--ease),box-shadow .2s;min-width:0}
 .block:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(0,0,0,.35);z-index:3}
 .block .bt{font-size:12px;font-weight:700;opacity:.75;font-variant-numeric:tabular-nums}
-.block .bn{font-variation-settings:"wdth" 75;font-weight:800;font-size:15px;line-height:1.05}
+.block .bn{font-variation-settings:"wdth" 75;font-weight:800;font-size:16px;line-height:1.05}
 .block .bl{font-size:12px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.block.new::after{content:"";position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 3px rgba(255,255,255,.45)}
 .block.past{opacity:.28;filter:saturate(.3)}
 .block.dim{opacity:.12}
 .nowline{position:absolute;top:36px;bottom:14px;width:2px;background:#fff;z-index:4;pointer-events:none}
@@ -611,7 +609,7 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
       </div>
       <div class="board" id="board"></div>
       <ul class="list" id="list"></ul>
-      <p class="note">Barva bloku = hlavní skupina lekce, malý čtvereček vpravo dole = vedlejší skupina. Kulatá tečka označuje novou lekci. Na lekci přijďte aspoň 5 minut předem, jinak rezervace propadá. Plná lekce? Zapište se jako náhradník, při uvolnění místa vám přijde e-mail.</p>
+      <p class="note">Barva bloku = skupina lekce. Hodiny bez lekcí jsou zkrácené do proužku „pauza“. Na lekci přijďte aspoň 5 minut předem, jinak rezervace propadá. Plná lekce? Zapište se jako náhradník, při uvolnění místa vám přijde e-mail.</p>
     </div>
   </section>
 
@@ -890,16 +888,24 @@ function renderSched(){
   const day=S.filter(s=>s[0]===selDay).sort((a,b)=>m(a[1])-m(b[1]));
   const isPast=s=>selDay===today&&m(s[1])+dur(s)<=nowM;
   // board
-  let h=`<div class="axis">`;for(let t=8*60;t<=END;t+=60)h+=`<span style="left:${(t-START)/SPAN*100}%">${t/60}:00</span>`;h+=`</div><div class="grid-lines">`;
-  for(let t=8*60;t<=END;t+=60)h+=`<i style="left:${(t-START)/SPAN*100}%"></i>`;h+=`</div>`;
+  // časová osa se zkrácenými pauzami (úseky bez lekcí > 60 min)
+  let segs=[],cur=null;day.forEach(s=>{const a=m(s[1]),e=a+dur(s);if(cur&&a-cur[1]<=60)cur[1]=Math.max(cur[1],e);else{cur=[Math.floor(a/60)*60,e];segs.push(cur)}});
+  const GAP=28,total=segs.reduce((t,g)=>t+g[1]-g[0],0)+GAP*Math.max(segs.length-1,0)||1;
+  const map=[];let x=0;segs.forEach((g,i)=>{if(i)x+=GAP;map.push([g[0],g[1],x]);x+=g[1]-g[0]});
+  const X=t=>{const g=map.find(g=>t>=g[0]&&t<=g[1]);return g?(g[2]+t-g[0])/total*100:null};
+  const inner=p=>`calc(112px + (100% - 134px) * ${p/100})`;
+  let h=`<div class="axis">`;map.forEach(([a,b,xx])=>{for(let t=Math.ceil(a/60)*60;t<=b;t+=60)h+=`<span style="left:${(xx+t-a)/total*100}%">${t/60}:00</span>`});h+=`</div><div class="grid-lines">`;
+  map.forEach(([a,b,xx])=>{for(let t=Math.ceil(a/60)*60;t<=b;t+=60)h+=`<i style="left:${(xx+t-a)/total*100}%"></i>`});h+=`</div>`;
+  h+=map.slice(1).map((g,i)=>{const l=(map[i][2]+map[i][1]-map[i][0])/total*100;return `<div class="pgap" style="left:calc(${inner(l)} + 3px);width:calc((100% - 134px) * ${GAP/total} - 6px)">pauza</div>`}).join("");
   ROOMS.forEach(r=>{h+=`<div class="lane" data-room="${r}">`;
     day.filter(s=>s[4]===r).forEach(s=>{const a=m(s[1]),d=dur(s);
       const tg=tagsOf(s);
-      h+=`<a class="block ${CAT[tg[0]][1]} ${s[6]?"new":""} ${isPast(s)?"past":""} ${match(s)?"":"dim"}" href="${RES}" style="left:${(a-START)/SPAN*100}%;width:calc(${d/SPAN*100}% - 4px)" title="${s[2]}, ${s[1]}–${hm(a+d)}, ${s[3]} · ${tg.map(t=>CAT[t][0]).join(" + ")}">
-        <span class="bt">${s[1]}</span><span class="bn">${s[2]}</span><span class="bl">${s[3]}</span>${tg.length>1?`<span class="sec">${tg.slice(1).map(t=>`<i class="${CAT[t][1]}"></i>`).join("")}</span>`:""}</a>`});
+      h+=`<a class="block ${CAT[tg[0]][1]} ${isPast(s)?"past":""} ${match(s)?"":"dim"}" href="${RES}" style="left:${X(a)}%;width:calc(${d/total*100}% - 4px)" title="${s[2]}, ${s[1]}–${hm(a+d)}, ${s[3]} · ${tg.map(t=>CAT[t][0]).join(" + ")}">
+        <span class="bt">${s[1]}</span><span class="bn">${s[2]}</span><span class="bl">${s[3]}</span></a>`});
     h+=`</div>`});
   if(!day.length)h+=`<p class="empty">Tento den nejsou žádné lekce. Posilovna a open gym jsou otevřené podle provozní doby.</p>`;
-  if(selDay===today&&nowM>START&&nowM<END)h+=`<div class="nowline" style="left:calc(112px + (100% - 134px) * ${(nowM-START)/SPAN})" data-t="${hm(nowM)}"></div>`;
+  const nx=selDay===today?X(nowM):null;
+  if(nx!==null)h+=`<div class="nowline" style="left:${inner(nx)}" data-t="${hm(nowM)}"></div>`;
   $("#board").innerHTML=h;
   // list (mobil)
   const l=day.filter(match);
