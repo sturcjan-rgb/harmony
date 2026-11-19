@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rozvrh – varianty B a C</title>
+<title>Rozvrh – varianty A, B a C</title>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
 <style>
 :root{--forest:#0B3328;--ink:#101A16;--lime:#C2EB3C;--paper:#F7F9F5;--line:rgba(255,255,255,.1)}
@@ -26,6 +26,14 @@ section+section{border-top:1px solid var(--line)}
 .blk .w{font-size:12px;opacity:.75}
 .sec{display:flex;gap:3px;margin-top:auto}.sec i{width:9px;height:9px;border-radius:3px;background:var(--c);box-shadow:0 0 0 1.5px rgba(16,26,22,.5)}
 .dim{opacity:.12}
+/* A */
+.ha{position:relative;background:rgba(255,255,255,.04);border-radius:20px;padding:14px 18px 18px 100px}
+.hax{position:relative;height:24px;margin-bottom:6px}
+.hax span{position:absolute;transform:translateX(-50%);font-size:12px;opacity:.5;white-space:nowrap}
+.hlane{position:relative;height:96px;margin-bottom:8px}
+.hlane::before{content:attr(data-room);position:absolute;right:calc(100% + 16px);top:50%;transform:translateY(-50%);font-size:14px;font-weight:600;opacity:.6;white-space:nowrap}
+.hlane .blk{top:0;bottom:0}
+.hgap{position:absolute;top:30px;bottom:12px;display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;font-size:11px;opacity:.5;background:repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 6px,transparent 6px 12px);border-radius:8px}
 /* B */
 .vb{display:grid;grid-template-columns:56px repeat(3,1fr);gap:8px;background:rgba(255,255,255,.04);border-radius:20px;padding:16px}
 .vb .hd{font-weight:700;font-size:14px;opacity:.7;padding:4px 6px 10px}
@@ -52,6 +60,13 @@ section+section{border-top:1px solid var(--line)}
 .pro b{display:block;color:var(--lime);margin-bottom:4px}
 @media(max-width:900px){.wk{grid-template-columns:1fr}.pro{grid-template-columns:1fr}}
 </style></head><body>
+<section><div class="wrap">
+  <span class="lbl">Varianta A</span>
+  <h1>Současná tabule, zkrácené pauzy<small>Sály v řádcích, čas vodorovně. Úseky bez lekcí se smrsknou do úzkého pruhu.</small></h1>
+  <div class="bar"><div class="days" id="aDays"></div><div class="filters" id="aF"></div></div>
+  <div class="ha" id="ha"></div>
+  <div class="pro"><div><b>Plus</b>Nejmenší zásah do prototypu. Bloky jsou zhruba 2× širší a názvy se vejdou. Sály i souběh zůstávají vidět.</div><div><b>Mínus</b>Osa není časově rovnoměrná (pauza 10–16 h zabírá stejně jako půlhodina). Pořád jen jeden den najednou. Kdyby přibyly dopolední lekce, bloky se zase zúží.</div></div>
+</div></section>
 <section><div class="wrap">
   <span class="lbl">Varianta B</span>
   <h1>Den svisle, sály vedle sebe<small>Čas běží dolů, prázdné úseky jsou zkrácené. Názvy mají celou šířku sloupce.</small></h1>
@@ -139,6 +154,27 @@ let bDay=today,bCat=null,cCat=null;
 function filters(el,get,set,after){el.innerHTML=Object.entries(CAT).map(([k,[l,c]])=>`<button class="${c}" data-c="${k}" aria-pressed="${get()===k}"><span class="sw"></span>${l}</button>`).join("");
  el.querySelectorAll("button").forEach(b=>b.onclick=()=>{set(get()===b.dataset.c?null:b.dataset.c);filters(el,get,set,after);after()})}
 const sec=tg=>tg.length>1?`<span class="sec">${tg.slice(1).map(t=>`<i class="${CAT[t][1]}"></i>`).join("")}</span>`:"";
+/* A */
+let aDay=today,aCat=null;
+function segments(day,maxGap){let segs=[],cur=null;day.forEach(s=>{const a=m(s[1]),e=a+dur(s);if(cur&&a-cur[1]<=maxGap)cur[1]=Math.max(cur[1],e);else{cur=[a,e];segs.push(cur)}});return segs}
+function renderA(){
+ document.getElementById("aDays").innerHTML=ORDER.map(d=>`<button data-d="${d}" aria-selected="${d===aDay}">${DS[d]}</button>`).join("");
+ document.querySelectorAll("#aDays button").forEach(b=>b.onclick=()=>{aDay=+b.dataset.d;renderA()});
+ const day=S.filter(s=>s[0]===aDay).sort((a,b)=>m(a[1])-m(b[1]));
+ const el=document.getElementById("ha");
+ if(!day.length){el.innerHTML='<p style="opacity:.6;padding:20px 0">Tento den nejsou lekce.</p>';return}
+ const segs=segments(day,60).map(g=>[Math.floor(g[0]/60)*60,g[1]]);
+ const GAP=28;const total=segs.reduce((t,g)=>t+g[1]-g[0],0)+GAP*(segs.length-1);
+ const map=[];let x=0;segs.forEach((g,i)=>{if(i)x+=GAP;map.push([g[0],g[1],x]);x+=g[1]-g[0]});
+ const X=t=>{const g=map.find(g=>t>=g[0]&&t<=g[1]);return (g[2]+t-g[0])/total*100};
+ let html='<div class="hax">';map.forEach(([a,b,xx])=>{for(let t=Math.ceil(a/60)*60;t<=b;t+=60)html+=`<span style="left:${(xx+t-a)/total*100}%">${t/60}:00</span>`});html+='</div>';
+ html+=map.slice(1).map((g,i)=>{const l=(map[i][2]+map[i][1]-map[i][0])/total*100;return `<div class="hgap" style="left:calc(100px + (100% - 118px)*${l/100} + 3px);width:calc((100% - 118px)*${GAP/total} - 6px)">pauza</div>`}).join("");
+ ROOMS.forEach(r=>{html+=`<div class="hlane" data-room="${r}">`+day.filter(s=>s[4]===r).map(s=>{const tg=tagsOf(s),a=m(s[1]),e=a+dur(s);
+   return `<a class="blk ${CAT[tg[0]][1]} ${aCat&&!tg.includes(aCat)?"dim":""}" style="left:${X(a)}%;width:calc(${(e-a)/total*100}% - 4px)"><span class="t">${s[1]}</span><span class="n">${s[2]}</span><span class="w">${s[3]}</span>${sec(tg)}</a>`}).join("")+`</div>`});
+ el.innerHTML=html;
+}
+filters(document.getElementById("aF"),()=>aCat,v=>aCat=v,renderA);renderA();
+
 /* B */
 const PX=1.35; // px na minutu
 function renderB(){
