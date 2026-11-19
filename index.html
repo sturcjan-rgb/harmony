@@ -326,16 +326,13 @@ a.it:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px var(--line),0 1
 .plan dt,.plan dd{padding:11px 0;border-top:1px solid var(--line)}
 .plan dd{font-weight:700;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .card{position:relative;background:linear-gradient(140deg,var(--forest-3) 0%,var(--forest) 55%,#071F18 100%);color:#fff;overflow:hidden}
-.card::before{content:"";position:absolute;right:-90px;top:-90px;width:300px;height:300px;border-radius:50%;border:36px solid rgba(194,235,60,.14)}
-.card::after{content:"";position:absolute;right:-20px;top:-20px;width:160px;height:160px;border-radius:50%;border:2px solid rgba(194,235,60,.4)}
 .card>*{position:relative;z-index:1}
 .card .sub{color:rgba(255,255,255,.65)}
-.card .chip{width:44px;height:32px;border-radius:7px;background:linear-gradient(135deg,#E4F59A,#9BBE2A);margin-bottom:20px}
 .mem{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
-.mem div{padding-top:14px;border-top:1px solid rgba(255,255,255,.18)}
+.mem .k{padding:14px 0;border-top:1px solid rgba(255,255,255,.18);border-bottom:1px solid rgba(255,255,255,.18);margin-top:28px}
 .mem .k{font-weight:700;font-size:15px}
-.mem .k span{font-weight:500;opacity:.6;display:block;font-size:13px}
-.mem .p{font-variation-settings:"wdth" 62;font-weight:800;font-size:76px;line-height:.9;margin-top:10px;font-variant-numeric:tabular-nums}
+.mem .k span{font-weight:500;opacity:.6;display:block;font-size:13px;margin-top:2px}
+.mem .p{font-variation-settings:"wdth" 62;font-weight:800;font-size:76px;line-height:.9;margin-top:56px;font-variant-numeric:tabular-nums}
 .mem .p small{font-size:16px;font-weight:600;font-variation-settings:"wdth" 100;margin-left:4px}
 .half{font-size:15px;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.07);margin-bottom:22px}
 .half b{color:var(--lime)}
@@ -636,7 +633,6 @@ footer{background:#0A110E;color:rgba(255,255,255,.55);font-size:14px}
           <dl id="perm"></dl>
         </div>
         <div class="plan card">
-          <div class="chip" aria-hidden="true"></div>
           <h3>Chodím pravidelně</h3>
           <p class="sub">Členství, neomezený vstup na 30 dní.</p>
           <div class="mem" id="member"></div>
@@ -806,12 +802,12 @@ const ORDER=[1,2,3,4,5,6,0];
 const PRICES={
  adult:{once:[["Posilovna, 2 hodiny","199 Kč"],["Skupinová lekce","199 Kč"],["Wellness, 2 hodiny","210 Kč"],["Celý den bez wellness","390 Kč"]],
    perm:[["Lekce, 8 + 2 zdarma","1 800 Kč"],["Posilovna, 9 + 1 zdarma","1 600 Kč"],["Wellness","2 000 Kč"]],
-   mem:[["Fit","1 690","posilovna, open gym, lekce"],["All-in","2 190","vše + wellness"]],
-   half:"Na půl roku bez wellness jen <b>1 390 Kč měsíčně</b> (8 340 Kč najednou)."},
+   mem:[["Fit","1690","posilovna, open gym, lekce"],["All-in","2190","vše + wellness"]],
+   half:"Na půl roku bez wellness jen <b>1&nbsp;390&nbsp;Kč měsíčně</b> (8&nbsp;340&nbsp;Kč najednou)."},
  student:{once:[["Posilovna, 2 hodiny","199 Kč"],["Skupinová lekce","199 Kč"],["Wellness, 2 hodiny","210 Kč"],["Celý den bez wellness","290 Kč"]],
    perm:[["Posilovna nebo lekce, 7 + 3 zdarma","1 400 Kč"],["Wellness","2 000 Kč"]],
-   mem:[["Fit","1 390","posilovna, open gym, lekce"],["All-in","1 890","vše + wellness"]],
-   half:"Na půl roku bez wellness jen <b>990 Kč měsíčně</b> (5 940 Kč najednou)."}
+   mem:[["Fit","1390","posilovna, open gym, lekce"],["All-in","1890","vše + wellness"]],
+   half:"Na půl roku bez wellness jen <b>990&nbsp;Kč měsíčně</b> (5&nbsp;940&nbsp;Kč najednou)."}
 };
 const TRAINERS=[
  ["Kačka Králová","Fitness, TRX, cvičení po porodu",""],
