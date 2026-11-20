@@ -1,0 +1,78 @@
+/* Harmony – rozvrh. Vychází ze sekce #rozvrh a varianty C v prototypu.
+   Barvy se berou z proměnných šablony, když existují (--forest, --lime, --ink). */
+.hr-rozvrh{
+  --hr-bg:var(--forest,#0B3328);
+  --hr-fg:#fff;
+  --hr-accent:var(--lime,#C2EB3C);
+  --hr-ink:var(--ink,#101A16);
+  --hr-tile:rgba(255,255,255,.05);
+  background:var(--hr-bg);color:var(--hr-fg);
+  font-family:inherit;font-variant-numeric:tabular-nums;
+  border-radius:22px;padding:clamp(16px,3vw,28px);
+}
+.hr-rozvrh *{box-sizing:border-box}
+.hr-rozvrh a{color:inherit}
+.c-mind{--c:#F2C744}.c-cardio{--c:#B48CF2}.c-sila{--c:#FF6B57}.c-boj{--c:#6FA0FF}.c-deti{--c:#7FD69A}.c-jine{--c:#D9E2DC}
+
+.hr-controls{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:22px}
+.hr-weeks,.hr-days,.hr-filters{display:flex;gap:6px;flex-wrap:wrap}
+.hr-rozvrh button{font:inherit;cursor:pointer;border:0;color:inherit}
+.hr-weeks button,.hr-days button{background:rgba(255,255,255,.07);border-radius:14px;padding:9px 14px;text-align:left;transition:background .2s}
+.hr-weeks button b,.hr-days button b{display:block;font-weight:800;font-size:15px;line-height:1.1}
+.hr-weeks button span,.hr-days button span{font-size:12px;opacity:.6}
+.hr-weeks button:hover,.hr-days button:hover{background:rgba(255,255,255,.14)}
+.hr-weeks button[aria-selected=true],.hr-days button[aria-selected=true]{background:var(--hr-accent);color:var(--hr-bg)}
+.hr-filters{align-items:center}
+.hr-filters button{border-radius:999px;padding:8px 14px 8px 12px;background:transparent;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22);font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.hr-filters button[aria-pressed=true]{background:#fff;color:var(--hr-bg);box-shadow:none}
+.hr-sw{width:9px;height:9px;border-radius:3px;background:var(--c)}
+
+.hr-week+.hr-week{margin-top:32px}
+.hr-week-title{font-size:18px;font-weight:700;margin:0 0 12px;opacity:.75}
+.hr-days{display:none}
+.hr-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}
+.hr-day h4{margin:0;padding:6px 4px;font-weight:800;font-size:22px;font-stretch:62%;font-variation-settings:"wdth" 62}
+.hr-day h4 small{font-size:12px;font-weight:500;opacity:.55;margin-left:4px;font-variation-settings:"wdth" 100}
+.hr-day.is-today h4{color:var(--hr-accent)}
+.hr-day ul{list-style:none;margin:0;display:flex;flex-direction:column;gap:6px;background:var(--hr-tile);border-radius:14px;padding:6px;min-height:160px}
+.hr-day.is-today ul{box-shadow:inset 0 0 0 2px var(--hr-accent)}
+.hr-empty{font-size:13px;opacity:.5;padding:8px}
+
+.hr-l{position:relative;display:block;border-radius:10px;background:var(--c);color:var(--hr-ink)!important;padding:8px 9px 9px;text-decoration:none;transition:transform .2s cubic-bezier(.2,.7,.1,1),box-shadow .2s,opacity .2s}
+.hr-l:hover,.hr-l:focus-visible{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.3)}
+.hr-l:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.hr-t{display:block;font-size:13px;font-weight:800}
+.hr-n{display:block;font-weight:800;font-size:15px;line-height:1.08;margin:2px 0;font-variation-settings:"wdth" 75}
+.hr-w{display:flex;justify-content:space-between;gap:4px;font-size:12px;opacity:.75}
+.hr-room{font-weight:700;opacity:.8;white-space:nowrap}
+.hr-occ{position:absolute;top:8px;right:8px;font-size:11px;font-weight:800;background:rgba(16,26,22,.12);padding:1px 6px;border-radius:99px}
+.hr-l.is-full .hr-occ{background:var(--hr-ink);color:#fff}
+.hr-sec{display:inline-flex;gap:3px;margin-left:6px;vertical-align:middle}
+.hr-sec i{width:9px;height:9px;border-radius:3px;background:var(--c);box-shadow:0 0 0 1.5px rgba(16,26,22,.5)}
+.hr-l.is-past{opacity:.3;filter:saturate(.3)}
+.hr-l.is-dim{opacity:.12}
+
+.hr-meta{margin:20px 0 0;font-size:13px;opacity:.6}
+.hr-rozvrh--empty p{margin:0}
+
+/* Před inicializací JS jsou vidět všechny týdny pod sebou (funguje i bez JS). */
+.hr-rozvrh.is-ready .hr-week:not(.is-active){display:none}
+.hr-rozvrh.is-ready .hr-week+.hr-week{margin-top:0}
+.hr-rozvrh.is-ready .hr-week-title{display:none}
+
+@media (max-width:900px){
+  .hr-rozvrh.is-ready .hr-days{display:flex;margin-bottom:14px}
+  .hr-days button{flex:1 1 0;min-width:0;text-align:center;padding:8px 0}
+  .hr-grid{grid-template-columns:1fr}
+  .hr-rozvrh.is-ready .hr-day:not(.is-active){display:none}
+  .hr-rozvrh.is-ready .hr-day h4{display:none}
+  .hr-day ul{min-height:0}
+  .hr-l{display:grid;grid-template-columns:4.2em 1fr;column-gap:12px;align-items:start;padding:12px 12px 12px 14px}
+  .hr-t{grid-row:span 2}
+  .hr-from{display:block;font-size:22px;line-height:1;font-variation-settings:"wdth" 62}
+  .hr-to{display:block;font-size:12px;font-weight:600;opacity:.7;margin-top:3px}
+  .hr-n{margin:0 3.5em 2px 0}
+  .hr-weeks{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none}
+  .hr-weeks button{flex:0 0 auto}
+}
+@media (prefers-reduced-motion:reduce){.hr-l{transition:none}}
