@@ -2,6 +2,7 @@
 // Minimální stuby WordPressu pro test pluginu mimo WP.
 define('ABSPATH', __DIR__ . '/');
 define('HARMONY_MZ_BASE_URL', 'http://127.0.0.1:8765/HARMONYpisek/');
+define('HARMONY_MZ_API_URL', 'http://127.0.0.1:8765/');
 define('HARMONY_MZ_USER', 'servis@harmony');
 define('HARMONY_MZ_PASS', getenv('TEST_PASS') ?: 'tajne');
 $GLOBALS['T'] = []; $GLOBALS['O'] = []; $GLOBALS['CRON'] = []; $GLOBALS['HTTP_COUNT'] = 0;
@@ -40,9 +41,10 @@ function wp_remote_request($url,$args){
     if (strtolower($k)==='set-cookie') { $ck=new WP_Http_Cookie; [$nv]=explode(';',$v); [$ck->name,$ck->value]=explode('=',$nv,2); $cookies[]=$ck; } }
   return ['response'=>['code'=>$code],'headers'=>$headers,'body'=>substr($raw,$hs),'cookies'=>$cookies];
 }
+function wp_remote_get($u,$a=[]){ $a['method']='GET'; return wp_remote_request($u,$a); }
 function wp_remote_retrieve_response_code($r){ return $r['response']['code']; }
 function wp_remote_retrieve_header($r,$h){ return $r['headers'][strtolower($h)] ?? ''; }
 function wp_remote_retrieve_body($r){ return $r['body']; }
 function wp_remote_retrieve_cookies($r){ return $r['cookies']; }
 define('HARMONY_ROZVRH_DIR', dirname(__DIR__) . '/');
-foreach (['config','html','parser','memberzone-client','categories','repository','render'] as $f) require HARMONY_ROZVRH_DIR."includes/class-$f.php";
+foreach (['config','html','parser','memberzone-client','api-client','categories','repository','render'] as $f) require HARMONY_ROZVRH_DIR."includes/class-$f.php";

@@ -63,9 +63,7 @@ final class Harmony_Rozvrh_Repository {
 		set_transient( self::KEY_LOCK, 1, 120 );
 
 		try {
-			$client = new Harmony_Rozvrh_Memberzone_Client();
-			$pages  = $client->fetch_weeks( Harmony_Rozvrh_Config::weeks_ahead() );
-			$data   = self::build( $pages );
+			$data = self::fetch();
 
 			set_transient( self::KEY_FRESH, $data, Harmony_Rozvrh_Config::ttl() );
 			update_option( self::OPT_LAST, $data, false );
@@ -94,7 +92,58 @@ final class Harmony_Rozvrh_Repository {
 		}
 	}
 
-	/** @param array<int,string> $pages */
+	/** Stáhne data z nastaveného zdroje (API nebo scraping). */
+	public static function fetch(): array {
+		$weeks = Harmony_Rozvrh_Config::weeks_ahead();
+		if ( 'scrape' === Harmony_Rozvrh_Config::get( 'HARMONY_ROZVRH_SOURCE' ) ) {
+			$pages = ( new Harmony_Rozvrh_Memberzone_Client() )->fetch_weeks( $weeks );
+			return self::build( $pages );
+		}
+		$monday = self::first_monday();
+		return self::build_from_lessons(
+			( new Harmony_Rozvrh_Api_Client() )->fetch_lessons( $monday, 7 * ( $weeks + 1 ) ),
+			$monday,
+			$weeks + 1
+		);
+	}
+
+	public static function first_monday(): DateTimeImmutable {
+		$tz    = new DateTimeZone( 'Europe/Prague' );
+		$start = (string) Harmony_Rozvrh_Config::get( 'HARMONY_ROZVRH_START_DATE' );
+		$day   = '' !== $start ? new DateTimeImmutable( $start, $tz ) : new DateTimeImmutable( 'now', $tz );
+		return $day->modify( 'monday this week' )->setTime( 0, 0 );
+	}
+
+	/** Rozdělí normalizované lekce do týdnů od $monday. */
+	public static function build_from_lessons( array $lessons, DateTimeImmutable $monday, int $count ): array {
+		$weeks = array();
+		for ( $i = 0; $i < $count; $i++ ) {
+			$from      = $monday->modify( '+' . ( 7 * $i ) . ' days' );
+			$to        = $from->modify( '+6 days' );
+			$in_week   = array_values(
+				array_filter(
+					$lessons,
+					static fn( $l ) => $l['datum'] >= $from->format( 'Y-m-d' ) && $l['datum'] <= $to->format( 'Y-m-d' )
+				)
+			);
+			foreach ( $in_week as &$l ) {
+				$l['skupiny'] = Harmony_Rozvrh_Categories::for_lesson( $l['nazev'] );
+			}
+			unset( $l );
+			$weeks[] = array(
+				'tyden' => $i,
+				'od'    => $from->format( 'Y-m-d' ),
+				'do'    => $to->format( 'Y-m-d' ),
+				'lekce' => $in_week,
+			);
+		}
+		return array(
+			'aktualizovano' => time(),
+			'tydny'         => $weeks,
+		);
+	}
+
+	/** Scraping: HTML stránky týdnů → data. @param array<int,string> $pages */
 	public static function build( array $pages ): array {
 		$tz    = new DateTimeZone( 'Europe/Prague' );
 		$weeks = array();

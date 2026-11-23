@@ -1,8 +1,12 @@
 # Harmony – rozvrh lekcí (WordPress plugin)
 
 Zobrazuje živý rozvrh skupinových lekcí Harmony Sport & Relax Club Písek
-z rezervačního systému memberzone.cz. Plugin se přihlásí servisním účtem,
-stáhne aktuální týden + 2 týdny dopředu, naparsuje HTML a výsledek drží v cache.
+z rezervačního systému memberzone.cz. Stáhne aktuální týden + 2 týdny dopředu a výsledek drží v cache.
+
+**Dva zdroje dat** (`HARMONY_ROZVRH_SOURCE`):
+
+- `api` (výchozí, doporučeno): oficiální API MemberPro, endpoint `GET api/Lesson`. Zpoplatněné (550 Kč/měs.), stabilní, v souladu s podmínkami. Dokumentace: https://api.memberzone.online:49297/Help
+- `scrape` (záloha): přihlášení servisním účtem do webu memberzone a parsování HTML. Viz [Rizika](#rizika).
 
 - shortcode `[harmony_rozvrh]`
 - blok **Rozvrh Harmony** (`harmony/rozvrh`)
@@ -15,7 +19,7 @@ stáhne aktuální týden + 2 týdny dopředu, naparsuje HTML a výsledek drží
 ## Instalace
 
 1. Složku `harmony-rozvrh` nahrajte do `wp-content/plugins/` (složku `tests/` na produkci nahrávat nemusíte) a plugin aktivujte.
-2. Do `wp-config.php` (nad řádek `/* That's all, stop editing! */`) doplňte údaje **vyhrazeného servisního účtu** (ne osobního):
+2. Do `wp-config.php` (nad řádek `/* That's all, stop editing! */`) doplňte přístup. Pro API jsou to údaje, které přidělí memberzone (Basic Auth), pro scraping údaje **vyhrazeného servisního účtu** (ne osobního):
 
 ```php
 define( 'HARMONY_MZ_USER', 'web-rozvrh@harmonypisek.cz' );
@@ -34,6 +38,12 @@ Požadavky: WordPress 6.3+, PHP 7.4+ s rozšířením `dom` (a `sodium` pro šif
 
 | Konstanta | Výchozí | Význam |
 |---|---|---|
+| `HARMONY_ROZVRH_SOURCE` | `api` | `api` nebo `scrape` |
+| `HARMONY_MZ_API_URL` | `https://api.memberzone.online:49297/` | adresa API |
+| `HARMONY_MZ_API_RESORT` | `1` | ID pobočky (`api/Resorts`) |
+| `HARMONY_MZ_API_CATEGORIES` | autodetekce | ID kategorií lekcí, např. `51,52`; prázdné = všechny kategorie typu 2 |
+| `HARMONY_MZ_API_TIME_UTC` | `false` | API posílá čas s „Z“, ale jde o místní čas; `true` jen když memberzone potvrdí skutečné UTC |
+| `HARMONY_ROZVRH_START_DATE` | – | jen pro test: zobrazit rozvrh od data `Y-m-d` (testovací data jsou z 28. 9.–5. 10. 2026) |
 | `HARMONY_ROZVRH_TTL` | `1200` | platnost cache v sekundách (doporučeno 900–1800) |
 | `HARMONY_ROZVRH_WEEKS_AHEAD` | `2` | kolik týdnů dopředu stahovat (0–4) |
 | `HARMONY_ROZVRH_TIMEOUT` | `15` | timeout jednoho HTTP požadavku (s) |
@@ -108,6 +118,15 @@ add_filter( 'harmony_rozvrh_kategorie_lekci', function ( $map ) {
 
 Metadata jsou v hlavičkách: `X-Harmony-Tyden-Od`, `X-Harmony-Tyden-Do`, `X-Harmony-Aktualizovano`, `X-Harmony-Zastarale` (`1` = vrací se poslední úspěšná data). Když nejsou žádná data, vrací 503.
 
+## API – poznámky z testování (23. 11. 2026)
+
+- Testovací přístup `test` / `test`, pobočka 1 (Luxart). Kategorie lekcí 51 (skupinová cvičení) a 52 (spinning); kategorie typu 10 jsou kurty.
+- `date_start` musí být `dd.MM.yyyy` s nulami (`01.10.2026`), jinak HTTP 500.
+- Když v období nejsou lekce, API vrací **404** (ne prázdné pole). Plugin to bere jako „žádné lekce“.
+- Ostré API pouští jen povolené IP adresy: IP serveru webu je potřeba nahlásit memberzone.
+- API nepovoluje volání z prohlížeče (CORS) a heslo nesmí být v kódu stránky, proto data stahuje WordPress na serveru.
+- Rychlý test pro pobočku z testu: `define( 'HARMONY_MZ_USER', 'test' ); define( 'HARMONY_MZ_PASS', 'test' ); define( 'HARMONY_ROZVRH_START_DATE', '2026-09-28' );`
+
 ## Cache a zátěž memberzone
 
 - Výsledek je v transientu po dobu `HARMONY_ROZVRH_TTL`. Jedno stažení = 1–2 GET (+ login jen při neplatné session) + 1 POST na každý další týden.
@@ -145,7 +164,8 @@ Pojistky: když aktuální týden nemá žádnou lekci nebo stránka nevypadá j
 
 ```
 php -S 127.0.0.1:8765 tests/mock/router.php &
-php tests/run.php
+HARMONY_ROZVRH_START_DATE=2026-09-28 php tests/run-api.php   # API (data z testovacího API v tests/fixtures)
+HARMONY_ROZVRH_SOURCE=scrape php tests/run.php               # scraping
 ```
 
 Mock simuluje ASP.NET login (ViewState, EventValidation, auth cookie na 302), rozvrh se skrytými `hf…` inputy a `__doPostBack('btnNext','')`.

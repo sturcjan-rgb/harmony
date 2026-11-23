@@ -62,6 +62,23 @@ final class Harmony_Rozvrh_Categories {
 				$best = $key;
 			}
 		}
-		return null !== $best ? $map[ $best ] : array(); // neznámá lekce → neutrální barva
+		if ( null !== $best ) {
+			return $map[ $best ];
+		}
+		// Klíčová slova kdekoli v názvu (pro názvy, které v mapě nejsou).
+		foreach ( self::KEYWORDS as $re => $groups ) {
+			if ( preg_match( $re, $n ) ) {
+				return $groups;
+			}
+		}
+		return array(); // neznámá lekce → neutrální barva
 	}
+
+	private const KEYWORDS = array(
+		'/spin|jumping|aerobic|zumba|step|kardio|cardio|interval|hiit/u' => array( 'cardio' ),
+		'/pilates|barre/u'                                               => array( 'mind', 'sila' ),
+		'/j[óo]g|yoga|čchi|chi.?kung|tai.?chi|záda|strečink|stretch|mobilit|fyzio|zdrav/u' => array( 'mind' ),
+		'/kruh|trx|kondi|bodyform|posil|total|gym|síla|core|pevné tělo/u' => array( 'sila', 'cardio' ),
+	);
+
 }

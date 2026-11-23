@@ -10,6 +10,13 @@ final class Harmony_Rozvrh_Config {
 
 	/** Výchozí hodnoty pro nepovinná nastavení. */
 	private const DEFAULTS = array(
+		// Zdroj dat: 'api' = oficiální API MemberPro (doporučeno), 'scrape' = stahování HTML za loginem (záloha).
+		'HARMONY_ROZVRH_SOURCE'      => 'api',
+		'HARMONY_MZ_API_URL'         => 'https://api.memberzone.online:49297/',
+		'HARMONY_MZ_API_RESORT'      => 1,     // ID pobočky (api/Resorts)
+		'HARMONY_MZ_API_CATEGORIES'  => '',    // např. '51,52'; prázdné = všechny kategorie typu 2
+		'HARMONY_MZ_API_TIME_UTC'    => false, // true jen když memberzone potvrdí, že date_time je skutečně UTC
+		'HARMONY_ROZVRH_START_DATE'  => '',    // jen pro test: 'Y-m-d' místo dneška (testovací data jsou z 9/2026)
 		'HARMONY_MZ_BASE_URL'        => 'https://memberzone.cz/HARMONYpisek/',
 		'HARMONY_MZ_LOGIN_PATH'      => 'Uvod.aspx',
 		'HARMONY_MZ_SCHEDULE_PATH'   => 'StudioveHodiny.aspx',

@@ -15,6 +15,27 @@ function page($body, $vs) {
    . $body . '</form></body></html>';
 }
 
+
+// --- API MemberPro (Basic Auth, JSON, 404 = žádná data) ---
+if (strpos($path, '/api/') === 0) {
+  header('Content-Type: application/json; charset=utf-8');
+  $auth = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+  if ($auth !== 'Basic ' . base64_encode('servis@harmony:tajne')) { http_response_code(401); echo '"Unauthorized"'; exit; }
+  $fx = __DIR__ . '/../fixtures/';
+  if ($path === '/api/Room') { echo file_get_contents($fx . 'api-room-test.json'); exit; }
+  if ($path === '/api/Categories') { echo json_encode([['id'=>1,'nazev'=>'Tenis','type'=>10],['id'=>51,'nazev'=>'Skupinová cvičení','type'=>2],['id'=>52,'nazev'=>'Spinning','type'=>2]]); exit; }
+  if ($path === '/api/Lesson') {
+    $ds = $_GET['date_start'] ?? '';
+    if (!preg_match('/^\d{2}\.\d{2}\.\d{4}$/', $ds)) { http_response_code(500); echo '"String was not recognized as a valid DateTime."'; exit; }
+    $from = DateTime::createFromFormat('!d.m.Y', $ds); $to = (clone $from)->modify('+' . (int)($_GET['pocet_dni_dopredu'] ?? 7) . ' days');
+    $rows = array_values(array_filter(json_decode(file_get_contents($fx . 'api-lesson-test.json'), true), function ($l) use ($from, $to) {
+      $d = new DateTime(substr($l['date_time'], 0, 19)); return $l['kategorie'] == $_GET['id_kategorie'] && $d >= $from && $d < $to; }));
+    if (!$rows) { http_response_code(404); exit; }
+    echo json_encode($rows, JSON_UNESCAPED_UNICODE); exit;
+  }
+  http_response_code(404); exit;
+}
+
 if ($path === '/HARMONYpisek/Uvod.aspx') {
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ok = ($_POST['__VIEWSTATE'] ?? '') === 'LOGINVS' && ($_POST['__EVENTVALIDATION'] ?? '') === 'EV'.md5('LOGINVS')

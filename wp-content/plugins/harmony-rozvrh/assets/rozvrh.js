@@ -14,7 +14,9 @@
     var weekBtns = Array.prototype.slice.call(root.querySelectorAll('.hr-weeks button'));
     var weeks = Array.prototype.slice.call(root.querySelectorAll('.hr-week'));
     var filterBtns = Array.prototype.slice.call(root.querySelectorAll('.hr-filters button'));
-    var today = ymd(new Date());
+    // data-now (ISO) = simulovaný „teď“ pro náhledy a testy; jinak skutečný čas.
+    var nowTs = root.dataset.now ? Date.parse(root.dataset.now) : Date.now();
+    var today = ymd(new Date(nowTs));
     var group = null;
 
     function showWeek(i) {
@@ -52,7 +54,7 @@
     });
 
     function markPast() {
-      var now = Date.now();
+      var now = root.dataset.now ? nowTs : Date.now();
       root.querySelectorAll('.hr-l[data-end]').forEach(function (l) {
         l.classList.toggle('is-past', Date.parse(l.dataset.end) < now);
       });

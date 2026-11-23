@@ -20,6 +20,7 @@ require_once HARMONY_ROZVRH_DIR . 'includes/class-config.php';
 require_once HARMONY_ROZVRH_DIR . 'includes/class-html.php';
 require_once HARMONY_ROZVRH_DIR . 'includes/class-parser.php';
 require_once HARMONY_ROZVRH_DIR . 'includes/class-memberzone-client.php';
+require_once HARMONY_ROZVRH_DIR . 'includes/class-api-client.php';
 require_once HARMONY_ROZVRH_DIR . 'includes/class-categories.php';
 require_once HARMONY_ROZVRH_DIR . 'includes/class-repository.php';
 require_once HARMONY_ROZVRH_DIR . 'includes/class-rest.php';

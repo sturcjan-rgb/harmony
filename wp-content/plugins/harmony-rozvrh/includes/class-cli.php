@@ -46,6 +46,14 @@ final class Harmony_Rozvrh_CLI {
 	 * : Kam uložit HTML. Výchozí je systémový temp (ne veřejný adresář webu – stránka může obsahovat jméno servisního účtu).
 	 */
 	public function debug( $args, $assoc ): void {
+		if ( 'scrape' !== Harmony_Rozvrh_Config::get( 'HARMONY_ROZVRH_SOURCE' ) ) {
+			try {
+				WP_CLI::log( wp_json_encode( Harmony_Rozvrh_Repository::fetch(), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE ) );
+			} catch ( Throwable $e ) {
+				WP_CLI::error( $e->getMessage() );
+			}
+			return;
+		}
 		$dir = rtrim( $assoc['dir'] ?? sys_get_temp_dir(), '/' );
 		$c   = new Harmony_Rozvrh_Memberzone_Client();
 		try {
